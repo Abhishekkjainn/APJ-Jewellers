@@ -46,41 +46,58 @@ body{
   margin-right: 20px;
 }
 
-.bottombar{
-  width: calc(90%-16px);
+/* .bottombar{
+  width: max-content;
   height: 45px;
   background-color: #161616;
   position: fixed;
   bottom: 20px;
-  left: 5%;
-  right: 5%;
+  left: 0;
+  right: 0;
   border-radius: 40px;
   padding: 8px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
+} */
+.bottombar {
+  width: max-content;
+  max-width: 400px;
+  height: 45px;
+  background-color: #161616;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 40px;
+  padding: 8px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  z-index: 1000;
 }
 .tab{
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-left: 12px;
-  padding-right: 12px;
   border-radius: 40px;
   height: 100%;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 .active{
+  transition: 0.3s linear;
   border: 1.5px solid royalblue;
   background-color: rgba(65, 105, 225, 0.093);
 }
 .tabicon{
-  width: 16px;
+  width: 14px;
 }
 .tabtag{
   color: white;
   font-weight: 600;
-  margin-top: 2px;
-  font-size: 12px;
+  margin-top: 0px;
+  font-size: 10px;
   margin-left: 6px;
   margin-right: 6px;
 }
