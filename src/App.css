@@ -121,7 +121,7 @@ body{
   color: white;
   font-size: 28px;
   font-weight: 600;
-  margin-left: 20px;
+  margin-left: 30px;
 }
 .topmenubarbutton{
   margin-right: 20px;
@@ -157,12 +157,12 @@ body{
   align-items: center;
 }
 .itemicon{
-  width: 20px;
+  width: 16px;
   margin-right:20px ;
 }
 .itemtag{
   color: grey;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
 }
 .loggedintag{
@@ -177,7 +177,7 @@ body{
   margin-bottom: 20px;
   font-size: 14px;
   font-weight: 600;
-  color: grey;
+  color: rgb(75, 75, 75);
 }
 
 
