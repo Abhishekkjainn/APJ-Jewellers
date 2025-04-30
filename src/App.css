@@ -22,6 +22,7 @@ body{
   top: 0;
   left: 0;
   right: 0;
+  z-index: 999;
 }
 .carouselcircle{
   width: 8px;
@@ -40,6 +41,7 @@ body{
   left: 0;
   right: 0;
   background-color: white;
+  z-index: 1000;
 }
 .greeting{
   display: flex;
@@ -349,7 +351,7 @@ body{
   height: auto;
   padding-bottom: 20px;
   background-color: rgb(243, 243, 243);
-  margin:4px;
+  margin:0px;
   border-radius: 12px;
   display: flex;
   justify-content: start;
