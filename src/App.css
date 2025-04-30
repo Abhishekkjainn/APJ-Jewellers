@@ -92,7 +92,7 @@ body{
   margin-right: 6px;
 }
 .homescreen{
-  height: 100vh;
+  height: auto;
   padding-bottom: 40px;
   width: 100%;
   margin-top: 85px;
@@ -134,8 +134,12 @@ body{
   margin-right: 4px;
   font-size: 12px;
   font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .activecategory{
+  border: 2px solid #161616;
   background-color: #161616;
   color: white;
 }
