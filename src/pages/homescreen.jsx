@@ -17,6 +17,8 @@ export default function Homescreen() {
       pricePerGram: 5800,
       totalMakingCharges: 9600,
       totalPrice: 313600,
+      RQ: 300000,
+      FRQ: 280000,
       image: '/images/necklace1.jpg',
       description:
         'Handcrafted antique-style necklace with ruby embellishments.',
@@ -36,6 +38,8 @@ export default function Homescreen() {
       pricePerGram: 4800,
       totalMakingCharges: 1080,
       totalPrice: 32544,
+      RQ: 300000,
+      FRQ: 280000,
       image: '/images/ring1.jpg',
       description: 'Elegant gold wedding ring in polished 18K gold.',
     },
@@ -54,6 +58,8 @@ export default function Homescreen() {
       pricePerGram: 5000,
       totalMakingCharges: 2000,
       totalPrice: 50800,
+      RQ: 300000,
+      FRQ: 280000,
       image: '/images/earring1.jpg',
       description: '18K gold earrings studded with diamonds for a royal look.',
     },
@@ -72,6 +78,8 @@ export default function Homescreen() {
       pricePerGram: 75,
       totalMakingCharges: 1320,
       totalPrice: 2970,
+      RQ: 300000,
+      FRQ: 280000,
       image: '/images/bracelet1.jpg',
       description: 'Minimalist sterling silver cuff with high polish.',
     },
@@ -90,6 +98,8 @@ export default function Homescreen() {
       pricePerGram: 5800,
       totalMakingCharges: 7410,
       totalPrice: 271110,
+      RQ: 300000,
+      FRQ: 280000,
       image: '/images/bangle1.jpg',
       description: 'Bridal gold bangles with fine cubic zirconia details.',
     },
@@ -108,6 +118,8 @@ export default function Homescreen() {
       pricePerGram: 5800,
       totalMakingCharges: 2040,
       totalPrice: 77736,
+      RQ: 300000,
+      FRQ: 280000,
       image: '/images/pendant1.jpg',
       description: 'Customizable gold pendant with floral engraving.',
     },
@@ -126,6 +138,8 @@ export default function Homescreen() {
       pricePerGram: 75,
       totalMakingCharges: 1650,
       totalPrice: 3900,
+      RQ: 300000,
+      FRQ: 280000,
       image: '/images/anklet1.jpg',
       description: 'Sterling silver anklets with traditional charm design.',
     },
@@ -144,6 +158,8 @@ export default function Homescreen() {
       pricePerGram: 5800,
       totalMakingCharges: 2320,
       totalPrice: 101790,
+      RQ: 300000,
+      FRQ: 280000,
       image: '/images/kada1.jpg',
       description: 'Adjustable gold kada for kids with emerald highlight.',
     },
@@ -162,6 +178,8 @@ export default function Homescreen() {
       pricePerGram: 5800,
       totalMakingCharges: 3675,
       totalPrice: 124290,
+      RQ: 300000,
+      FRQ: 280000,
       image: '/images/tikka1.jpg',
       description: 'Heavily embellished bridal maang tikka with Polki stones.',
     },
@@ -180,6 +198,8 @@ export default function Homescreen() {
       pricePerGram: 5800,
       totalMakingCharges: 4500,
       totalPrice: 159375,
+      RQ: 300000,
+      FRQ: 280000,
       image: '/images/chain1.jpg',
       description: 'Sturdy and elegant 22K gold chain for men.',
     },
@@ -268,7 +288,40 @@ export default function Homescreen() {
                   Category - {item.material} : {item.category}
                 </div>
                 <div className="codename">
-                  Price - ₹{item.totalPrice.toLocaleString()}
+                  <div className="priceamt">
+                    Quote : ₹{item.totalPrice.toLocaleString()}
+                  </div>
+                  <div className="dwnbtn">
+                    <img
+                      src="/download.png"
+                      alt="download"
+                      className="downloadbutton"
+                    />
+                  </div>
+                </div>
+                <div className="codename">
+                  <div className="priceamt">
+                    RQ : ₹{item.RQ.toLocaleString()}
+                  </div>
+                  <div className="dwnbtn">
+                    <img
+                      src="/download.png"
+                      alt="download"
+                      className="downloadbutton"
+                    />
+                  </div>
+                </div>
+                <div className="codename">
+                  <div className="priceamt">
+                    FRQ : ₹{item.FRQ.toLocaleString()}
+                  </div>
+                  <div className="dwnbtn">
+                    <img
+                      src="/download.png"
+                      alt="download"
+                      className="downloadbutton"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
