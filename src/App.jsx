@@ -7,15 +7,16 @@ import Bottombar from './components/bottombar';
 import Homescreen from './pages/homescreen';
 import UpdatePrice from './pages/updateprices';
 import Additem from './pages/additem';
+import Menupage from './components/menupage';
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
-
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
     <>
-      <Header />
+      <Header isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
       <Carousel />
-
+      <Menupage isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
       {/* Conditional rendering */}
       {activeTab === 'home' && <Homescreen />}
       {activeTab === 'price' && <UpdatePrice />}
