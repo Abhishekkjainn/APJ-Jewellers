@@ -5,6 +5,9 @@ body{
   overflow-x: hidden;
   border: none;
 }
+::-webkit-scrollbar{
+  display: none;
+}
 .carousel{
   width: 100%;
   height: 25px;
@@ -14,6 +17,7 @@ body{
   justify-content: center;
   align-items: center;
   font-size: 12px;
+  font-weight: 600;
   position: fixed;
   top: 0;
   left: 0;
@@ -88,9 +92,14 @@ body{
   margin-right: 6px;
 }
 .homescreen{
-  background-color: royalblue;
   height: 100vh;
+  padding-bottom: 40px;
   width: 100%;
+  margin-top: 85px;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
 }
 .updateprice{
   background-color: blue;
@@ -101,4 +110,32 @@ body{
   background-color: greenyellow;
   height: 100vh;
   width: 100%;
+}
+.categoriesdiv{
+  width: 100%;
+  height: 40px;
+  overflow-x: auto;
+  display: flex;
+  white-space: nowrap;
+  padding-left: 8px;
+  align-items: center;
+  margin-left: 4px;
+}
+.category{
+  height: fit-content;
+  width: max-content;
+  padding-right: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 8px;
+  border: 2px solid rgb(73, 73, 73);
+  border-radius: 40px;
+  margin-left: 4px;
+  margin-right: 4px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.activecategory{
+  background-color: #161616;
+  color: white;
 }
