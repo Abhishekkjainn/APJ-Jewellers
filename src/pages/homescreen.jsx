@@ -188,48 +188,5 @@ export default function Homescreen() {
   const [items, setItems] = useState(data);
   const [filter, setFilter] = useState('All Items');
 
-  return (
-    <div className="homescreen">
-      <div className="searchbar">
-        <img src="/search.png" alt="Search" className="searchicon" />
-        <input
-          type="text"
-          name="searchinp"
-          id="searchinp"
-          className="searchinp"
-          placeholder="Search Product Id.."
-        />
-      </div>
-      <div className="categoriesdiv">
-        <div className="category activecategory">All Items</div>
-        <div className="category">Necklace</div>
-        <div className="category">Bracelet</div>
-        <div className="category">Earring</div>
-        <div className="category">Rings</div>
-        <div className="category">Toering</div>
-        <div className="category">Etc</div>
-        <div className="category">Unknown</div>
-      </div>
-
-      <div className="itemdiv">
-        <div className="itemcard">
-          <img
-            src="https://5.imimg.com/data5/TG/DN/MY-37294786/designer-artificial-jewellery.jpg"
-            alt="Image"
-            className="itemimage"
-          />
-          <div className="iteminfo">
-            <div className="first">
-              <div className="code">Code - 123456789</div>
-              <div className="cardbuttonstop">
-                <img src="/delete.png" alt="Delete Icon" className="delete" />
-                <img src="/edit.png" alt="Edit Icon" className="edit" />
-              </div>
-            </div>
-            <div className="second">Category - Gold [Necklace]</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return <div className="homescreen"></div>;
 }

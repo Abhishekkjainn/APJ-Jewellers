@@ -20,6 +20,24 @@ export default defineConfig({
         short_name: 'apj',
         description: 'Jewllers Application',
         theme_color: '#000000',
+        icons: [
+          {
+            src: 'icon192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+          },
+          {
+            src: 'icon512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+          },
+          {
+            src: 'icon512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any maskable', // for Android splash screen
+          },
+        ],
       },
 
       workbox: {

@@ -4,7 +4,7 @@ export default function Carousel() {
   return (
     <div className="carousel">
       <Marquee autoFill={true} speed={45} className="goldratemarquee">
-        Today's Gold Rate - {goldRate}/gm &nbsp;&nbsp;&nbsp;{' '}
+        Today's Gold Rate : 22k - {goldRate}/gm &nbsp;&nbsp;&nbsp;{' '}
         <div className="carouselcircle"></div> &nbsp;&nbsp;&nbsp;
       </Marquee>
     </div>
