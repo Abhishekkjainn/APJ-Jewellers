@@ -39,6 +39,7 @@ body{
   top: 25px;
   left: 0;
   right: 0;
+  background-color: white;
 }
 .greeting{
   display: flex;
@@ -229,7 +230,7 @@ body{
 }
 .homescreen{
   height: auto;
-  padding-bottom: 40px;
+  padding-bottom: 100px;
   width: 100%;
   margin-top: 85px;
   display: flex;
@@ -330,4 +331,64 @@ body{
 }
 .activecat .caticon{
   filter: invert(1);
+}
+.activecat .catcircle{
+  background-color: white;
+}
+.itemsdiv{
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.itemcard{
+  width: 45%;
+  height: auto;
+  padding-bottom: 20px;
+  background-color: rgb(243, 243, 243);
+  margin:4px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+.iteminfo{
+  width: 100%;
+  flex: 1;
+  /* background-color: aqua; */
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column;
+  
+}
+
+.prodimg{
+  width: 90%;
+  margin-top: 8px;
+  border-radius: 8px;
+}
+.codename{
+  font-size: 12px;
+  font-weight: 800;
+  margin-top: 6px;
+  margin-left: 12px;
+}
+.catname{
+  font-size: 10px;
+  font-weight: 400;
+  transform: translateY(-6px);
+  color: grey;
+}
+.catcircle{
+  width: 12px;
+  height: 12px;
+  background-color: #161616;
+  border-radius: 50%;
+  margin-right: 8px;
 }
