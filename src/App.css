@@ -1,7 +1,7 @@
 body{
   margin: 0;
   padding: 0;
-  font-family: "Gilroy";
+  font-family: "Manrope";
   overflow-x: hidden;
   border: none;
 }
@@ -150,7 +150,7 @@ body{
 .menuitem{
   width: 80%;
   height: 65px;
-  border-top: 1px solid rgba(128, 128, 128, 0.148);
+  /* border-top: 1px solid rgba(128, 128, 128, 0.148); */
   border-bottom: 1px solid rgba(128, 128, 128, 0.148);
   display: flex;
   justify-content: start;
@@ -196,7 +196,7 @@ body{
   border-radius: 40px;
   padding: 8px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   z-index: 99;
 }
@@ -217,6 +217,7 @@ body{
 }
 .tabicon{
   width: 14px;
+  transform: translateY(0px);
 }
 .tabtag{
   color: white;
@@ -233,7 +234,7 @@ body{
   margin-top: 85px;
   display: flex;
   justify-content: start;
-  align-items: start;
+  align-items: center;
   flex-direction: column;
 }
 
@@ -246,4 +247,87 @@ body{
   width: 100%;
   height: 100vh;
   background-color: greenyellow;
+}
+
+.searchbar{
+  width: 95%;
+  height: 50px;
+  background-color: rgb(248, 248, 248);
+  margin-top: 12px;
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.searchinput{
+  flex: 1;
+  height: 80%;
+  margin-left: 20px;
+  font-size: 16px;
+  font-weight: 500;
+  color: black;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+.searchinput::placeholder{
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(189, 189, 189);
+}
+.searchbutton{
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.searchicon{
+  width: 16px;
+  filter: invert(1);
+}
+.categoriesdiv{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-left: 12px;
+  margin-right: 12px;
+  margin-top: 12px;
+  overflow-x: scroll;
+}
+.category{
+  width: max-content;
+  padding-right: 12px;
+  padding-left: 12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  /* background-color: #161616; */
+  border-radius: 40px;
+  border: 1px solid #d5d5d583;
+  font-size: 14px;
+  font-weight: 600;
+  color: black;
+  margin-left: 6px;
+  margin-right: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: none;
+  flex-wrap: nowrap;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.caticon{
+  width: 14px;
+  margin-right: 4px;
+}
+.activecat{
+  background-color: black;
+  color: white;
+}
+.activecat .caticon{
+  filter: invert(1);
 }

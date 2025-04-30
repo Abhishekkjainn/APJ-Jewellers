@@ -188,5 +188,34 @@ export default function Homescreen() {
   const [items, setItems] = useState(data);
   const [filter, setFilter] = useState('All Items');
 
-  return <div className="homescreen"></div>;
+  return (
+    <div className="homescreen">
+      <div className="searchbar">
+        <input
+          type="text"
+          name="Searchinput"
+          id="searchinput"
+          className="searchinput"
+          placeholder="Search with Product Id."
+        />
+        <div className="searchbutton">
+          <img src="/search.png" alt="" className="searchicon" />
+        </div>
+      </div>
+      <div className="categoriesdiv">
+        <div className="category activecat">
+          <img src="/all.png" alt="All" className="caticon" /> All Items
+        </div>
+        <div className="category">
+          <img src="/necklace.png" alt="All" className="caticon" /> Necklace
+        </div>
+        <div className="category">
+          <img src="/earrings.png" alt="All" className="caticon" /> Earrings
+        </div>
+        <div className="category">
+          <img src="/rings.png" alt="All" className="caticon" /> Rings
+        </div>
+      </div>
+    </div>
+  );
 }
