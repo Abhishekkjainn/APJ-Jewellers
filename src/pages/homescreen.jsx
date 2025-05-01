@@ -278,8 +278,15 @@ export default function Homescreen() {
               <img src={item.image} alt="Jewellery" className="itemimage" />
 
               <div className="overlay-top">
-                <div className="pill">{item.material}</div>
-                <div className="pill">{item.category}</div>
+                <div className="pillsection">
+                  <div className="pill">{item.material}</div>
+                  <div className="pill">{item.category}</div>
+                </div>
+                <div className="editsection">
+                  <div className="editbutton">
+                    <img src="/edit.png" alt="" className="editicon" />
+                  </div>
+                </div>
               </div>
 
               <div className="overlay-bottom">
