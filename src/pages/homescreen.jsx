@@ -272,55 +272,30 @@ export default function Homescreen() {
           filteredItems.map((item) => (
             <div key={item.id} className="itemcard">
               <img
-                src={item.image}
-                alt={item.name}
-                className="prodimg"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src =
-                    'https://5.imimg.com/data5/TG/DN/MY-37294786/designer-artificial-jewellery.jpg';
-                }}
+                src="https://5.imimg.com/data5/TG/DN/MY-37294786/designer-artificial-jewellery.jpg"
+                alt="Jewellery"
+                className="itemimage"
               />
 
-              <div className="iteminfo">
-                <div className="codename">Code - {item.id}</div>
-                <div className="codename catname">
-                  Category - {item.material} : {item.category}
-                </div>
-                <div className="codename">
-                  <div className="priceamt">
-                    Quote : ₹{item.totalPrice.toLocaleString()}
+              <div className="overlay-top">
+                <div className="pill">{item.material}</div>
+                <div className="pill">{item.category}</div>
+              </div>
+
+              <div className="overlay-bottom">
+                <div className="code">Code - {item.id}</div>
+                <div className="pricesection">
+                  <div className="price">
+                    <div className="priceamt">{item.totalPrice}</div>
+                    <img src="/download.png" alt="" className="downloadicon" />
                   </div>
-                  <div className="dwnbtn">
-                    <img
-                      src="/download.png"
-                      alt="download"
-                      className="downloadbutton"
-                    />
+                  <div className="price">
+                    <div className="priceamt">{item.RQ}</div>
+                    <img src="/download.png" alt="" className="downloadicon" />
                   </div>
-                </div>
-                <div className="codename">
-                  <div className="priceamt">
-                    RQ : ₹{item.RQ.toLocaleString()}
-                  </div>
-                  <div className="dwnbtn">
-                    <img
-                      src="/download.png"
-                      alt="download"
-                      className="downloadbutton"
-                    />
-                  </div>
-                </div>
-                <div className="codename">
-                  <div className="priceamt">
-                    FRQ : ₹{item.FRQ.toLocaleString()}
-                  </div>
-                  <div className="dwnbtn">
-                    <img
-                      src="/download.png"
-                      alt="download"
-                      className="downloadbutton"
-                    />
+                  <div className="price">
+                    <div className="priceamt">{item.FRQ}</div>
+                    <img src="/download.png" alt="" className="downloadicon" />
                   </div>
                 </div>
               </div>
@@ -333,3 +308,59 @@ export default function Homescreen() {
     </div>
   );
 }
+
+// <div key={item.id} className="itemcard">
+//   <img
+//     src={item.image}
+//     alt={item.name}
+//     className="prodimg"
+//     onError={(e) => {
+//       e.target.onerror = null;
+//       e.target.src =
+//         'https://5.imimg.com/data5/TG/DN/MY-37294786/designer-artificial-jewellery.jpg';
+//     }}
+//   />
+
+//   <div className="iteminfo">
+//     <div className="codename">Code - {item.id}</div>
+//     <div className="codename catname">
+//       Category - {item.material} : {item.category}
+//     </div>
+//     <div className="codename">
+//       <div className="priceamt">
+//         Quote : ₹{item.totalPrice.toLocaleString()}
+//       </div>
+//       <div className="dwnbtn">
+//         <img
+//           src="/download.png"
+//           alt="download"
+//           className="downloadbutton"
+//         />
+//       </div>
+//     </div>
+//     <div className="codename">
+//       <div className="priceamt">
+//         RQ : ₹{item.RQ.toLocaleString()}
+//       </div>
+//       <div className="dwnbtn">
+//         <img
+//           src="/download.png"
+//           alt="download"
+//           className="downloadbutton"
+//         />
+//       </div>
+//     </div>
+//     <div className="codename">
+//       <div className="priceamt">
+//         FRQ : ₹{item.FRQ.toLocaleString()}
+//       </div>
+//       <div className="dwnbtn">
+//         <img
+//           src="/download.png"
+//           alt="download"
+//           className="downloadbutton"
+//         />
+//       </div>
+//     </div>
+//   </div>
+// </div>
