@@ -17,7 +17,6 @@ function App() {
       <Header isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
       <Carousel />
       <Menupage isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-      {/* Conditional rendering */}
       {activeTab === 'home' && <Homescreen />}
       {activeTab === 'price' && <UpdatePrice />}
       {activeTab === 'add' && <Additem />}

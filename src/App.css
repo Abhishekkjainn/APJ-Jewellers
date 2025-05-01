@@ -350,70 +350,6 @@ body{
   flex-wrap: wrap;
   margin-top: 20px;
 }
-/* .itemcard{
-  width: 45%;
-  height: auto;
-  padding-bottom: 20px;
-  background-color: rgb(243, 243, 243);
-  margin:8px;
-  border-radius: 12px;
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  flex-direction: column;
-  overflow: hidden;
-}
-.iteminfo{
-  width: 100%;
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: start;
-  flex-direction: column;
-  
-}
-
-.prodimg{
-  width: 90%;
-  margin-top: 8px;
-  border-radius: 8px;
-}
-.codename{
-  width: 80%;
-  font-size: 10px;
-  font-weight: 800;
-  margin-top: 6px;
-  margin-left: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.catname{
-  font-size: 10px;
-  font-weight: 400;
-  transform: translateY(-6px);
-  color: grey;
-}
-.catcircle{
-  width: 12px;
-  height: 12px;
-  background-color: #161616;
-  border-radius: 50%;
-  margin-right: 8px;
-}
-.dwnbtn{
-  width: 24px;
-  height: 16px;
-  background-color: #161616;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 4px;
-}
-.downloadbutton{
-  filter: invert(1);
-  width: 10px;
-} */
 
 .itemcard {
   position: relative;
@@ -431,7 +367,6 @@ body{
   object-fit: cover;
 }
 
-/* Overlay container */
 .overlay-top {
   position: absolute;
   top: 16px;
@@ -441,7 +376,6 @@ body{
   z-index: 2;
 }
 
-/* Pill styles */
 .pill {
   background-color: rgba(0, 0, 0, 0.65);
   padding: 6px 18px;
@@ -452,7 +386,6 @@ body{
   backdrop-filter: blur(10px);
 }
 
-/* Bottom gradient overlay */
 .overlay-bottom {
   position: absolute;
   bottom: 0;
@@ -487,7 +420,6 @@ body{
   justify-content: center;
   align-items: center;
   font-size: 12px;
-  /* flex-direction: column; */
 }
 .priceamt{
   color: white;
@@ -498,23 +430,3 @@ body{
   filter: invert(1);
   margin-left: 6px;
 }
-/* .price{
-  width: 80%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.pricetag{
-  font-size: 12px;
-  font-weight: 600;
-  color: white;
-}
-.pricebutton{
-  width: 30px;
-  height: 30px;
-  background-color: black;
-  border-radius: 50%;
-}
-.downloadbutton{
-  width: 16px;
-} */

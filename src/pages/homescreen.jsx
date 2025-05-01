@@ -19,7 +19,8 @@ export default function Homescreen() {
       totalPrice: 313600,
       RQ: 300000,
       FRQ: 280000,
-      image: '/images/necklace1.jpg',
+      image:
+        'https://images.naptol.com/usr/local/csp/staticContent/product_images/horizontal/750x750/Shubh-Muhurat-Jewellery-Collection-01.jpg',
       description:
         'Handcrafted antique-style necklace with ruby embellishments.',
     },
@@ -40,7 +41,7 @@ export default function Homescreen() {
       totalPrice: 32544,
       RQ: 300000,
       FRQ: 280000,
-      image: '/images/ring1.jpg',
+      image: 'https://m.media-amazon.com/images/I/81en+7HxawS._AC_UY1100_.jpg',
       description: 'Elegant gold wedding ring in polished 18K gold.',
     },
     {
@@ -60,7 +61,7 @@ export default function Homescreen() {
       totalPrice: 50800,
       RQ: 300000,
       FRQ: 280000,
-      image: '/images/earring1.jpg',
+      image: 'https://m.media-amazon.com/images/I/915xr2txe+S._AC_UY1100_.jpg',
       description: '18K gold earrings studded with diamonds for a royal look.',
     },
     {
@@ -80,7 +81,8 @@ export default function Homescreen() {
       totalPrice: 2970,
       RQ: 300000,
       FRQ: 280000,
-      image: '/images/bracelet1.jpg',
+      image:
+        'https://images.meesho.com/images/products/109961574/dtfwn_512.webp',
       description: 'Minimalist sterling silver cuff with high polish.',
     },
     {
@@ -100,7 +102,8 @@ export default function Homescreen() {
       totalPrice: 271110,
       RQ: 300000,
       FRQ: 280000,
-      image: '/images/bangle1.jpg',
+      image:
+        'https://5.imimg.com/data5/SELLER/Default/2023/9/342004062/LM/TL/PB/35175566/jewellery-png-2-500x500.jpg',
       description: 'Bridal gold bangles with fine cubic zirconia details.',
     },
     {
@@ -120,7 +123,7 @@ export default function Homescreen() {
       totalPrice: 77736,
       RQ: 300000,
       FRQ: 280000,
-      image: '/images/pendant1.jpg',
+      image: 'https://in.all.biz/img/in/catalog/324158.jpeg',
       description: 'Customizable gold pendant with floral engraving.',
     },
     {
@@ -140,7 +143,7 @@ export default function Homescreen() {
       totalPrice: 3900,
       RQ: 300000,
       FRQ: 280000,
-      image: '/images/anklet1.jpg',
+      image: 'https://m.media-amazon.com/images/I/714ITzZgFTL._AC_UY1100_.jpg',
       description: 'Sterling silver anklets with traditional charm design.',
     },
     {
@@ -160,7 +163,8 @@ export default function Homescreen() {
       totalPrice: 101790,
       RQ: 300000,
       FRQ: 280000,
-      image: '/images/kada1.jpg',
+      image:
+        'https://sukkhi.com/cdn/shop/products/N73718_28i2_29_2000x.jpg?v=1551866942',
       description: 'Adjustable gold kada for kids with emerald highlight.',
     },
     {
@@ -180,7 +184,8 @@ export default function Homescreen() {
       totalPrice: 124290,
       RQ: 300000,
       FRQ: 280000,
-      image: '/images/tikka1.jpg',
+      image:
+        'https://i.pinimg.com/564x/06/fa/59/06fa59e35a6df52c532aab465a4483dd.jpg',
       description: 'Heavily embellished bridal maang tikka with Polki stones.',
     },
     {
@@ -200,7 +205,8 @@ export default function Homescreen() {
       totalPrice: 159375,
       RQ: 300000,
       FRQ: 280000,
-      image: '/images/chain1.jpg',
+      image:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtPWtIwSXil4ffkj9fMU8Ghum4bOhWEoBLJw&s',
       description: 'Sturdy and elegant 22K gold chain for men.',
     },
   ];
@@ -209,7 +215,6 @@ export default function Homescreen() {
   const [filter, setFilter] = useState('All Items');
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Get unique categories from data
   const categories = [
     'All Items',
     ...new Set(data.map((item) => item.category)),
@@ -262,7 +267,6 @@ export default function Homescreen() {
               alt={category}
               className="caticon"
             />
-            {/* <div className="catcircle"></div> */}
             {category}
           </div>
         ))}
@@ -271,11 +275,7 @@ export default function Homescreen() {
         {filteredItems.length > 0 ? (
           filteredItems.map((item) => (
             <div key={item.id} className="itemcard">
-              <img
-                src="https://5.imimg.com/data5/TG/DN/MY-37294786/designer-artificial-jewellery.jpg"
-                alt="Jewellery"
-                className="itemimage"
-              />
+              <img src={item.image} alt="Jewellery" className="itemimage" />
 
               <div className="overlay-top">
                 <div className="pill">{item.material}</div>
@@ -308,59 +308,3 @@ export default function Homescreen() {
     </div>
   );
 }
-
-// <div key={item.id} className="itemcard">
-//   <img
-//     src={item.image}
-//     alt={item.name}
-//     className="prodimg"
-//     onError={(e) => {
-//       e.target.onerror = null;
-//       e.target.src =
-//         'https://5.imimg.com/data5/TG/DN/MY-37294786/designer-artificial-jewellery.jpg';
-//     }}
-//   />
-
-//   <div className="iteminfo">
-//     <div className="codename">Code - {item.id}</div>
-//     <div className="codename catname">
-//       Category - {item.material} : {item.category}
-//     </div>
-//     <div className="codename">
-//       <div className="priceamt">
-//         Quote : ₹{item.totalPrice.toLocaleString()}
-//       </div>
-//       <div className="dwnbtn">
-//         <img
-//           src="/download.png"
-//           alt="download"
-//           className="downloadbutton"
-//         />
-//       </div>
-//     </div>
-//     <div className="codename">
-//       <div className="priceamt">
-//         RQ : ₹{item.RQ.toLocaleString()}
-//       </div>
-//       <div className="dwnbtn">
-//         <img
-//           src="/download.png"
-//           alt="download"
-//           className="downloadbutton"
-//         />
-//       </div>
-//     </div>
-//     <div className="codename">
-//       <div className="priceamt">
-//         FRQ : ₹{item.FRQ.toLocaleString()}
-//       </div>
-//       <div className="dwnbtn">
-//         <img
-//           src="/download.png"
-//           alt="download"
-//           className="downloadbutton"
-//         />
-//       </div>
-//     </div>
-//   </div>
-// </div>
