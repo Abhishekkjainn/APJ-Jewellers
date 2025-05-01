@@ -275,7 +275,12 @@ export default function Homescreen() {
         {filteredItems.length > 0 ? (
           filteredItems.map((item) => (
             <div key={item.id} className="itemcard">
-              <img src={item.image} alt="Jewellery" className="itemimage" />
+              <img
+                src={item.image}
+                alt="Jewellery"
+                className="itemimage"
+                loading="lazy"
+              />
 
               <div className="overlay-top">
                 <div className="pillsection">

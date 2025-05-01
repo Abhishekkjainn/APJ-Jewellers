@@ -53,7 +53,7 @@ body{
   width: 40px;
   margin-right: 8px;
   border-radius: 50%;
-  border: 1px solid royalblue;
+  border: 1px solid black;
 }
 .topgreet{
   font-size: 12px;
@@ -241,11 +241,7 @@ body{
   flex-direction: column;
 }
 
-.updateprice{
-  width: 100%;
-  height: 100vh;
-  background-color: royalblue;
-}
+
 .additem{
   width: 100%;
   height: 100vh;
@@ -257,6 +253,7 @@ body{
   height: 50px;
   background-color: rgb(248, 248, 248);
   margin-top: 12px;
+  margin-bottom: 12px;
   border-radius: 40px;
   display: flex;
   justify-content: center;
@@ -455,4 +452,28 @@ body{
   width: 16px;
   filter: invert(1);
   margin-left: 6px;
+}
+
+
+
+
+/*Update Section Page*/
+.updateprice{
+  margin-top: 95px;
+  width: 100%;
+  min-height: calc(100vh - 95px);
+  height: auto;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  padding-bottom: 100px;
+}
+.heading{
+  font-size: 18px;
+  font-weight: 800;
+  color: grey;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
 }
