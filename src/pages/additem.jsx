@@ -72,7 +72,7 @@ export default function Additem() {
 
   return (
     <div className="additem">
-      <h2>Add Item</h2>
+      {/* <h2>Add Item</h2>
 
       <input
         type="text"
@@ -155,7 +155,7 @@ export default function Additem() {
         style={{ marginTop: '20px' }}
       >
         Save Item
-      </button>
+      </button> */}
     </div>
   );
 }
