@@ -162,7 +162,6 @@
 // export default UpdatePrice;
 
 import React, { useState, useEffect } from 'react';
-// import './UpdatePrice.css';
 
 const unitOptions = ['gm', '%', 'ct'];
 
@@ -203,6 +202,17 @@ const UpdatePrice = () => {
     );
   }, [categories, originalCategories]);
 
+  useEffect(() => {
+    const stored = localStorage.getItem('categoriesData');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      setCategories(parsed);
+      setOriginalCategories(parsed);
+    } else {
+      setOriginalCategories(JSON.parse(JSON.stringify(categories)));
+    }
+  }, []);
+
   const handleAddSubcategory = (categoryIndex, newSubcategory) => {
     const updatedCategories = [...categories];
     updatedCategories[categoryIndex].subcategories.push(newSubcategory);
@@ -228,6 +238,7 @@ const UpdatePrice = () => {
 
   const handleSave = () => {
     console.log('Saved categories:', categories);
+    localStorage.setItem('categoriesData', JSON.stringify(categories));
     setOriginalCategories(JSON.parse(JSON.stringify(categories)));
     setIsModified(false);
   };
