@@ -274,29 +274,65 @@ export default function Homescreen() {
       <div className="itemsdiv">
         {filteredItems.length > 0 ? (
           filteredItems.map((item) => (
-            <div key={item.id} className="itemcard">
+            // <div key={item.id} className="itemcard">
+            //   <img
+            //     src={item.image}
+            //     alt="Jewellery"
+            //     className="itemimage"
+            //     loading="lazy"
+            //   />
+
+            //   <div className="overlay-top">
+            //     <div className="pillsection">
+            //       <div className="pill">{item.material}</div>
+            //       <div className="pill">{item.category}</div>
+            //     </div>
+            //     <div className="editsection">
+            //       <div className="editbutton">
+            //         <img src="/edit.png" alt="" className="editicon" />
+            //       </div>
+            //     </div>
+            //   </div>
+
+            //   <div className="overlay-bottom">
+            //     <div className="code">Code - {item.id}</div>
+            //     <div className="pricesection">
+            //       <div className="price">
+            //         <div className="priceamt">{item.totalPrice}</div>
+            //         <img src="/download.png" alt="" className="downloadicon" />
+            //       </div>
+            //       <div className="price">
+            //         <div className="priceamt">{item.RQ}</div>
+            //         <img src="/download.png" alt="" className="downloadicon" />
+            //       </div>
+            //       <div className="price">
+            //         <div className="priceamt">{item.FRQ}</div>
+            //         <img src="/download.png" alt="" className="downloadicon" />
+            //       </div>
+            //     </div>
+            //   </div>
+            // </div>
+            <div className="itemcard">
               <img
                 src={item.image}
-                alt="Jewellery"
+                alt="Jewellery Image"
                 className="itemimage"
-                loading="lazy"
               />
-
-              <div className="overlay-top">
-                <div className="pillsection">
-                  <div className="pill">{item.material}</div>
-                  <div className="pill">{item.category}</div>
-                </div>
-                <div className="editsection">
+              <div className="iteminfo">
+                <div className="first">
+                  <div className="pillsection">
+                    <div className="pillone">{item.material}</div>
+                    <div className="pilltwo">{item.category}</div>
+                  </div>
                   <div className="editbutton">
-                    <img src="/edit.png" alt="" className="editicon" />
+                    <img src="/edit.png" alt="" className="editbuttonicon" />
                   </div>
                 </div>
-              </div>
-
-              <div className="overlay-bottom">
-                <div className="code">Code - {item.id}</div>
-                <div className="pricesection">
+                <div className="codename">
+                  <div className="codetag">Product ID :</div>
+                  <div className="code">{item.id}</div>
+                </div>
+                <div className="pricessection">
                   <div className="price">
                     <div className="priceamt">{item.totalPrice}</div>
                     <img src="/download.png" alt="" className="downloadicon" />
