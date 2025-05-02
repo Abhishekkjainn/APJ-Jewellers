@@ -547,6 +547,7 @@ body{
   font-weight: 800;
   margin: 2px;
   font-size: 14px;
+  border: 1px solid royalblue;
 }
 .codename{
   width: 100%;
@@ -586,4 +587,156 @@ body{
   filter: invert(1);
   width: 12px;
   margin-left: 4px;
+}
+
+
+/*Update*/
+/* Root container */
+.update-price-container {
+  padding: 16px;
+  max-width: 100%;
+  background-color: #f9f9f9;
+  margin-top: 95px;
+  padding-bottom: 100px;
+}
+
+/* Heading */
+.update-price-heading {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* Save button */
+.submit-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  display: block;
+  margin-left: auto;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}
+
+/* Category card */
+.category-card {
+  background: white;
+  padding: 16px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Category header */
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.category-name {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Add button */
+.add-subcategory-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.add-subcategory-button:hover {
+  background-color: #0069d9;
+}
+
+/* Form */
+.subcategory-form {
+  margin-top: 10px;
+}
+
+.subcategory-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.subcategory-values {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  /* margin-top: 6px; */
+}
+
+.subcategory-input {
+  display: flex;
+  /* flex-direction: column; */
+  gap: 6px;
+  margin-bottom: 0px;
+  background: #fafafa;
+  /* padding: 12px; */
+  padding-bottom: 12px;
+  border-radius: 8px;
+}
+
+/* Input Styles */
+.input-text,
+.input-select,
+.input-number {
+  width: 100%;
+  height: min-content;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #fff;
+}
+
+.input-radio-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.radio-label {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Responsive Enhancements */
+@media (min-width: 600px) {
+  .subcategory-input {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .input-text,
+  .input-select,
+  .input-number {
+    width: auto;
+    flex: 1;
+  }
+
+  .subcategory-values {
+    flex: 2;
+    justify-content: flex-end;
+  }
 }
