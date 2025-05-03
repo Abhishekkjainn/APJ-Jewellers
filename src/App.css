@@ -971,3 +971,10 @@ body{
   align-items: start;
   flex-direction: column;
 }
+
+
+/*Product Description*/
+.productdesc{
+  margin-top: 95px;
+  padding-bottom: 100px;
+}

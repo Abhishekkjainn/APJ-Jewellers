@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function Homescreen() {
+export default function Homescreen({ onPriceClick }) {
   const data = [
     {
       id: 'ORN001',
@@ -333,15 +333,15 @@ export default function Homescreen() {
                   <div className="code">{item.id}</div>
                 </div>
                 <div className="pricessection">
-                  <div className="price">
+                  <div className="price" onClick={() => onPriceClick(item, 0)}>
                     <div className="priceamt">{item.totalPrice}</div>
                     <img src="/download.png" alt="" className="downloadicon" />
                   </div>
-                  <div className="price">
+                  <div className="price" onClick={() => onPriceClick(item, 1)}>
                     <div className="priceamt">{item.RQ}</div>
                     <img src="/download.png" alt="" className="downloadicon" />
                   </div>
-                  <div className="price">
+                  <div className="price" onClick={() => onPriceClick(item, 2)}>
                     <div className="priceamt">{item.FRQ}</div>
                     <img src="/download.png" alt="" className="downloadicon" />
                   </div>
