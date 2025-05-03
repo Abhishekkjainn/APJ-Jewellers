@@ -1,6 +1,7 @@
 import { PDFDownloadLink, pdf } from '@react-pdf/renderer'; // adjust the path
 import { saveAs } from 'file-saver';
 import ProductPDF from './productPDF';
+import { useState } from 'react';
 export default function ProductDesc({ item, priceIndex, onBack }) {
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   if (!item) return <div>No item selected.</div>;
