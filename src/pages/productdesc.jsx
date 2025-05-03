@@ -2,6 +2,7 @@ import { PDFDownloadLink, pdf } from '@react-pdf/renderer'; // adjust the path
 import { saveAs } from 'file-saver';
 import ProductPDF from './productPDF';
 export default function ProductDesc({ item, priceIndex, onBack }) {
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
   if (!item) return <div>No item selected.</div>;
 
   const priceLabels = ['Total Price', 'RQ', 'FRQ'];
@@ -19,10 +20,19 @@ export default function ProductDesc({ item, priceIndex, onBack }) {
     ).toBlob();
 
     const today = new Date();
-    const formattedDate = today.toISOString().split('T')[0]; // yyyy-mm-dd
+    const formattedDate = today.toISOString().split('T')[0];
     const filename = `${item.id || 'item'}_${formattedDate}.pdf`;
 
     saveAs(blob, filename);
+
+    // Show snackbar
+    setSnackbarVisible(true);
+
+    // Redirect after a short delay
+    setTimeout(() => {
+      setSnackbarVisible(false);
+      setActiveTab('home');
+    }, 2000); // Show snackbar for 2 seconds
   };
 
   return (
@@ -77,6 +87,9 @@ export default function ProductDesc({ item, priceIndex, onBack }) {
         ₹{priceValues[priceIndex]}
       </p>
       <p className="productdescriptionpage-description">{item.description}</p>
+      {snackbarVisible && (
+        <div className="snackbar">PDF downloaded successfully!</div>
+      )}
     </div>
   );
 }

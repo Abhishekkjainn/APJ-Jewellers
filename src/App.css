@@ -1041,3 +1041,20 @@ body{
   color: #666;
   line-height: 1.6;
 }
+
+.snackbar {
+  visibility: visible;
+  min-width: 250px;
+  background-color: #323232;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 12px;
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  opacity: 0.95;
+  transition: all 0.5s ease;
+}
