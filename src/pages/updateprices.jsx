@@ -84,9 +84,7 @@ const UpdatePrice = () => {
     <div className="update-price-container">
       <div className="update-price-heading">Update Prices</div>
       {/* {isModified && ( */}
-      <button className="submit-button" onClick={handleSave}>
-        Save Changes
-      </button>
+
       {/* )} */}
       {categories.map((category, idx) => (
         <CategoryCard
@@ -97,6 +95,9 @@ const UpdatePrice = () => {
           onChange={handleSubcategoryChange}
         />
       ))}
+      <button className="submit-button" onClick={handleSave}>
+        Save Changes
+      </button>
     </div>
   );
 };

@@ -8,6 +8,7 @@ import Homescreen from './pages/homescreen';
 import UpdatePrice from './pages/updateprices';
 import Additem from './pages/additem';
 import Menupage from './components/menupage';
+import AddItemPage from './pages/additem';
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
@@ -19,7 +20,7 @@ function App() {
       <Menupage isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
       {activeTab === 'home' && <Homescreen />}
       {activeTab === 'price' && <UpdatePrice />}
-      {activeTab === 'add' && <Additem />}
+      {activeTab === 'add' && <AddItemPage />}
 
       <Bottombar activeTab={activeTab} setActiveTab={setActiveTab} />
     </>

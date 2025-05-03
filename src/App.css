@@ -741,3 +741,128 @@ body{
 
 
 
+.additempage {
+  /* padding: 1.5rem; */
+  width: 100%;
+  /* margin: 0 auto; */
+  /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+  background-color: #fdfdfd;
+  color: #333;
+  padding-top: 95px;
+  padding-bottom: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: auto;
+}
+
+.additempage h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #1a1a1a;
+}
+
+.mat {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  color: #444;
+}
+
+.input-text-additempage,
+.input-number-additempage,
+.input-select-additempage,
+.input-file-additempage {
+  width: calc(90% - 32px);
+  padding: 16px;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-size: 1rem;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-text-additempage:focus,
+.input-number-additempage:focus,
+.input-select-additempage:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  outline: none;
+}
+
+.image-preview-additempage {
+  width: auto;
+  max-height: 150px;
+  object-fit: contain;
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.material-row-additempage {
+  width: calc(90% - 24px);
+  display: flex;
+  /* flex-direction: column; */
+  background-color: #fafafa;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+}
+
+.unit-display-additempage {
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
+  margin-bottom: 0rem;
+}
+
+.add-button-additempage,
+.submit-button-additempage {
+  width: 80%;
+  padding: 0.85rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  margin-bottom: 60px;
+}
+
+.add-button-additempage {
+  width: 80%;
+  background-color: #f3f4f6;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.add-button-additempage:hover {
+  background-color: #e5e7eb;
+}
+
+.submit-button-additempage {
+  background-color: #4f46e5;
+  color: white;
+}
+
+.submit-button-additempage:hover {
+  background-color: #4338ca;
+}
+
+/* Responsive padding for very small screens */
+@media (max-width: 360px) {
+  .additempage {
+    padding: 1rem;
+  }
+}
+
+
+
+
