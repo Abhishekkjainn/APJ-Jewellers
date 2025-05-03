@@ -849,6 +849,7 @@ body{
 }
 
 .submit-button-additempage {
+  margin-bottom: 65px;
   background-color: #4f46e5;
   color: white;
 }
