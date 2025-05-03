@@ -948,6 +948,9 @@ body{
 .manageusers-name {
   font-weight: 500;
 }
+.manageusers-password{
+  font-size: 12px;
+}
 
 .manageusers-role {
   padding: 6px;
@@ -962,4 +965,9 @@ body{
   color: #ef4444;
   cursor: pointer;
 }
-
+.username{
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+}

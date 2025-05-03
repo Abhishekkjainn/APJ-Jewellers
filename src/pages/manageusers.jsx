@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 export default function ManageUsers() {
   const [users, setUsers] = useState([
-    { id: 1, name: 'John Doe', role: 'admin' },
-    { id: 2, name: 'Jane Smith', role: 'user' },
+    { id: 1, name: 'John Doe', role: 'admin', password: '123456789' },
+    { id: 2, name: 'Jane Smith', role: 'user', password: '123456789' },
   ]);
 
   const [newUser, setNewUser] = useState({ name: '', role: 'user' });
@@ -37,6 +37,13 @@ export default function ManageUsers() {
           onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
           className="manageusers-input"
         />
+        <input
+          type="text"
+          placeholder="Enter password"
+          value={newUser.name}
+          onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
+          className="manageusers-input"
+        />
         <select
           value={newUser.role}
           onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
@@ -54,7 +61,10 @@ export default function ManageUsers() {
         {users.map((user) => (
           <div key={user.id} className="manageusers-card">
             <div className="manageusers-info">
-              <span className="manageusers-name">{user.name}</span>
+              <div className="username">
+                <span className="manageusers-name">{user.name}</span>
+                <span className="manageusers-password">{user.password}</span>
+              </div>
               <select
                 value={user.role}
                 onChange={(e) => handleRoleChange(user.id, e.target.value)}
