@@ -872,5 +872,94 @@ body{
 }
 
 
+.manageusers{
+  margin-top: 95px;
+}
 
+
+.manageusers-container {
+  padding: 16px;
+  /* font-family: 'Inter', sans-serif; */
+  margin-top: 95px;
+}
+
+.manageusers-title {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.manageusers-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-direction: column;
+}
+
+.manageusers-input,
+.manageusers-select {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 80%;
+}
+
+.manageusers-add-btn {
+  background-color: #1e40af;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.manageusers-add-btn:hover {
+  background-color: #1c3fa0;
+}
+
+.manageusers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.manageusers-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+  padding: 12px 16px;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.manageusers-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* flex-direction: column; */
+  gap: 4px;
+}
+
+.manageusers-name {
+  font-weight: 500;
+}
+
+.manageusers-role {
+  padding: 6px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+}
+
+.manageusers-delete {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #ef4444;
+  cursor: pointer;
+}
 

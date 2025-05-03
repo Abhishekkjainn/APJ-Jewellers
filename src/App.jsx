@@ -6,21 +6,34 @@ import '/src/assets/styles.css';
 import Bottombar from './components/bottombar';
 import Homescreen from './pages/homescreen';
 import UpdatePrice from './pages/updateprices';
-import Additem from './pages/additem';
+// import Additem from './pages/additem';
 import Menupage from './components/menupage';
 import AddItemPage from './pages/additem';
+import ManageUsers from './pages/manageusers';
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
     <>
-      <Header isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+      <Header
+        isMenuOpen={isMenuOpen}
+        setIsMenuOpen={setIsMenuOpen}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
       <Carousel />
-      <Menupage isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+      <Menupage
+        isMenuOpen={isMenuOpen}
+        setIsMenuOpen={setIsMenuOpen}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
+
       {activeTab === 'home' && <Homescreen />}
       {activeTab === 'price' && <UpdatePrice />}
       {activeTab === 'add' && <AddItemPage />}
+      {activeTab === 'users' && <ManageUsers />}
 
       <Bottombar activeTab={activeTab} setActiveTab={setActiveTab} />
     </>

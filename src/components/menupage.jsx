@@ -1,37 +1,60 @@
-export default function Menupage({ isMenuOpen, setIsMenuOpen, setActiveTab }) {
+import { useState } from 'react';
+export default function Menupage({
+  isMenuOpen,
+  setIsMenuOpen,
+  activeTab,
+  setActiveTab,
+}) {
+  const handleMenuClick = (tab) => {
+    setActiveTab(tab);
+    setIsMenuOpen(false);
+  };
+
   return (
     <div className={`menupage ${isMenuOpen ? 'menuopen' : 'menuclose'}`}>
       <div className="topmenubar">
         <div className="topmenubartag">Menu</div>
-        <div
-          className="topmenubarbutton"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
+        <div className="topmenubarbutton" onClick={() => setIsMenuOpen(false)}>
           <img src="/close.png" alt="Close button" className="closebutton" />
         </div>
       </div>
+
       <div className="menuitems">
-        <div className="menuitem item1">
+        <div className="menuitem item1" onClick={() => handleMenuClick('home')}>
           <img src="/home.png" alt="Home Icon" className="itemicon" />
           <div className="itemtag">Home</div>
         </div>
-        <div className="menuitem item1">
-          <img src="/add.png" alt="Home Icon" className="itemicon" />
+
+        <div className="menuitem item1" onClick={() => handleMenuClick('add')}>
+          <img src="/add.png" alt="Add Icon" className="itemicon" />
           <div className="itemtag">Add Products</div>
         </div>
-        <div className="menuitem item1">
-          <img src="/updateprice.png" alt="Home Icon" className="itemicon" />
+
+        <div
+          className="menuitem item1"
+          onClick={() => handleMenuClick('price')}
+        >
+          <img src="/updateprice.png" alt="Price Icon" className="itemicon" />
           <div className="itemtag">Update Prices</div>
         </div>
-        <div className="menuitem item1">
-          <img src="/user.png" alt="Home Icon" className="itemicon" />
+
+        <div
+          className="menuitem item1"
+          onClick={() => handleMenuClick('users')}
+        >
+          <img src="/user.png" alt="User Icon" className="itemicon" />
           <div className="itemtag">Manage Users</div>
         </div>
-        <div className="menuitem item1">
-          <img src="/exit.png" alt="Home Icon" className="itemicon" />
+
+        <div
+          className="menuitem item1"
+          onClick={() => handleMenuClick('logout')}
+        >
+          <img src="/exit.png" alt="Logout Icon" className="itemicon" />
           <div className="itemtag">Logout</div>
         </div>
       </div>
+
       <div className="loggedintag">
         <div className="loggedininfo">Logged In As: Admin</div>
       </div>

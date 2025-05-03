@@ -1,4 +1,9 @@
-export default function Header({ isMenuOpen, setIsMenuOpen }) {
+export default function Header({
+  isMenuOpen,
+  setIsMenuOpen,
+  // activeTab,
+  setActiveTab,
+}) {
   return (
     <div className="header">
       <div className="greeting">
