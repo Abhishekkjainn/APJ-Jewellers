@@ -9,7 +9,13 @@ export default function ProductDesc({ item, priceIndex, onBack }) {
 
   const handleDownload = async () => {
     const blob = await pdf(
-      <ProductPDF item={item} priceIndex={priceIndex} />
+      <ProductPDF
+        item={item}
+        priceIndex={priceIndex}
+        logoUrl={
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZpUQWDaUTeJ180nuMsWJwVVpLsDm2xVEycw&s'
+        }
+      />
     ).toBlob();
 
     const today = new Date();
