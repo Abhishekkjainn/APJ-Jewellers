@@ -276,7 +276,7 @@ export default function AddItemPage() {
             onChange={(e) =>
               handleChangeAddItemPage(i, 'category', e.target.value)
             }
-            className="input-select-additempage"
+            className="input-select-additempage asd"
           >
             <option value="">Select Category</option>
             {categoriesAddItemPage.map((cat) => (
@@ -291,7 +291,7 @@ export default function AddItemPage() {
             onChange={(e) =>
               handleChangeAddItemPage(i, 'subcategory', e.target.value)
             }
-            className="input-select-additempage"
+            className="input-select-additempage asd"
             disabled={!material.category}
           >
             <option value="">Select Subcategory</option>
@@ -313,7 +313,7 @@ export default function AddItemPage() {
             onChange={(e) =>
               handleChangeAddItemPage(i, 'quantity', e.target.value)
             }
-            className="input-number-additempage"
+            className="input-number-additempage asd asd2"
             disabled={!material.subcategory}
           />
         </div>

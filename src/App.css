@@ -742,13 +742,10 @@ body{
 
 
 .additempage {
-  /* padding: 1.5rem; */
   width: 100%;
-  /* margin: 0 auto; */
-  /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
   background-color: #fdfdfd;
   color: #333;
-  padding-top: 95px;
+  margin-top: 95px;
   padding-bottom: 60px;
   display: flex;
   justify-content: center;
@@ -758,17 +755,18 @@ body{
 }
 
 .additempage h2 {
-  font-size: 1.75rem;
+  width: 80%;
+  font-size: 24px;
   font-weight: 600;
-  margin-bottom: 1rem;
-  text-align: center;
+  margin-bottom: 20px;
+  text-align: start;
   color: #1a1a1a;
 }
 
 .mat {
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  font-size: 1.25rem;
+  margin-top: 20px;
+  margin-bottom: 12px;
+  font-size: 18px;
   color: #444;
 }
 
@@ -776,7 +774,7 @@ body{
 .input-number-additempage,
 .input-select-additempage,
 .input-file-additempage {
-  width: calc(90% - 32px);
+  width: calc(75% - 0px);
   padding: 16px;
   margin-bottom: 1rem;
   border: 1px solid #ddd;
@@ -785,6 +783,9 @@ body{
   background-color: #fff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.input-number-additempage{
+  width: 90%;
 }
 
 .input-text-additempage:focus,
@@ -807,11 +808,10 @@ body{
 .material-row-additempage {
   width: calc(90% - 24px);
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column;
   background-color: #fafafa;
   padding: 12px;
   border-radius: 12px;
-  margin-bottom: 12px;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
 }
 
@@ -854,6 +854,12 @@ body{
 
 .submit-button-additempage:hover {
   background-color: #4338ca;
+}
+.asd{
+  width: 100%;
+}
+.asd2{
+  width: 90%;
 }
 
 /* Responsive padding for very small screens */
