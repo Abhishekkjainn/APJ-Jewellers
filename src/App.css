@@ -742,7 +742,8 @@ body{
 
 
 .additempage {
-  width: 100%;
+  width: 95%;
+  scale: 0.95;
   background-color: #fdfdfd;
   color: #333;
   margin-top: 95px;
