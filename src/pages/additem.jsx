@@ -1,10 +1,23 @@
 import React, { useEffect, useState } from 'react';
 
+const ORNAMENT_TYPES = [
+  'Necklace',
+  'Ring',
+  'Earring',
+  'Bracelet',
+  'Bangle',
+  'Pendant',
+  'Anklet',
+  'KadaKada',
+  'Maang Tikka',
+  'Chain',
+];
+
 export default function AddItemPage() {
   const [categoriesAddItemPage, setCategoriesAddItemPage] = useState([]);
+  const [categoryAddItemPage, setCategoryAddItemPage] = useState('');
+  const [subcategoryAddItemPage, setSubcategoryAddItemPage] = useState('');
   const [materialsUsedAddItemPage, setMaterialsUsedAddItemPage] = useState([]);
-  const [ornamentNameAddItemPage, setOrnamentNameAddItemPage] = useState('');
-  const [ornamentIdAddItemPage, setOrnamentIdAddItemPage] = useState('');
   const [imageDataAddItemPage, setImageDataAddItemPage] = useState('');
 
   useEffect(() => {
@@ -52,9 +65,15 @@ export default function AddItemPage() {
   };
 
   const handleSaveAddItemPage = () => {
+    if (!categoryAddItemPage || !subcategoryAddItemPage) {
+      alert('Please select both category and ornament type.');
+      return;
+    }
+
     const item = {
-      id: ornamentIdAddItemPage || Date.now().toString(),
-      name: ornamentNameAddItemPage,
+      id: Date.now().toString(),
+      category: categoryAddItemPage,
+      ornamentType: subcategoryAddItemPage,
       image: imageDataAddItemPage,
       materials: materialsUsedAddItemPage,
     };
@@ -63,10 +82,10 @@ export default function AddItemPage() {
     localStorage.setItem('jewelryItems', JSON.stringify([...existing, item]));
 
     alert('Item saved successfully!');
-    console.log(existing);
+
     // Reset form
-    setOrnamentNameAddItemPage('');
-    setOrnamentIdAddItemPage('');
+    setCategoryAddItemPage('');
+    setSubcategoryAddItemPage('');
     setImageDataAddItemPage('');
     setMaterialsUsedAddItemPage([]);
   };
@@ -75,21 +94,31 @@ export default function AddItemPage() {
     <div className="additempage">
       <h2>Add Item</h2>
 
-      <input
-        type="text"
-        placeholder="Ornament Name"
-        value={ornamentNameAddItemPage}
-        onChange={(e) => setOrnamentNameAddItemPage(e.target.value)}
-        className="input-text-additempage"
-      />
+      <select
+        value={categoryAddItemPage}
+        onChange={(e) => setCategoryAddItemPage(e.target.value)}
+        className="input-select-additempage"
+      >
+        <option value="">Select Category (Metal)</option>
+        {categoriesAddItemPage.map((cat) => (
+          <option key={cat.name} value={cat.name}>
+            {cat.name}
+          </option>
+        ))}
+      </select>
 
-      <input
-        type="text"
-        placeholder="Custom ID (optional)"
-        value={ornamentIdAddItemPage}
-        onChange={(e) => setOrnamentIdAddItemPage(e.target.value)}
-        className="input-text-additempage"
-      />
+      <select
+        value={subcategoryAddItemPage}
+        onChange={(e) => setSubcategoryAddItemPage(e.target.value)}
+        className="input-select-additempage"
+      >
+        <option value="">Select Ornament Type</option>
+        {ORNAMENT_TYPES.map((type) => (
+          <option key={type} value={type}>
+            {type}
+          </option>
+        ))}
+      </select>
 
       <input
         type="file"
