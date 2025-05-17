@@ -934,3 +934,621 @@ body{
   font-size: 14px;
   font-weight: 600;
 }
+
+
+/*Manage Users Page*/
+.manageusers-container{
+  width: 100%;
+  height: max-content;
+  padding-bottom: 100px;
+  margin-top: 95px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+.manageusers-heading {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.manageusers-add-btn {
+  display: block;
+  margin: 0 auto 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.manageusers-table {
+  width: 80%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.manageusers-th, .manageusers-td {
+  padding: 0.75rem;
+  text-align: left;
+  border: 1px solid #ddd;
+  font-size: 12px;
+}
+
+.manageusers-th {
+  background-color: #f9f9f9;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.manageusers-td img.btn {
+  width: 12px;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.manageusers-loading,
+.manageusers-error,
+.manageusers-message {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+.manageusers-error {
+  color: red;
+}
+
+.manageusers-message {
+  color: green;
+}
+
+/* Modal Popup */
+.manageusers-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.manageusers-modal {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+}
+
+.manageusers-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.manageusers-form-heading {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.manageusers-form-group {
+  margin-bottom: 1rem;
+}
+
+.manageusers-label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+
+.manageusers-input {
+  width: 100%;
+  padding: 0.45rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.manageusers-checkbox {
+  transform: scale(1.2);
+  margin-left: 0.5rem;
+}
+
+.manageusers-button {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.manageusers-button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+  .manageusers-table {
+    font-size: 0.85rem;
+  }
+
+  .manageusers-th,
+  .manageusers-td {
+    padding: 0.5rem;
+  }
+
+  .manageusers-modal {
+    padding: 1rem;
+    width: 90%;
+  }
+}
+
+/* .btn{
+  width: 14px;
+  margin: 4px;
+} */
+
+
+.manageusers-toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #323232;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  z-index: 1000;
+  animation: fadein 0.3s, fadeout 0.3s 2.7s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Toast Animation */
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+}
+
+/* Overlay background */
+.manageusers-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* semi-transparent black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* Modal box */
+.manageusers-popup {
+  background-color: #fff;
+  padding: 24px 20px;
+  border-radius: 10px;
+  width: 70%;
+  max-width: 350px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  animation: popup-fade 0.3s ease-in-out;
+  position: relative;
+}
+
+/* Animation for fade-in effect */
+@keyframes popup-fade {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Popup buttons */
+.manageusers-popup-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+/* Input fields */
+.manageusers-input,
+.manageusers-checkbox {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.manageusers-checkbox {
+  width: auto;
+}
+
+/* Form labels */
+.manageusers-label {
+  font-weight: 500;
+  color: #333;
+  font-size: 14px;
+}
+
+/* Buttons inside popup */
+.manageusers-button,
+.manageusers-button-cancel {
+  padding: 10px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.manageusers-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.manageusers-button:hover {
+  background-color: #0069d9;
+}
+
+.manageusers-button-cancel {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.manageusers-button-cancel:hover {
+  background-color: #d6d6d6;
+}
+
+.manageusers-add-button{
+  width: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.updateprices-container {
+  max-width: 100%;
+  margin: 1rem auto;
+  padding: 0.5rem 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: #222;
+  margin-top: 95px;
+  box-sizing: border-box;
+  padding-bottom: 100px;
+}
+
+.updateprices-heading {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.updateprices-loading {
+  text-align: center;
+  font-size: 1rem;
+  color: #666;
+  padding: 1.5rem 0;
+}
+
+.updateprices-category {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+}
+
+.updateprices-category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.updateprices-category-header h3 {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.updateprices-edit-button {
+  background: transparent;
+  border: 1px solid #007bff;
+  color: #007bff;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.updateprices-edit-button:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.updateprices-items {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.updateprices-item-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  /* flex-wrap: wrap; */
+}
+
+.updateprices-item-label {
+  flex: 0 0 110px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #444;
+  min-width: 120px;
+}
+
+.updateprices-input-group {
+  display: flex;
+  justify-content: end;
+
+  gap: 0.4rem;
+  flex: 1;
+  min-width: 140px;
+}
+
+.updateprices-input {
+  width: 50px;
+  padding: 0.25rem 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-align: center;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease;
+}
+
+.updateprices-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+}
+
+/* Responsive tweaks */
+@media (max-width: 400px) {
+  .updateprices-item-label {
+    /* flex: 0 0 100%; */
+    /* margin-bottom: 0.2rem; */
+  }
+  .updateprices-item-row {
+    /* flex-direction: column; */
+    /* align-items: flex-start; */
+  }
+  .updateprices-input-group {
+    /* min-width: 100%; */
+    /* justify-content: flex-start; */
+  }
+  .updateprices-input {
+    /* width: 60px; */
+  }
+}
+.headingup{
+  width: 100%;
+  position: sticky;
+  top: 95px;
+  background-color: white;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.savechanges{
+  width: 100px;
+  height: 30px;
+  border-radius: 8px;
+  background-color: #0069d9;
+  color: white;
+  font-weight: 600;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.updateprices-changed {
+  background-color: #fff3cd !important;
+  border-color: #ffce75 !important;
+}
+.updateprices-delete-button {
+  background: transparent;
+  color: red;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+/* Overlay */
+.updprices-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup box */
+.updprices-popup-content {
+  background: #fff;
+  width: 80%;
+  max-width: 350px;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Heading */
+.updprices-popup-heading {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Selects & inputs */
+.updprices-popup-select,
+.updprices-popup-input {
+  width: calc(100% - 24px);
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #f9f9f9;
+  transition: border-color 0.2s;
+}
+
+.updprices-popup-select:focus,
+.updprices-popup-input:focus {
+  outline: none;
+  border-color: #7b61ff;
+  background: #fff;
+}
+
+/* Tier inputs container */
+.updprices-popup-tier-inputs {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.updprices-popup-tier-input {
+  width: 25%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #f9f9f9;
+  font-size: 1rem;
+}
+
+/* Buttons */
+.updprices-popup-addbtn,
+.updprices-popup-cancelbtn {
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.updprices-popup-addbtn {
+  width: 100px;
+  background-color: #4caf50;
+  color: white;
+}
+
+.updprices-popup-addbtn:hover {
+  background-color: #43a047;
+}
+
+.updprices-popup-cancelbtn {
+  width: 100px;
+  margin-left: 12px;
+  background-color: #e53935;
+  color: white;
+}
+
+.updprices-popup-cancelbtn:hover {
+  background-color: #d32f2f;
+}
+.btns{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
