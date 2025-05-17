@@ -1275,10 +1275,8 @@ body{
 }
 
 .updateprices-heading {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 600;
-  margin-bottom: 0;
-  text-align: center;
 }
 
 .updateprices-loading {
@@ -1377,24 +1375,6 @@ body{
   box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
 }
 
-/* Responsive tweaks */
-@media (max-width: 400px) {
-  .updateprices-item-label {
-    /* flex: 0 0 100%; */
-    /* margin-bottom: 0.2rem; */
-  }
-  .updateprices-item-row {
-    /* flex-direction: column; */
-    /* align-items: flex-start; */
-  }
-  .updateprices-input-group {
-    /* min-width: 100%; */
-    /* justify-content: flex-start; */
-  }
-  .updateprices-input {
-    /* width: 60px; */
-  }
-}
 .headingup{
   width: 100%;
   position: sticky;
