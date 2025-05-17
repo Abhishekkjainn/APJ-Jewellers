@@ -7,7 +7,11 @@ export default function ProductDesc({ item, priceIndex, onBack }) {
   if (!item) return <div>No item selected.</div>;
 
   const priceLabels = ['Total Price', 'RQ', 'FRQ'];
-  const priceValues = [item.totalPrice, item.RQ, item.FRQ];
+  const priceValues = [
+    item.pricing.base,
+    item.pricing.franchise,
+    item.pricing.retail,
+  ];
 
   const handleDownload = async () => {
     const blob = await pdf(
@@ -47,47 +51,50 @@ export default function ProductDesc({ item, priceIndex, onBack }) {
       >
         download
       </button>
-      <h2 className="productdescriptionpage-title">{item.name}</h2>
+
       <img
-        src={item.image}
+        src="https://i.pinimg.com/236x/7e/16/45/7e1645afd92e02d9427837298d2e7dcc.jpg"
         alt={item.name}
         className="productdescriptionpage-image"
       />
       <p className="productdescriptionpage-detail">
         <span className="productdescriptionpage-label">Category:</span>{' '}
-        {item.category}
+        {item.subcategory}
       </p>
       <p className="productdescriptionpage-detail">
         <span className="productdescriptionpage-label">Material:</span>{' '}
-        {item.material} ({item.purity})
+        {item.category}
+        {/* ({item.purity}) */}
       </p>
       <p className="productdescriptionpage-detail">
         <span className="productdescriptionpage-label">Gross Weight:</span>{' '}
-        {item.grossWeight}
+        {item.grossweight} gms
+      </p>
+
+      <p className="productdescriptionpage-detail">
+        <span className="productdescriptionpage-label">Price :</span> ₹
+        {priceIndex == 0
+          ? item.pricing.base
+          : priceIndex == 1
+          ? item.pricing.franchise
+          : item.pricing.retail}
       </p>
       <p className="productdescriptionpage-detail">
-        <span className="productdescriptionpage-label">Net Weight:</span>{' '}
-        {item.netWeight}
+        <span className="productdescriptionpage-label">Materials Used:</span>
       </p>
-      <p className="productdescriptionpage-detail">
-        <span className="productdescriptionpage-label">Stone:</span>{' '}
-        {item.stoneType} ({item.stoneWeight})
-      </p>
-      <p className="productdescriptionpage-detail">
-        <span className="productdescriptionpage-label">Wastage %:</span>{' '}
-        {item.wastagePercent}
-      </p>
-      <p className="productdescriptionpage-detail">
-        <span className="productdescriptionpage-label">Making Charges/g:</span>{' '}
-        {item.makingChargesPerGram}
-      </p>
-      <p className="productdescriptionpage-detail">
-        <span className="productdescriptionpage-label">
-          {priceLabels[priceIndex]}:
-        </span>{' '}
-        ₹{priceValues[priceIndex]}
-      </p>
-      <p className="productdescriptionpage-description">{item.description}</p>
+      <ul className="productdescriptionpage-materials">
+        {item.materialsUsed?.map((material, index) => (
+          <li key={index}>
+            <strong>{material.docname}:</strong>{' '}
+            {Object.entries(material)
+              .filter(([key]) => key !== 'docname')
+              .map(([name, value]) => `${name} - ${value} units`)
+              .join(', ')}
+          </li>
+        ))}
+      </ul>
+
+      {/* <p className="productdescriptionpage-description">{item.description}</p> */}
       {snackbarVisible && (
         <div className="snackbar">PDF downloaded successfully!</div>
       )}

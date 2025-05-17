@@ -1,88 +1,3 @@
-// import React from 'react';
-// import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
-
-// // PDF styles
-// const styles = StyleSheet.create({
-//   page: {
-//     padding: 30,
-//     fontSize: 12,
-//     backgroundColor: '#fff',
-//   },
-//   section: {
-//     marginBottom: 10,
-//   },
-//   heading: {
-//     fontSize: 18,
-//     marginBottom: 15,
-//   },
-//   label: {
-//     fontWeight: 'bold',
-//   },
-// });
-
-// // PDF document
-// const ProductPDF = ({ item, priceIndex }) => {
-//   const priceLabels = ['Total Price', 'RQ', 'FRQ'];
-//   const priceValues = [item.totalPrice, item.RQ, item.FRQ];
-
-//   return (
-//     <Document>
-//       <Page size="A4" style={styles.page}>
-//         <Text style={styles.heading}>{item.name}</Text>
-//         <View style={styles.section}>
-//           <Text>
-//             <Text style={styles.label}>Category:</Text> {item.category}
-//           </Text>
-//         </View>
-//         <View style={styles.section}>
-//           <Text>
-//             <Text style={styles.label}>Material:</Text> {item.material} (
-//             {item.purity})
-//           </Text>
-//         </View>
-//         <View style={styles.section}>
-//           <Text>
-//             <Text style={styles.label}>Gross Weight:</Text> {item.grossWeight}
-//           </Text>
-//         </View>
-//         <View style={styles.section}>
-//           <Text>
-//             <Text style={styles.label}>Net Weight:</Text> {item.netWeight}
-//           </Text>
-//         </View>
-//         <View style={styles.section}>
-//           <Text>
-//             <Text style={styles.label}>Stone:</Text> {item.stoneType} (
-//             {item.stoneWeight})
-//           </Text>
-//         </View>
-//         <View style={styles.section}>
-//           <Text>
-//             <Text style={styles.label}>Wastage %:</Text> {item.wastagePercent}
-//           </Text>
-//         </View>
-//         <View style={styles.section}>
-//           <Text>
-//             <Text style={styles.label}>Making Charges/g:</Text>{' '}
-//             {item.makingChargesPerGram}
-//           </Text>
-//         </View>
-//         <View style={styles.section}>
-//           <Text>
-//             <Text style={styles.label}>{priceLabels[priceIndex]}:</Text> ₹
-//             {priceValues[priceIndex]}
-//           </Text>
-//         </View>
-//         <View style={styles.section}>
-//           <Text>{item.description}</Text>
-//         </View>
-//       </Page>
-//     </Document>
-//   );
-// };
-
-// export default ProductPDF;
-
 import React from 'react';
 import {
   Page,
@@ -95,6 +10,13 @@ import {
 
 // PDF styles
 const styles = StyleSheet.create({
+  materialsSection: {
+    marginTop: 10,
+  },
+  materialItem: {
+    fontSize: 10,
+    marginBottom: 2,
+  },
   page: {
     padding: 30,
     fontSize: 12,
@@ -198,48 +120,66 @@ const ProductPDF = ({ item, priceIndex, logoUrl }) => {
         <View style={styles.section}>
           <View style={styles.labelRow}>
             <Text style={styles.label}>Category:</Text>
-            <Text style={styles.value}>{item.category}</Text>
+            <Text style={styles.value}>{item.subcategory}</Text>
           </View>
           <View style={styles.labelRow}>
             <Text style={styles.label}>Material:</Text>
             <Text style={styles.value}>
-              {item.material} ({item.purity})
+              {item.category}
+              {/* ({item.purity}) */}
             </Text>
           </View>
           <View style={styles.labelRow}>
             <Text style={styles.label}>Gross Weight:</Text>
-            <Text style={styles.value}>{item.grossWeight} g</Text>
+            <Text style={styles.value}>{item.grossweight} g</Text>
           </View>
-          <View style={styles.labelRow}>
+          {/* <View style={styles.labelRow}>
             <Text style={styles.label}>Net Weight:</Text>
             <Text style={styles.value}>{item.netWeight} g</Text>
-          </View>
-          <View style={styles.labelRow}>
+          </View> */}
+          {/* <View style={styles.labelRow}>
             <Text style={styles.label}>Stone:</Text>
             <Text style={styles.value}>
               {item.stoneType} ({item.stoneWeight} g)
             </Text>
-          </View>
-          <View style={styles.labelRow}>
+          </View> */}
+          {/* <View style={styles.labelRow}>
             <Text style={styles.label}>Wastage %:</Text>
             <Text style={styles.value}>{item.wastagePercent} %</Text>
-          </View>
-          <View style={styles.labelRow}>
+          </View> */}
+          {/* <View style={styles.labelRow}>
             <Text style={styles.label}>Making Charges/g:</Text>
             <Text style={styles.value}>₹{item.makingChargesPerGram}</Text>
-          </View>
+          </View> */}
           <View style={styles.labelRow}>
-            <Text style={styles.label}>{priceLabels[priceIndex]}:</Text>
-            <Text style={styles.value}>₹{priceValues[priceIndex]}</Text>
+            <Text style={styles.label}>Price :</Text>
+            <Text style={styles.value}>
+              ₹{' '}
+              {priceIndex == 0
+                ? item.pricing.base
+                : priceLabels == 1
+                ? item.pricing.franchise
+                : item.pricing.retail}
+            </Text>
           </View>
+          {/* Materials Used Section */}
+          {item.materialsUsed && item.materialsUsed.length > 0 && (
+            <View style={[styles.section, styles.materialsSection]}>
+              <Text style={{ fontWeight: 'bold', marginBottom: 4 }}>
+                Materials Used:
+              </Text>
+              {item.materialsUsed.map((mat, idx) => (
+                <Text key={idx} style={styles.materialItem}>
+                  • {mat.docname}:{' '}
+                  {Object.entries(mat)
+                    .filter(([key]) => key !== 'docname')
+                    .map(([name, value]) => `${name} - ${value}`)
+                    .join(', ')}
+                </Text>
+              ))}
+            </View>
+          )}
         </View>
-
-        {/* Description */}
-        {item.description && (
-          <View style={styles.section}>
-            <Text style={{ fontSize: 10 }}>{item.description}</Text>
-          </View>
-        )}
 
         {/* Footer */}
         <Text style={styles.footerNote}>Thank you for shopping with us!</Text>
