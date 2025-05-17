@@ -1276,6 +1276,7 @@ body{
 
 .updateprices-heading {
   font-size: 20px;
+  margin-right: 12px;
   font-weight: 600;
 }
 
@@ -1292,7 +1293,7 @@ body{
   border-radius: 6px;
   padding: 0.75rem 1rem;
   margin-bottom: 1rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+  box-shadow: 0 1px 3px rgba(0,0,0);
 }
 
 .updateprices-category-header {
