@@ -7,7 +7,7 @@ export default function Header({
   return (
     <div className="header">
       <div className="greeting">
-        <img src="/amarsonslogo.png" alt="" className="greetlogo" />
+        {/* <img src="/amarsonslogo.png" alt="" className="greetlogo" /> */}
         <div className="greettext">
           <div className="topgreet">Welcome Back</div>
           <div className="bottomgreet">Abhishek Jain</div>

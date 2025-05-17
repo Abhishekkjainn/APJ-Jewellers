@@ -87,7 +87,7 @@ body{
   cursor: pointer;
 }
 .menupage{
-  width: 75%;
+  width: 100%;
   height: 100vh;
   position: fixed;
   z-index: 1500;
@@ -672,4 +672,257 @@ body{
   z-index: 1000;
   opacity: 0.95;
   transition: all 0.5s ease;
+}
+
+
+/* Add Items Page - Modern Minimal Aesthetic */
+
+/* Add Items Page - Mobile First Responsive & Compact Design */
+
+.addpage-container {
+  width: 100%;
+  max-width: 100%;
+  padding: 20px 16px;
+  margin: 80px auto 40px auto;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+}
+
+.addpage-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #222;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.addpage-field {
+  margin-bottom: 16px;
+}
+
+.addpage-field label {
+  display: block;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.addpage-input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+  box-sizing: border-box;
+}
+
+.addpage-input:focus {
+  outline: none;
+  border-color: #007bff;
+  background-color: #fff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+.addpage-materials {
+  margin-top: 24px;
+}
+
+.addpage-materials h3 {
+  font-size: 16px;
+  margin-bottom: 12px;
+  color: #444;
+}
+
+.addpage-material-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.addpage-button-small {
+  background: #28a745;
+  color: #fff;
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  width: 100%;
+}
+
+.addpage-button-small:hover {
+  background: #218838;
+}
+
+.addpage-material-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 8px;
+  max-height: 180px;
+  overflow-y: auto;
+  border-top: 1px solid #eee;
+  padding-top: 8px;
+}
+
+.addpage-material-item {
+  padding: 8px 10px;
+  background: #f5f5f5;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 6px;
+  border: 1px solid #e1e1e1;
+  color: #444;
+}
+
+.addpage-button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 20px;
+  transition: background 0.2s ease;
+}
+
+.addpage-button:hover {
+  background: #0056b3;
+}
+
+/* Larger screens enhancement */
+@media (min-width: 600px) {
+  .addpage-container {
+    max-width: 600px;
+    padding: 28px;
+    border-radius: 16px;
+  }
+
+  .addpage-title {
+    font-size: 26px;
+  }
+
+  .addpage-input {
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  .addpage-material-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .addpage-button-small {
+    width: auto;
+    padding: 10px 16px;
+  }
+}
+
+
+
+/*Login Page*/
+.loginpage{
+  width: 100%;
+  height: 100vh;
+  background-image: url('/loginimg.jpg');
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.headingpage{
+  width: 100%;
+  height: 120px;
+  background-color: rgba(0, 0, 0, 0.493);
+  background: linear-gradient(to bottom , black ,rgba(0, 0, 0, 0.442), transparent);
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+.logologin{
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
+}
+.logindiv{
+  width: 90%;
+  padding: 5%;
+  height: max-content;
+  background-color: rgba(0, 0, 0,0.595);
+  border-radius: 40px 40px 0 0;
+  backdrop-filter: blur(40px);
+  /* display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column; */
+}
+.logindivhead{
+  width: 100%;
+  font-size: 24px;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  margin-left: 20px;
+  margin-top: 12px;
+  margin-bottom: 40px;
+}
+.logininp{
+  width: 90%;
+  height: auto;
+  /* background-color: #0056b3; */
+  margin-left: 5%;
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+}
+.labelinp{
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  margin-left: 8px;
+}
+.inputinp{
+  width: 90%;
+  padding-left: 5%;
+  padding-right: 5%;
+  height: 50px;
+  outline: none;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.125);
+  border-radius: 8px;
+  margin-top: 8px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+}
+.loginbutton{
+  width: 90%;
+  height: 50px;
+  margin-left: 5%;
+  margin-top: 40px;
+  border-radius: 8px;
+  background-color: #007bff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 20px;
 }
