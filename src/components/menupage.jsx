@@ -4,10 +4,17 @@ export default function Menupage({
   setIsMenuOpen,
   activeTab,
   setActiveTab,
+  setIsLoggedIn,
+  isAdmin,
 }) {
   const handleMenuClick = (tab) => {
     setActiveTab(tab);
     setIsMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    setIsLoggedIn(false);
   };
 
   return (
@@ -38,25 +45,26 @@ export default function Menupage({
           <div className="itemtag">Update Prices</div>
         </div>
 
-        <div
-          className="menuitem item1"
-          onClick={() => handleMenuClick('users')}
-        >
-          <img src="/user.png" alt="User Icon" className="itemicon" />
-          <div className="itemtag">Manage Users</div>
-        </div>
+        {isAdmin && (
+          <div
+            className="menuitem item1"
+            onClick={() => handleMenuClick('users')}
+          >
+            <img src="/user.png" alt="User Icon" className="itemicon" />
+            <div className="itemtag">Manage Users</div>
+          </div>
+        )}
 
-        <div
-          className="menuitem item1"
-          onClick={() => handleMenuClick('logout')}
-        >
+        <div className="menuitem item1" onClick={() => handleLogout()}>
           <img src="/exit.png" alt="Logout Icon" className="itemicon" />
           <div className="itemtag">Logout</div>
         </div>
       </div>
 
       <div className="loggedintag">
-        <div className="loggedininfo">Logged In As: Admin</div>
+        <div className="loggedininfo">
+          Logged In As: {isAdmin ? 'Admin' : 'User'}
+        </div>
       </div>
     </div>
   );

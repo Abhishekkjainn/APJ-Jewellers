@@ -3,6 +3,7 @@ export default function Header({
   setIsMenuOpen,
   // activeTab,
   setActiveTab,
+  username,
 }) {
   return (
     <div className="header">
@@ -10,7 +11,7 @@ export default function Header({
         {/* <img src="/amarsonslogo.png" alt="" className="greetlogo" /> */}
         <div className="greettext">
           <div className="topgreet">Welcome Back</div>
-          <div className="bottomgreet">Abhishek Jain</div>
+          <div className="bottomgreet">{username}</div>
         </div>
       </div>
       <div className="actions">

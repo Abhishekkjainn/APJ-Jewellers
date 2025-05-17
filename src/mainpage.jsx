@@ -10,7 +10,7 @@ import Menupage from './components/menupage';
 import AddItemPage from './pages/additem';
 import ManageUsers from './pages/manageusers';
 import ProductDesc from './pages/productdesc';
-export default function Mainpage() {
+export default function Mainpage({ username, isAdmin, setIsLoggedIn }) {
   const [activeTab, setActiveTab] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -28,6 +28,7 @@ export default function Mainpage() {
         setIsMenuOpen={setIsMenuOpen}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
+        username={username}
       />
       <Carousel />
       <Menupage
@@ -35,6 +36,8 @@ export default function Mainpage() {
         setIsMenuOpen={setIsMenuOpen}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
+        setIsLoggedIn={setIsLoggedIn}
+        isAdmin={isAdmin}
       />
 
       {activeTab === 'home' && <Homescreen onPriceClick={handlePriceClick} />}

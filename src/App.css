@@ -926,3 +926,11 @@ body{
   font-weight: 600;
   margin-bottom: 20px;
 }
+
+.error-message{
+  margin-left: 20px;
+  margin-bottom: 12px;
+  color: red;
+  font-size: 14px;
+  font-weight: 600;
+}

@@ -1,36 +1,41 @@
 import { useState } from 'react';
 import './App.css';
 
-function Loginpage({ isLoggedIn, setIsLoggedIn }) {
-  const [username, setUsername] = useState('');
+function Loginpage({ setIsLoggedIn, setUsername, setIsAdmin }) {
+  const [inputUsername, setInputUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Handle form submission
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(''); // Reset error message
+    setError('');
 
     try {
       const response = await fetch(
-        `https://apjapi.vercel.app/authenticate/username=${username}/password=${password}`
+        `https://apjapi.vercel.app/authenticate/username=${inputUsername}/password=${password}`
       );
       const data = await response.json();
 
       if (data.success) {
-        // Successful authentication, set the login state
-        setIsLoggedIn(true);
+        const { username, isAdmin } = data.data;
 
-        // Optionally, you can store user data in localStorage or a global state management solution (like Context API or Redux)
-        // For now, let's just log the successful login data.
+        // Update app state
+        setIsLoggedIn(true);
+        setUsername(username);
+        setIsAdmin(isAdmin);
+
+        // Persist in localStorage
+        localStorage.setItem('loggedIn', 'true');
+        localStorage.setItem('username', username);
+        localStorage.setItem('isAdmin', JSON.stringify(isAdmin));
+
         console.log('Login successful:', data.data);
       } else {
-        // Authentication failed, show the error message
-        setError(data.message);
+        setError(data.message || 'Login failed. Please try again.');
       }
-    } catch (error) {
+    } catch (err) {
       setError('Failed to authenticate. Please try again later.');
     } finally {
       setLoading(false);
@@ -39,38 +44,13 @@ function Loginpage({ isLoggedIn, setIsLoggedIn }) {
 
   return (
     <div className="loginpage">
-      {/* <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" disabled={loading}>
-          {loading ? 'Logging in...' : 'Login'}
-        </button>
-      </form>
-      {error && <div className="error">{error}</div>} */}
       <div className="headingpage">
         <img src="/icon192x192.png" alt="main logo" className="logologin" />
       </div>
-      <div className="logindiv">
+
+      <form className="logindiv" onSubmit={handleLogin}>
         <div className="logindivhead">Login to Continue</div>
+
         <div className="logininp">
           <div className="labelinp">Enter Username</div>
           <input
@@ -78,8 +58,12 @@ function Loginpage({ isLoggedIn, setIsLoggedIn }) {
             name="username"
             id="username"
             className="inputinp"
+            value={inputUsername}
+            onChange={(e) => setInputUsername(e.target.value)}
+            required
           />
         </div>
+
         <div className="logininp">
           <div className="labelinp">Enter Password</div>
           <input
@@ -87,10 +71,18 @@ function Loginpage({ isLoggedIn, setIsLoggedIn }) {
             name="userpassword"
             id="userpassword"
             className="inputinp"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
           />
         </div>
-        <div className="loginbutton">Login</div>
-      </div>
+
+        {error && <div className="error-message">{error}</div>}
+
+        <button type="submit" className="loginbutton" disabled={loading}>
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
+      </form>
     </div>
   );
 }
