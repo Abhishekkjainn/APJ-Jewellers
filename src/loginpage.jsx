@@ -70,7 +70,7 @@ function Loginpage({ isLoggedIn, setIsLoggedIn }) {
         <img src="/icon192x192.png" alt="main logo" className="logologin" />
       </div>
       <div className="logindiv">
-        <div className="logindivhead">Login</div>
+        <div className="logindivhead">Login to Continue</div>
         <div className="logininp">
           <div className="labelinp">Enter Username</div>
           <input
