@@ -1275,9 +1275,9 @@ body{
 }
 
 .updateprices-heading {
-  font-size: 1.5rem;
+  font-size: 24px;
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
   text-align: center;
 }
 
@@ -1416,6 +1416,7 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 12px;
 }
 
 .updateprices-changed {
