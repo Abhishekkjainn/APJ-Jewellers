@@ -20,7 +20,7 @@ export default function Bottombar({ activeTab, setActiveTab }) {
         onClick={() => setActiveTab('add')}
       >
         <img src="/add.png" alt="Add" className="tabicon" />
-        <div className="tabtag">Add Item</div>
+        <div className="tabtag">Add Product</div>
       </div>
     </div>
   );

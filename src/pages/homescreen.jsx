@@ -64,7 +64,7 @@ export default function Homescreen({ onPriceClick }) {
           name="Searchinput"
           id="searchinput"
           className="searchinput"
-          placeholder="Search with Product Id or Name"
+          placeholder="Search with Product Code"
           value={searchTerm}
           onChange={handleSearchChange}
         />

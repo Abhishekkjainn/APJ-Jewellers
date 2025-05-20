@@ -553,9 +553,9 @@ export default function AddItemPage() {
     return goldRate;
   }
 
-  function getMakingCharges(k) {
+  function getMakingCharges(k, i) {
     const goldRate =
-      pricesData.find((cat) => cat.docname === 'GOLD')?.MAKING?.[k] ?? '-';
+      pricesData.find((cat) => cat.docname === i)?.MAKING?.[k] ?? '-';
     return goldRate;
   }
 
@@ -578,7 +578,6 @@ export default function AddItemPage() {
   return (
     <div className="additems-container">
       <div className="additemheading">Add A Product</div>
-
       <div className="additems-field">
         <select
           value={category}
@@ -593,7 +592,6 @@ export default function AddItemPage() {
           ))}
         </select>
       </div>
-
       <div className="additems-field">
         <select
           value={subcategory}
@@ -608,7 +606,6 @@ export default function AddItemPage() {
           ))}
         </select>
       </div>
-
       <div className="additemheadingsmall">Gross Weight</div>
       <div className="grossweightsection">
         <select
@@ -638,7 +635,6 @@ export default function AddItemPage() {
         />
         <div className="unit">gms</div>
       </div>
-
       <div className="additemheadingsmall">Items Used</div>
       <div className="itemsused-section">
         {selectedItems.map((item, index) => (
@@ -704,9 +700,9 @@ export default function AddItemPage() {
       </div>
       <div className="netwt">
         <div className="additemheadingsmall2">+ Making Charges</div>
-        <div className="netwtval">{getMakingCharges(0)} ₹/gm</div>
+        <div className="netwtval">{getMakingCharges(0, category)} ₹/gm</div>
         <div className="netwtval finprice">
-          {(getMakingCharges(0) * netWeight).toFixed(1)} ₹
+          {(getMakingCharges(0, category) * netWeight).toFixed(1)} ₹
         </div>
       </div>
       <div className="netwt">
@@ -716,7 +712,7 @@ export default function AddItemPage() {
           {(
             calcWastage(goldWastage, getGoldRate(grossWeight, 0) * netWeight) +
             getGoldRate(grossWeight, 0) * netWeight +
-            getMakingCharges(0) * netWeight +
+            getMakingCharges(0, category) * netWeight +
             total
           ).toFixed(1)}
           ₹
@@ -730,7 +726,7 @@ export default function AddItemPage() {
             3,
             calcWastage(goldWastage, getGoldRate(grossWeight, 0) * netWeight) +
               getGoldRate(grossWeight, 0) * netWeight +
-              getMakingCharges(0) * netWeight +
+              getMakingCharges(0, category) * netWeight +
               total
           ).toFixed(1)}
           ₹
@@ -743,7 +739,7 @@ export default function AddItemPage() {
           {(
             calcWastage(goldWastage, getGoldRate(grossWeight, 0) * netWeight) +
             getGoldRate(grossWeight, 0) * netWeight +
-            getMakingCharges(0) * netWeight +
+            getMakingCharges(0, category) * netWeight +
             total +
             calcWastage(
               3,
@@ -752,13 +748,14 @@ export default function AddItemPage() {
                 getGoldRate(grossWeight, 0) * netWeight
               ) +
                 getGoldRate(grossWeight, 0) * netWeight +
-                getMakingCharges(0) * netWeight +
+                getMakingCharges(0, category) * netWeight +
                 total
             )
           ).toFixed(1)}
           ₹
         </div>
-      </div>
+      </div>{' '}
+      <button className="additems-button">Save Ornament // </button>
     </div>
   );
 }

@@ -10,7 +10,10 @@ export default function Header({
       <div className="greeting">
         {/* <img src="/amarsonslogo.png" alt="" className="greetlogo" /> */}
         <div className="greettext">
-          <div className="topgreet">Welcome Back</div>
+          <div className="topgreet">
+            Welcome
+            {/* <span className="bl">{username}</span> */}
+          </div>
           <div className="bottomgreet">{username}</div>
         </div>
       </div>
