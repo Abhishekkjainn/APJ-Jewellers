@@ -56,6 +56,10 @@ export default function Homescreen({ onPriceClick }) {
     setSearchTerm(e.target.value);
   };
 
+  const onEditClick = (item) => {
+    console.log(item);
+  };
+
   return (
     <div className="homescreen">
       <div className="searchbar">
@@ -141,7 +145,7 @@ export default function Homescreen({ onPriceClick }) {
                     <div className="pillone">{item.category}</div>
                     <div className="pilltwo">{item.subcategory}</div>
                   </div>
-                  <div className="editbutton">
+                  <div className="editbutton" onClick={() => onEditClick(item)}>
                     <img src="/edit.png" alt="" className="editbuttonicon" />
                   </div>
                 </div>
