@@ -747,17 +747,6 @@ export default function AddItemPage() {
         <div className="additemheadingsmall2">+ Making Charges</div>
         {category == 'POLKI' ? (
           <>
-            <select
-              name="polki making"
-              id="polkimaking"
-              value={polkiType}
-              onChange={(e) => {
-                setPolkiType(e.target.value);
-              }}
-            >
-              <option value={0}>MAKING</option>
-              <option value={1}>VICTORIAN MC</option>
-            </select>
             <div className="netwtval">
               {polkiType == 0
                 ? getMakingCharges(0, category, 0)
@@ -784,6 +773,24 @@ export default function AddItemPage() {
           </>
         )}
       </div>
+      {category == 'POLKI' ? (
+        <div className="netwt">
+          <select
+            name="polki making"
+            id="polkimaking"
+            className="additems-input polkiselect"
+            value={polkiType}
+            onChange={(e) => {
+              setPolkiType(e.target.value);
+            }}
+          >
+            <option value={0}>MAKING</option>
+            <option value={1}>VICTORIAN MC</option>
+          </select>
+        </div>
+      ) : (
+        <></>
+      )}
       <div className="netwt">
         <div className="additemheadingsmall">SubTotal</div>
         {/* <div className="netwtval">{getMakingCharges(0)} ₹/gm</div> */}

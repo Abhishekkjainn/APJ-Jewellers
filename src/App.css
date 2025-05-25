@@ -1799,7 +1799,9 @@ body{
   text-align: end;
 }
 
-
+.polkiselect{
+  margin-left: 12px;
+}
 /**/
 .buttonsectionaddpage{
   width: 100%;
