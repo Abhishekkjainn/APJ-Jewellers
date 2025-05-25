@@ -470,6 +470,8 @@ export default function AddItemPage() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [newItem, setNewItem] = useState('');
   const [total, setTotal] = useState(0);
+  const [codeprefix, setCodePrefix] = useState('');
+  const [codeSuffix, setCodeSuffix] = useState('');
 
   const subcategories = [
     'Necklace',
@@ -553,9 +555,20 @@ export default function AddItemPage() {
     return goldRate;
   }
 
-  function getMakingCharges(k, i) {
-    const goldRate =
-      pricesData.find((cat) => cat.docname === i)?.MAKING?.[k] ?? '-';
+  function getMakingCharges(k, i, n) {
+    var goldRate = '';
+    if (i === 'POLKI') {
+      if (n == 0) {
+        goldRate =
+          pricesData.find((cat) => cat.docname === i)?.MAKING?.[k] ?? '-';
+      } else {
+        goldRate =
+          pricesData.find((cat) => cat.docname === i)?.VICTORIAN?.[k] ?? '-';
+      }
+    } else {
+      goldRate =
+        pricesData.find((cat) => cat.docname === i)?.MAKING?.[k] ?? '-';
+    }
     return goldRate;
   }
 
@@ -575,9 +588,18 @@ export default function AddItemPage() {
     setTotal(totalPrice);
   }, [selectedItems]);
 
+  const codes = ['GNS', 'DNS', 'PNS'];
+  const finalProductCode = `${codeprefix}${codeSuffix}`;
+  const [polkiType, setPolkiType] = useState(0); // default
+  useEffect(() => {
+    if (category === 'GOLD') setCodePrefix('GNS');
+    else if (category === 'DIAMONDS') setCodePrefix('DNS');
+    else if (category === 'POLKI') setCodePrefix('PNS');
+  }, [category]);
+
   return (
     <div className="additems-container">
-      <div className="additemheading">Add A Product</div>
+      <div className="additemheading">Add Product</div>
       <div className="additems-field">
         <select
           value={category}
@@ -606,6 +628,31 @@ export default function AddItemPage() {
           ))}
         </select>
       </div>
+      <div className="additemheadingsmall">
+        Product Code - {finalProductCode}
+      </div>
+      <div className="grossweightsection">
+        <select
+          value={codeprefix}
+          onChange={(e) => setCodePrefix(e.target.value)}
+          className="additems-input"
+        >
+          <option value="">Select Code Prefix</option>
+          {codes.map((goldType) => (
+            <option key={goldType} value={goldType}>
+              {goldType}
+            </option>
+          ))}
+        </select>
+
+        <input
+          type="number"
+          placeholder="Code"
+          className="grosswtinp"
+          value={codeSuffix}
+          onChange={(e) => setCodeSuffix(parseFloat(e.target.value))}
+        />
+      </div>
       <div className="additemheadingsmall">Gross Weight</div>
       <div className="grossweightsection">
         <select
@@ -629,9 +676,7 @@ export default function AddItemPage() {
           placeholder="Weight"
           className="grosswtinp"
           value={grossWeightAmount}
-          onChange={(e) =>
-            setGrossWeightAmount(parseFloat(e.target.value) || 0)
-          }
+          onChange={(e) => setGrossWeightAmount(parseFloat(e.target.value))}
         />
         <div className="unit">gms</div>
       </div>
@@ -700,10 +745,44 @@ export default function AddItemPage() {
       </div>
       <div className="netwt">
         <div className="additemheadingsmall2">+ Making Charges</div>
-        <div className="netwtval">{getMakingCharges(0, category)} ₹/gm</div>
-        <div className="netwtval finprice">
-          {(getMakingCharges(0, category) * netWeight).toFixed(1)} ₹
-        </div>
+        {category == 'POLKI' ? (
+          <>
+            <select
+              name="polki making"
+              id="polkimaking"
+              value={polkiType}
+              onChange={(e) => {
+                setPolkiType(e.target.value);
+              }}
+            >
+              <option value={0}>MAKING</option>
+              <option value={1}>VICTORIAN MC</option>
+            </select>
+            <div className="netwtval">
+              {polkiType == 0
+                ? getMakingCharges(0, category, 0)
+                : getMakingCharges(0, category, 1)}{' '}
+              ₹/gm
+            </div>
+            <div className="netwtval finprice">
+              {(
+                (polkiType == 0
+                  ? getMakingCharges(0, category, 0)
+                  : getMakingCharges(0, category, 1)) * netWeight
+              ).toFixed(1)}{' '}
+              ₹
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="netwtval">
+              {getMakingCharges(0, category, 0)} ₹/gm
+            </div>
+            <div className="netwtval finprice">
+              {(getMakingCharges(0, category, 0) * netWeight).toFixed(1)} ₹
+            </div>
+          </>
+        )}
       </div>
       <div className="netwt">
         <div className="additemheadingsmall">SubTotal</div>
@@ -712,7 +791,10 @@ export default function AddItemPage() {
           {(
             calcWastage(goldWastage, getGoldRate(grossWeight, 0) * netWeight) +
             getGoldRate(grossWeight, 0) * netWeight +
-            getMakingCharges(0, category) * netWeight +
+            (polkiType == 0 && category == 'POLKI'
+              ? getMakingCharges(0, category, 0)
+              : getMakingCharges(0, category, 1)) *
+              netWeight +
             total
           ).toFixed(1)}
           ₹
@@ -726,7 +808,10 @@ export default function AddItemPage() {
             3,
             calcWastage(goldWastage, getGoldRate(grossWeight, 0) * netWeight) +
               getGoldRate(grossWeight, 0) * netWeight +
-              getMakingCharges(0, category) * netWeight +
+              (polkiType == 0 && category == 'POLKI'
+                ? getMakingCharges(0, category, 0)
+                : getMakingCharges(0, category, 1)) *
+                netWeight +
               total
           ).toFixed(1)}
           ₹
@@ -739,7 +824,10 @@ export default function AddItemPage() {
           {(
             calcWastage(goldWastage, getGoldRate(grossWeight, 0) * netWeight) +
             getGoldRate(grossWeight, 0) * netWeight +
-            getMakingCharges(0, category) * netWeight +
+            (polkiType == 0 && category == 'POLKI'
+              ? getMakingCharges(0, category, 0)
+              : getMakingCharges(0, category, 1)) *
+              netWeight +
             total +
             calcWastage(
               3,
@@ -748,14 +836,21 @@ export default function AddItemPage() {
                 getGoldRate(grossWeight, 0) * netWeight
               ) +
                 getGoldRate(grossWeight, 0) * netWeight +
-                getMakingCharges(0, category) * netWeight +
+                (polkiType == 0 && category == 'POLKI'
+                  ? getMakingCharges(0, category, 0)
+                  : getMakingCharges(0, category, 1)) *
+                  netWeight +
                 total
             )
           ).toFixed(1)}
           ₹
         </div>
       </div>{' '}
-      <button className="additems-button">Save Ornament // </button>
+      <div className="buttonsectionaddpage">
+        <div className="savebutton">Save Product</div>
+        <div className="savebutton">Add as Draft</div>
+        <div className="savebutton">Upload Picture</div>
+      </div>
     </div>
   );
 }
