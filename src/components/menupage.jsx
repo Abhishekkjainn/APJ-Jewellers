@@ -55,6 +55,16 @@ export default function Menupage({
           </div>
         )}
 
+        {isAdmin && (
+          <div
+            className="menuitem item1"
+            onClick={() => handleMenuClick('draft')}
+          >
+            <img src="/draft.png" alt="Logout Icon" className="itemicon" />
+            <div className="itemtag">Draft Page</div>
+          </div>
+        )}
+
         <div className="menuitem item1" onClick={() => handleLogout()}>
           <img src="/exit.png" alt="Logout Icon" className="itemicon" />
           <div className="itemtag">Logout</div>

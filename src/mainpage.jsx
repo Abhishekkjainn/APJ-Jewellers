@@ -10,6 +10,7 @@ import Menupage from './components/menupage';
 import AddItemPage from './pages/additem';
 import ManageUsers from './pages/manageusers';
 import ProductDesc from './pages/productdesc';
+import DraftPage from './pages/draftpage';
 
 export default function Mainpage({ username, isAdmin, setIsLoggedIn }) {
   const [activeTab, setActiveTab] = useState('home');
@@ -88,6 +89,7 @@ export default function Mainpage({ username, isAdmin, setIsLoggedIn }) {
           onBack={() => setActiveTab('home')}
         />
       )}
+      {activeTab === 'draft' && <DraftPage />}
 
       <Bottombar activeTab={activeTab} setActiveTab={setActiveTab} />
     </>
