@@ -1,464 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-
-// export default function AddItemPage() {
-//   const [pricesData, setPricesData] = useState([]);
-//   const [category, setCategory] = useState('');
-//   const [subcategory, setSubcategory] = useState('');
-//   const [grossWeight, setGrossWeight] = useState('');
-//   const [materialsUsed, setMaterialsUsed] = useState([]);
-//   const [newMaterial, setNewMaterial] = useState({
-//     category: '',
-//     item: '',
-//     quantity: '',
-//   });
-
-//   const subcategories = [
-//     'Necklace',
-//     'Ring',
-//     'Earring',
-//     'Bracelet',
-//     'Bangle',
-//     'Pendant',
-//     'Anklet',
-//     'Kada',
-//     'Maang Tikka',
-//     'Chain',
-//   ];
-
-//   useEffect(() => {
-//     fetch('https://apjapi.vercel.app/getAllPrices')
-//       .then((res) => res.json())
-//       .then((data) => {
-//         if (data.success) {
-//           setPricesData(data.PRICES);
-//         }
-//       })
-//       .catch((err) => console.error('Failed to fetch prices:', err));
-//   }, []);
-
-//   const handleAddMaterial = () => {
-//     const { category, item, quantity } = newMaterial;
-//     if (!category || !item || !quantity) return;
-
-//     setMaterialsUsed([...materialsUsed, { category, item, quantity }]);
-//     setNewMaterial({ category: '', item: '', quantity: '' });
-//   };
-
-//   const handleSave = () => {
-//     if (
-//       !category ||
-//       !subcategory ||
-//       !grossWeight ||
-//       materialsUsed.length === 0
-//     ) {
-//       alert('Please fill all fields and add at least one material.');
-//       return;
-//     }
-
-//     // Transform materialsUsed into backend format
-//     const transformedMaterials = [];
-
-//     materialsUsed.forEach(({ category, item, quantity }) => {
-//       if (!category || !item || !quantity) return;
-
-//       let existingGroup = transformedMaterials.find(
-//         (group) => group.docname === category
-//       );
-
-//       if (!existingGroup) {
-//         existingGroup = { docname: category };
-//         transformedMaterials.push(existingGroup);
-//       }
-
-//       existingGroup[item] = parseFloat(quantity);
-//     });
-
-//     const newItem = {
-//       category,
-//       subcategory,
-//       grossWeight: parseFloat(grossWeight),
-//       materialsUsed: transformedMaterials,
-//     };
-
-//     fetch('https://apjapi.vercel.app/addItem', {
-//       method: 'POST',
-//       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify(newItem),
-//     })
-//       .then((res) => res.json())
-//       .then((data) => {
-//         if (data.success) {
-//           alert('Item saved successfully!');
-//           // Reset form
-//           setCategory('');
-//           setSubcategory('');
-//           setGrossWeight('');
-//           setMaterialsUsed([]);
-//           setNewMaterial({ category: '', item: '', quantity: '' });
-//         } else {
-//           alert('Failed to save item.');
-//         }
-//       })
-//       .catch((err) => {
-//         console.error('Error saving item:', err);
-//         alert('An error occurred while saving the item.');
-//       });
-//   };
-
-//   const getItemsForCategory = (categoryName) => {
-//     const categoryData = pricesData.find((cat) => cat.docname === categoryName);
-//     if (!categoryData) return [];
-
-//     return Object.keys(categoryData).filter(
-//       (key) => key !== 'docname' && key !== 'MAKING' && key !== 'WASTAGE'
-//     );
-//   };
-
-//   return (
-//     <div className="additems-container">
-//       <h2 className="additems-title">Add New Ornament</h2>
-
-//       <div className="additems-field">
-//         <label className="additems-label">Category:</label>
-//         <select
-//           value={category}
-//           onChange={(e) => {
-//             setCategory(e.target.value);
-//             setNewMaterial({
-//               ...newMaterial,
-//               category: e.target.value,
-//               item: '',
-//             });
-//           }}
-//           className="additems-input"
-//         >
-//           <option value="">Select</option>
-//           {pricesData.map((cat) => (
-//             <option key={cat.docname} value={cat.docname}>
-//               {cat.docname}
-//             </option>
-//           ))}
-//         </select>
-//       </div>
-
-//       <div className="additems-field">
-//         <label className="additems-label">Subcategory:</label>
-//         <select
-//           value={subcategory}
-//           onChange={(e) => setSubcategory(e.target.value)}
-//           className="additems-input"
-//         >
-//           <option value="">Select</option>
-//           {subcategories.map((subcat) => (
-//             <option key={subcat} value={subcat}>
-//               {subcat}
-//             </option>
-//           ))}
-//         </select>
-//       </div>
-
-//       <div className="additems-field">
-//         <label className="additems-label">Gross Weight (gms):</label>
-//         <input
-//           type="number"
-//           value={grossWeight}
-//           onChange={(e) => setGrossWeight(e.target.value)}
-//           className="additems-input"
-//         />
-//       </div>
-
-//       <div className="additems-materials">
-//         <h3 className="additems-subtitle">Materials Used</h3>
-
-//         <div className="additems-material-row">
-//           <div className="additems-field">
-//             <label className="additems-label">Material Category:</label>
-//             <select
-//               value={newMaterial.category}
-//               onChange={(e) =>
-//                 setNewMaterial({
-//                   ...newMaterial,
-//                   category: e.target.value,
-//                   item: '',
-//                 })
-//               }
-//               className="additems-input"
-//             >
-//               <option value="">Select</option>
-//               {pricesData.map((cat) => (
-//                 <option key={cat.docname} value={cat.docname}>
-//                   {cat.docname}
-//                 </option>
-//               ))}
-//             </select>
-//           </div>
-
-//           <div className="additems-field">
-//             <label className="additems-label">Item:</label>
-//             <select
-//               value={newMaterial.item}
-//               onChange={(e) =>
-//                 setNewMaterial({ ...newMaterial, item: e.target.value })
-//               }
-//               className="additems-input"
-//               disabled={!newMaterial.category}
-//             >
-//               <option value="">Select</option>
-//               {getItemsForCategory(newMaterial.category).map((item) => (
-//                 <option key={item} value={item}>
-//                   {item}
-//                 </option>
-//               ))}
-//             </select>
-//           </div>
-
-//           <div className="additems-field">
-//             <label className="additems-label">Quantity:</label>
-//             <input
-//               type="number"
-//               value={newMaterial.quantity}
-//               onChange={(e) =>
-//                 setNewMaterial({ ...newMaterial, quantity: e.target.value })
-//               }
-//               className="additems-input"
-//               disabled={!newMaterial.item}
-//             />
-//           </div>
-
-//           <button
-//             onClick={handleAddMaterial}
-//             className="additems-button additems-button-small"
-//           >
-//             Add
-//           </button>
-//         </div>
-
-//         <ul className="additems-material-list">
-//           {materialsUsed.map((mat, idx) => (
-//             <li key={idx} className="additems-material-item">
-//               {mat.quantity} units of {mat.item} ({mat.category})
-//             </li>
-//           ))}
-//         </ul>
-//       </div>
-
-//       <button onClick={handleSave} className="additems-button">
-//         Save Ornament
-//       </button>
-//     </div>
-//   );
-// }
-
-// import React, { useState, useEffect } from 'react';
-
-// export default function AddItemPage() {
-//   const [pricesData, setPricesData] = useState([]);
-//   const [category, setCategory] = useState('');
-//   const [subcategory, setSubcategory] = useState('');
-//   const [grossWeight, setGrossWeight] = useState('');
-//   const [grossWeightAmount, setGrossWeightAmount] = useState('');
-
-//   const subcategories = [
-//     'Necklace',
-//     'Ring',
-//     'Earring',
-//     'Bracelet',
-//     'Bangle',
-//     'Pendant',
-//     'Anklet',
-//     'Kada',
-//     'Maang Tikka',
-//     'Chain',
-//   ];
-
-//   useEffect(() => {
-//     fetch('https://apjapi.vercel.app/getAllPrices')
-//       .then((res) => res.json())
-//       .then((data) => {
-//         if (data.success) {
-//           console.log('[Initial Load] Prices:', data.PRICES);
-//           setPricesData(data.PRICES);
-//         }
-//       })
-//       .catch((err) => console.error('Failed to fetch prices:', err));
-//   }, []);
-
-//   const [selectedItems, setSelectedItems] = useState([]);
-//   const [newItem, setNewItem] = useState('');
-
-//   const getAllMaterialOptions = () => {
-//     const materials = [];
-
-//     pricesData.forEach((category) => {
-//       Object.entries(category).forEach(([key, value]) => {
-//         if (key !== 'docname' && key !== 'MAKING' && key !== 'WASTAGE') {
-//           materials.push({
-//             label: key,
-//             category: category.docname,
-//             price: Number(value[0]), // use first price tier
-//           });
-//         }
-//       });
-//     });
-
-//     return materials;
-//   };
-
-//   const allOptions = getAllMaterialOptions();
-
-//   const handleAddItem = () => {
-//     if (!newItem) return;
-
-//     const item = allOptions.find((opt) => opt.label === newItem);
-//     if (!item) return;
-
-//     setSelectedItems([...selectedItems, { ...item, quantity: 1 }]);
-//     setNewItem('');
-//   };
-
-//   const updateQuantity = (index, qty) => {
-//     const updated = [...selectedItems];
-//     updated[index].quantity = Number(qty);
-//     setSelectedItems(updated);
-//   };
-
-//   const deleteItem = (index) => {
-//     const updated = [...selectedItems];
-//     updated.splice(index, 1);
-//     setSelectedItems(updated);
-//   };
-
-//   const totalCt = selectedItems.reduce((sum, item) => {
-//     return sum + (item.label.toLowerCase().includes('ct') ? item.quantity : 0);
-//   }, 0);
-
-//   const netWeight = grossWeightAmount
-//     ? (grossWeightAmount - totalCt * 0.2).toFixed(2)
-//     : '';
-
-//   return (
-//     <div className="additems-container">
-//       <div className="additemheading">Add A Product</div>
-//       <div className="additems-field">
-//         {/* <label className="additems-label">Category:</label> */}
-//         <select
-//           value={category}
-//           onChange={(e) => {
-//             setCategory(e.target.value);
-//             setNewMaterial({
-//               ...newMaterial,
-//               category: e.target.value,
-//               item: '',
-//             });
-//           }}
-//           className="additems-input"
-//         >
-//           <option value="">Select the Category</option>
-//           {pricesData.map((cat) => (
-//             <option key={cat.docname} value={cat.docname}>
-//               {cat.docname}
-//             </option>
-//           ))}
-//         </select>
-//       </div>
-//       <div className="additems-field">
-//         {/* <label className="additems-label">Subcategory:</label> */}
-//         <select
-//           value={subcategory}
-//           onChange={(e) => setSubcategory(e.target.value)}
-//           className="additems-input"
-//         >
-//           <option value="">Select the Type of Jewellery</option>
-//           {subcategories.map((subcat) => (
-//             <option key={subcat} value={subcat}>
-//               {subcat}
-//             </option>
-//           ))}
-//         </select>
-//       </div>
-//       <div className="additemheadingsmall">Gross Weight</div>
-//       <div className="grossweightsection">
-//         <select
-//           value={grossWeight}
-//           onChange={(e) => setGrossWeight(e.target.value)}
-//           className="additems-input"
-//           id=""
-//         >
-//           <option value="">Select the Purity</option>
-//           {pricesData.find((category) => category.docname === 'GOLD') &&
-//             Object.keys(
-//               pricesData.find((category) => category.docname === 'GOLD')
-//             )
-//               .filter((key) => key.endsWith('k')) // only include keys ending in 'k'
-//               .map((subcat) => (
-//                 <option key={subcat} value={subcat}>
-//                   {subcat}
-//                 </option>
-//               ))}
-//         </select>
-//         <input
-//           type="number"
-//           name="Gross Weight Grams"
-//           id="GrossWeight"
-//           className="grosswtinp"
-//           placeholder="Weight"
-//           value={grossWeightAmount}
-//           onChange={(e) =>
-//             setGrossWeightAmount(parseFloat(e.target.value) || 0)
-//           }
-//         />
-//         <div className="unit">gms</div>
-//       </div>
-
-//       <div className="additemheadingsmall">Items Used</div>
-
-//       <div className="itemsused-section">
-//         {selectedItems.map((item, index) => (
-//           <div key={index} className="itemsused-row">
-//             <div className="item-name">{item.label}</div>
-//             <input
-//               type="number"
-//               value={item.quantity}
-//               onChange={(e) => updateQuantity(index, e.target.value)}
-//               className="item-qty-input"
-//             />
-//             <span className="unit">ct</span>
-//             <button onClick={() => deleteItem(index)} className="delete-btn">
-//               <img src="/delete.png" alt="Delete Icon" className="delicon" />
-//             </button>
-//             <div className="item-total">
-//               ₹{(item.quantity * item.price).toLocaleString()}
-//             </div>
-//           </div>
-//         ))}
-
-//         <div className="additem-dropdown-row">
-//           <select
-//             value={newItem}
-//             onChange={(e) => setNewItem(e.target.value)}
-//             className="additems-input"
-//           >
-//             <option value="">Select field</option>
-//             {allOptions.map((opt) => (
-//               <option key={opt.label} value={opt.label}>
-//                 {opt.label} - {opt.price}
-//               </option>
-//             ))}
-//           </select>
-//           <button onClick={handleAddItem} className="add-btn">
-//             Add
-//           </button>
-//         </div>
-//       </div>
-
-//       <div className="netwt">
-//         <div className="additemheadingsmall">Net Weight</div>
-//         <div className="netwtval">{netWeight ? `${netWeight} gms` : '-'}</div>
-//       </div>
-//     </div>
-//   );
-// }
-
 import React, { useState, useEffect } from 'react';
 
 export default function AddItemPage() {
@@ -546,9 +85,14 @@ export default function AddItemPage() {
   };
 
   const netWeight = getNetWeight();
-  const goldWastage =
-    pricesData.find((cat) => cat.docname === 'GOLD')?.WASTAGE?.[0] ?? '-';
 
+  function getWastage(n) {
+    let goldWastage =
+      pricesData.find((cat) => cat.docname === 'GOLD')?.WASTAGE?.[n] ?? '-';
+    return goldWastage;
+  }
+
+  let goldWastage = getWastage(0);
   function getGoldRate(k, n) {
     const goldRate =
       pricesData.find((cat) => cat.docname === 'GOLD')?.[k]?.[n] ?? '-';
@@ -572,10 +116,6 @@ export default function AddItemPage() {
     return goldRate;
   }
 
-  function calcMaking(k, n) {
-    return k * n;
-  }
-
   function calcWastage(k, n) {
     return (k * n) / 100;
   }
@@ -596,6 +136,152 @@ export default function AddItemPage() {
     else if (category === 'DIAMONDS') setCodePrefix('DNS');
     else if (category === 'POLKI') setCodePrefix('PNS');
   }, [category]);
+
+  function getAllPrices() {
+    console.log(selectedItems);
+    const data = {
+      category: category,
+      subcategory: subcategory,
+      purity: grossWeight,
+      grossWeight: grossWeightAmount,
+      selectedItems: selectedItems,
+      ItemsTotalPrice: total,
+      finalProductCode: finalProductCode,
+    };
+    console.log(data);
+  }
+
+  function calculateSelectedTotal(i) {
+    let total = 0;
+
+    selectedItems.forEach((item) => {
+      const { label, category, quantity } = item;
+
+      // Find the matching category object in pricesData
+      const categoryData = pricesData.find((cat) => cat.docname === category);
+      if (!categoryData) {
+        console.warn(`Category "${category}" not found in pricesData.`);
+        return;
+      }
+
+      // Get the price array for the given label
+      const priceArray = categoryData[label];
+      if (!priceArray || !Array.isArray(priceArray)) {
+        console.warn(`Item "${label}" not found in category "${category}".`);
+        return;
+      }
+
+      // Convert the price at index i to a number
+      const price = Number(priceArray[i]);
+      if (isNaN(price)) {
+        console.warn(
+          `Price for "${label}" at index ${i} is not a valid number.`
+        );
+        return;
+      }
+
+      // Calculate total for this item
+      const itemTotal = price * quantity;
+      total += itemTotal;
+    });
+
+    return total;
+  }
+
+  const tier1price = calculateSelectedTotal(0);
+  const tier2price = calculateSelectedTotal(1);
+  const tier3price = calculateSelectedTotal(2);
+
+  function calculateFirstPrice(goldpurity, gst) {
+    console.log(selectedItems);
+    console.log(pricesData);
+    const goldamount = netWeight * getGoldRate(goldpurity, 0);
+    console.log(goldamount);
+    const wastagepercent = getWastage(0);
+    let wasteandgold = goldamount + (wastagepercent / 100) * goldamount;
+    console.log(wasteandgold);
+    let makingcharges = 0;
+    if (category === 'POLKI') {
+      if (polkiType == 0) {
+        makingcharges = getMakingCharges(0, category, 0);
+      } else {
+        makingcharges = getMakingCharges(0, category, 1);
+      }
+    } else {
+      makingcharges = getMakingCharges(0, category, 0);
+    }
+    let totalmaking = makingcharges * netWeight;
+    console.log(totalmaking);
+    console.log(wasteandgold + totalmaking);
+    let totalbeforetax = wasteandgold + totalmaking + tier1price;
+    let gstamt = (gst / 100) * totalbeforetax;
+    console.log(gstamt);
+    const finaltotal = gstamt + totalbeforetax;
+    console.log(finaltotal.toFixed(1));
+    // console.log(totalbeforetax + gstamt);
+    return finaltotal.toFixed(1);
+  }
+
+  function calculateSecondPrice(goldpurity, gst) {
+    console.log(selectedItems);
+    console.log(pricesData);
+    const goldamount = netWeight * getGoldRate(goldpurity, 1);
+    console.log(goldamount);
+    const wastagepercent = getWastage(1);
+    let wasteandgold = goldamount + (wastagepercent / 100) * goldamount;
+    console.log(wasteandgold);
+    let makingcharges = 0;
+    if (category === 'POLKI') {
+      if (polkiType == 0) {
+        makingcharges = getMakingCharges(1, category, 0);
+      } else {
+        makingcharges = getMakingCharges(1, category, 1);
+      }
+    } else {
+      makingcharges = getMakingCharges(1, category, 0);
+    }
+    let totalmaking = makingcharges * netWeight;
+    console.log(totalmaking);
+    console.log(wasteandgold + totalmaking);
+    let totalbeforetax = wasteandgold + totalmaking + tier2price;
+    let gstamt = (gst / 100) * totalbeforetax;
+    console.log(gstamt);
+    const finaltotal = gstamt + totalbeforetax;
+    console.log(finaltotal.toFixed(1));
+    // console.log(totalbeforetax + gstamt);
+    return finaltotal.toFixed(1);
+  }
+
+  function calculateThirdPrice(goldpurity, gst) {
+    console.log(selectedItems);
+    console.log(pricesData);
+    const goldamount = netWeight * getGoldRate(goldpurity, 2);
+    console.log(goldamount);
+    const wastagepercent = getWastage(2);
+    let wasteandgold = goldamount + (wastagepercent / 100) * goldamount;
+    console.log(wasteandgold);
+    let makingcharges = 0;
+    if (category === 'POLKI') {
+      if (polkiType == 0) {
+        makingcharges = getMakingCharges(2, category, 0);
+      } else {
+        makingcharges = getMakingCharges(2, category, 1);
+      }
+    } else {
+      makingcharges = getMakingCharges(2, category, 0);
+    }
+
+    let totalmaking = makingcharges * netWeight;
+    console.log(totalmaking);
+    console.log(wasteandgold + totalmaking);
+    let totalbeforetax = wasteandgold + totalmaking + tier3price;
+    let gstamt = (gst / 100) * totalbeforetax;
+    console.log(gstamt);
+    const finaltotal = gstamt + totalbeforetax;
+    console.log(finaltotal.toFixed(1));
+    // console.log(totalbeforetax + gstamt);
+    return finaltotal.toFixed(1);
+  }
 
   return (
     <div className="additems-container">
@@ -828,33 +514,21 @@ export default function AddItemPage() {
         <div className="additemheadingsmall">Grand Total</div>
         {/* <div className="netwtval">{getMakingCharges(0)} ₹/gm</div> */}
         <div className="netwtval finprice">
-          {(
-            calcWastage(goldWastage, getGoldRate(grossWeight, 0) * netWeight) +
-            getGoldRate(grossWeight, 0) * netWeight +
-            (polkiType == 0 && category == 'POLKI'
-              ? getMakingCharges(0, category, 0)
-              : getMakingCharges(0, category, 1)) *
-              netWeight +
-            total +
-            calcWastage(
-              3,
-              calcWastage(
-                goldWastage,
-                getGoldRate(grossWeight, 0) * netWeight
-              ) +
-                getGoldRate(grossWeight, 0) * netWeight +
-                (polkiType == 0 && category == 'POLKI'
-                  ? getMakingCharges(0, category, 0)
-                  : getMakingCharges(0, category, 1)) *
-                  netWeight +
-                total
-            )
-          ).toFixed(1)}
-          ₹
+          {calculateFirstPrice(grossWeight, 3)}₹
         </div>
       </div>{' '}
       <div className="buttonsectionaddpage">
-        <div className="savebutton">Save Product</div>
+        <div
+          className="savebutton"
+          onClick={() => {
+            getAllPrices();
+            calculateFirstPrice(grossWeight, 3);
+            calculateSecondPrice(grossWeight, 3);
+            calculateThirdPrice(grossWeight, 3);
+          }}
+        >
+          Save Product
+        </div>
         <div className="savebutton">Add as Draft</div>
         <div className="savebutton">Upload Picture</div>
       </div>
