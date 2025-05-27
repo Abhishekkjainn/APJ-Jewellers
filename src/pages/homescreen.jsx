@@ -19,6 +19,7 @@ export default function Homescreen({ onPriceClick, isLoading, setIsLoading }) {
           setData(dataa.items);
           console.log('[Initial Load] Prices:', dataa.items);
         }
+        setIsLoading(false);
       })
       .catch((err) => console.error('❌ Error fetching prices:', err))
       .finally(() => setLoading(false));
