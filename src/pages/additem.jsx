@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function AddItemPage() {
+export default function AddItemPage({ isLoading, setIsLoading }) {
   const [pricesData, setPricesData] = useState([]);
   const [category, setCategory] = useState('');
   const [subcategory, setSubcategory] = useState('');
@@ -26,12 +26,14 @@ export default function AddItemPage() {
   ];
 
   useEffect(() => {
+    setIsLoading(true);
     fetch('https://apjapi.vercel.app/getAllPrices')
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
           setPricesData(data.PRICES);
         }
+        setIsLoading(false);
       })
       .catch((err) => console.error('Failed to fetch prices:', err));
   }, []);
@@ -323,6 +325,7 @@ export default function AddItemPage() {
     console.log('🔍 Validated Final Data:', data);
 
     try {
+      setIsLoading(true);
       const response = await fetch('https://apjapi.vercel.app/addItem', {
         method: 'POST',
         headers: {
@@ -332,6 +335,7 @@ export default function AddItemPage() {
       });
 
       const result = await response.json();
+      setIsLoading(false);
 
       if (!response.ok) {
         console.error('❌ API Error:', result);
@@ -390,6 +394,7 @@ export default function AddItemPage() {
     console.log('🔍 Validated Final Data:', data);
 
     try {
+      setIsLoading(true);
       const response = await fetch('https://apjapi.vercel.app/addDraft', {
         method: 'POST',
         headers: {
@@ -399,6 +404,7 @@ export default function AddItemPage() {
       });
 
       const result = await response.json();
+      setIsLoading(false);
 
       if (!response.ok) {
         console.error('❌ API Error:', result);
