@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export default function Homescreen({ onPriceClick }) {
+export default function Homescreen({ onPriceClick, isLoading, setIsLoading }) {
   const [data, setData] = useState([]);
   const [id, setID] = useState('');
   const [category, setCategory] = useState('');
@@ -11,6 +11,7 @@ export default function Homescreen({ onPriceClick }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     fetch('https://apjapi.vercel.app/getAllItems')
       .then((res) => res.json())
       .then((dataa) => {
@@ -27,9 +28,9 @@ export default function Homescreen({ onPriceClick }) {
   const [filter, setFilter] = useState('All Items');
   const [searchTerm, setSearchTerm] = useState('');
 
-  useEffect(() => {
-    setItems(data);
-  }, [data]);
+  // useEffect(() => {
+  //   setItems(data);
+  // }, [data]);
 
   const categories = [
     'All Items',
@@ -62,7 +63,7 @@ export default function Homescreen({ onPriceClick }) {
 
   return (
     <div className="homescreen">
-      <div className="searchbar">
+      {/* <div className="searchbar">
         <input
           type="text"
           name="Searchinput"
@@ -155,15 +156,15 @@ export default function Homescreen({ onPriceClick }) {
                 </div>
                 <div className="pricessection">
                   <div className="price" onClick={() => onPriceClick(item, 0)}>
-                    <div className="priceamt">{item.pricing.base}</div>
+                    <div className="priceamt">Q1: {item.pricing.base}</div>
                     <img src="/download.png" alt="" className="downloadicon" />
                   </div>
                   <div className="price" onClick={() => onPriceClick(item, 1)}>
-                    <div className="priceamt">{item.pricing.franchise}</div>
+                    <div className="priceamt">Q2: {item.pricing.franchise}</div>
                     <img src="/download.png" alt="" className="downloadicon" />
                   </div>
                   <div className="price" onClick={() => onPriceClick(item, 2)}>
-                    <div className="priceamt">{item.pricing.retail}</div>
+                    <div className="priceamt">Q3: {item.pricing.retail}</div>
                     <img src="/download.png" alt="" className="downloadicon" />
                   </div>
                 </div>
@@ -173,7 +174,7 @@ export default function Homescreen({ onPriceClick }) {
         ) : (
           <div className="no-items">No items found matching your criteria.</div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 }

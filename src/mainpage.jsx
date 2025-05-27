@@ -12,7 +12,13 @@ import ManageUsers from './pages/manageusers';
 import ProductDesc from './pages/productdesc';
 import DraftPage from './pages/draftpage';
 
-export default function Mainpage({ username, isAdmin, setIsLoggedIn }) {
+export default function Mainpage({
+  username,
+  isAdmin,
+  setIsLoggedIn,
+  isLoading,
+  setIsLoading,
+}) {
   const [activeTab, setActiveTab] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -67,8 +73,10 @@ export default function Mainpage({ username, isAdmin, setIsLoggedIn }) {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         username={username}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
       />
-      <Carousel />
+      <Carousel isLoading={isLoading} setIsLoading={setIsLoading} />
       <Menupage
         isMenuOpen={isMenuOpen}
         setIsMenuOpen={setIsMenuOpen}
@@ -76,22 +84,45 @@ export default function Mainpage({ username, isAdmin, setIsLoggedIn }) {
         setActiveTab={setActiveTab}
         setIsLoggedIn={setIsLoggedIn}
         isAdmin={isAdmin}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
       />
 
-      {activeTab === 'home' && <Homescreen onPriceClick={handlePriceClick} />}
-      {activeTab === 'price' && <UpdatePrice />}
-      {activeTab === 'add' && <AddItemPage />}
-      {activeTab === 'users' && <ManageUsers />}
+      {activeTab === 'home' && (
+        <Homescreen
+          onPriceClick={handlePriceClick}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />
+      )}
+      {activeTab === 'price' && (
+        <UpdatePrice isLoading={isLoading} setIsLoading={setIsLoading} />
+      )}
+      {activeTab === 'add' && (
+        <AddItemPage isLoading={isLoading} setIsLoading={setIsLoading} />
+      )}
+      {activeTab === 'users' && (
+        <ManageUsers isLoading={isLoading} setIsLoading={setIsLoading} />
+      )}
       {activeTab === 'productdesc' && (
         <ProductDesc
           item={selectedItem}
           priceIndex={selectedPriceIndex}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
           onBack={() => setActiveTab('home')}
         />
       )}
-      {activeTab === 'draft' && <DraftPage />}
+      {activeTab === 'draft' && (
+        <DraftPage isLoading={isLoading} setIsLoading={setIsLoading} />
+      )}
 
-      <Bottombar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Bottombar
+        activeTab={activeTab}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+        setActiveTab={setActiveTab}
+      />
     </>
   );
 }

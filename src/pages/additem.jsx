@@ -137,6 +137,10 @@ export default function AddItemPage() {
     else if (category === 'POLKI') setCodePrefix('PNS');
   }, [category]);
 
+  const tier1price = calculateSelectedTotal(0);
+  const tier2price = calculateSelectedTotal(1);
+  const tier3price = calculateSelectedTotal(2);
+
   function getAllPrices() {
     console.log(selectedItems);
     const data = {
@@ -188,10 +192,6 @@ export default function AddItemPage() {
     return total;
   }
 
-  const tier1price = calculateSelectedTotal(0);
-  const tier2price = calculateSelectedTotal(1);
-  const tier3price = calculateSelectedTotal(2);
-
   function calculateFirstPrice(goldpurity, gst) {
     console.log(selectedItems);
     console.log(pricesData);
@@ -216,8 +216,8 @@ export default function AddItemPage() {
     let totalbeforetax = wasteandgold + totalmaking + tier1price;
     let gstamt = (gst / 100) * totalbeforetax;
     console.log(gstamt);
-    const finaltotal = gstamt + totalbeforetax;
-    console.log(finaltotal.toFixed(1));
+    let finaltotal = gstamt + totalbeforetax;
+    console.log(finaltotal.toFixed(1) + '- Final Total');
     // console.log(totalbeforetax + gstamt);
     return finaltotal.toFixed(1);
   }
@@ -281,6 +281,143 @@ export default function AddItemPage() {
     console.log(finaltotal.toFixed(1));
     // console.log(totalbeforetax + gstamt);
     return finaltotal.toFixed(1);
+  }
+
+  let imagelink =
+    'https://5.imimg.com/data5/TG/DN/MY-37294786/designer-artificial-jewellery-500x500.jpg';
+
+  async function handleSave() {
+    // Frontend Validation
+    if (
+      !category ||
+      !subcategory ||
+      !grossWeight ||
+      !netWeight ||
+      !grossWeightAmount ||
+      !imagelink ||
+      !finalProductCode ||
+      selectedItems.length === 0
+    ) {
+      alert(
+        'All fields must be filled and at least one item must be selected.'
+      );
+      return;
+    }
+
+    // Construct final data object
+    const data = {
+      category: category,
+      subcategory: subcategory,
+      goldpurity: grossWeight,
+      netweight: netWeight,
+      grossWeight: grossWeightAmount,
+      tier1price: calculateFirstPrice(grossWeight, 3),
+      tier2price: calculateSecondPrice(grossWeight, 3),
+      tier3price: calculateThirdPrice(grossWeight, 3),
+      itemsUsed: selectedItems,
+      gst: 3,
+      imagelink: imagelink,
+      productId: finalProductCode,
+    };
+
+    console.log('🔍 Validated Final Data:', data);
+
+    try {
+      const response = await fetch('https://apjapi.vercel.app/addItem', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        console.error('❌ API Error:', result);
+        alert(`Error: ${result.message}`);
+        return;
+      }
+
+      // ✅ Success
+      alert(`✅ ${result.message}`);
+      console.log('✅ Item saved successfully:', result);
+
+      // Optional: reset form or state
+      // resetForm();
+    } catch (error) {
+      console.error('❌ Network/Server Error:', error);
+      alert(
+        'Something went wrong while saving the item. Please try again later.'
+      );
+    }
+  }
+
+  async function handleDraft() {
+    // Frontend Validation
+    if (
+      !category ||
+      !subcategory ||
+      !grossWeight ||
+      !netWeight ||
+      !grossWeightAmount ||
+      !imagelink ||
+      !finalProductCode ||
+      selectedItems.length === 0
+    ) {
+      alert(
+        'All fields must be filled and at least one item must be selected.'
+      );
+      return;
+    }
+
+    // Construct final data object
+    const data = {
+      category: category,
+      subcategory: subcategory,
+      goldpurity: grossWeight,
+      netweight: netWeight,
+      grossWeight: grossWeightAmount,
+      tier1price: calculateFirstPrice(grossWeight, 3),
+      tier2price: calculateSecondPrice(grossWeight, 3),
+      tier3price: calculateThirdPrice(grossWeight, 3),
+      itemsUsed: selectedItems,
+      gst: 3,
+      imagelink: imagelink,
+      productId: finalProductCode,
+    };
+
+    console.log('🔍 Validated Final Data:', data);
+
+    try {
+      const response = await fetch('https://apjapi.vercel.app/addDraft', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        console.error('❌ API Error:', result);
+        alert(`Error: ${result.message}`);
+        return;
+      }
+
+      // ✅ Success
+      alert(`✅ ${result.message}`);
+      console.log('✅ Item saved to Draft successfully:', result);
+
+      // Optional: reset form or state
+      // resetForm();
+    } catch (error) {
+      console.error('❌ Network/Server Error:', error);
+      alert(
+        'Something went wrong while saving the item. Please try again later.'
+      );
+    }
   }
 
   return (
@@ -521,15 +658,23 @@ export default function AddItemPage() {
         <div
           className="savebutton"
           onClick={() => {
-            getAllPrices();
-            calculateFirstPrice(grossWeight, 3);
-            calculateSecondPrice(grossWeight, 3);
-            calculateThirdPrice(grossWeight, 3);
+            // getAllPrices();
+            // calculateFirstPrice(grossWeight, 3);
+            // calculateSecondPrice(grossWeight, 3);
+            // calculateThirdPrice(grossWeight, 3);
+            handleSave();
           }}
         >
           Save Product
         </div>
-        <div className="savebutton">Add as Draft</div>
+        <div
+          className="savebutton"
+          onClick={() => {
+            handleDraft();
+          }}
+        >
+          Add as Draft
+        </div>
         <div className="savebutton">Upload Picture</div>
       </div>
     </div>
