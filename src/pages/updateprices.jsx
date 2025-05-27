@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-export default function UpdatePrice() {
+export default function UpdatePrice({ isLoading, setIsLoading }) {
   const [prices, setPrices] = useState([]);
   const [initialPrices, setInitialPrices] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,6 +15,7 @@ export default function UpdatePrice() {
   });
 
   useEffect(() => {
+    setIsLoading(true);
     fetch('https://apjapi.vercel.app/getAllPrices')
       .then((res) => res.json())
       .then((data) => {
@@ -23,9 +24,10 @@ export default function UpdatePrice() {
           setInitialPrices(JSON.parse(JSON.stringify(data.PRICES)));
           console.log('[Initial Load] Prices:', data.PRICES);
         }
+        setIsLoading(false);
       })
       .catch((err) => console.error('❌ Error fetching prices:', err))
-      .finally(() => setLoading(false));
+      .finally(() => setIsLoading(false));
   }, []);
 
   const handleInputChange = (categoryIndex, itemKey, tierIndex, value) => {
@@ -62,6 +64,7 @@ export default function UpdatePrice() {
   };
 
   const handleSaveChanges = () => {
+    setIsLoading(true);
     console.log('[Saving Changes] Final prices to send:', prices);
     fetch('https://apjapi.vercel.app/updatePrices', {
       method: 'POST',
@@ -75,7 +78,9 @@ export default function UpdatePrice() {
           alert('✅ Prices updated successfully.');
           setInitialPrices(JSON.parse(JSON.stringify(prices)));
           setEditingCategory(null);
+          setIsLoading(false);
         } else {
+          setIsLoading(false);
           alert('❌ Failed to update prices.');
         }
       })
@@ -202,7 +207,7 @@ export default function UpdatePrice() {
         </div>
       )}
 
-      {loading ? (
+      {isLoading ? (
         <p className="updateprices-loading">Loading...</p>
       ) : (
         prices.map((category, categoryIndex) => (
