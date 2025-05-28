@@ -18,8 +18,14 @@ export default function Homescreen({
             name="searchinput"
             id="searchinput"
             className="searchinput"
-            placeholder='Search with Product Code'
+            placeholder="Search with Product Code"
           />
+        </div>
+      </div>
+      <div className="categoriesdiv">
+        <div className="category catactive">
+          <img src="/allitems.png" alt="caticon" className="caticon" />
+          <div className="cattag">All Items</div>
         </div>
       </div>
     </div>

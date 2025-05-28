@@ -254,7 +254,7 @@ body{
   background-color: rgb(245, 245, 245);
   border-radius: 12px;
   margin-top: 10px;
-  border: 1px solid rgb(174, 174, 174);
+  border: 1px solid rgb(205, 205, 205);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -280,6 +280,45 @@ body{
   font-size: 14px;
   color: grey;
 }
+.categoriesdiv{
+  width: 100%;
+  overflow-x: auto;
+  height: auto;
+  margin-top: 8px;
+}
+.category{
+  width: max-content;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  height: 30px;
+  border: 1px solid rgb(196, 196, 196);
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 16px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.caticon{
+  width: 14px;
+  margin-right: 4px;
+}
+.cattag{
+  font-size: 12px;
+  margin-right: 4px;
+}
+.catactive{
+  background-color: royalblue;
+  color: white;
+  border: none;
+}
+.catactive .caticon{
+  filter: invert(1);
+}
+
 
 
 
