@@ -341,6 +341,9 @@ export default function AddItemPage({
 
       const result = await response.json();
       setIsLoading(false);
+      setTimeout(() => {
+        window.location.reload();
+      }, 300);
 
       if (!response.ok) {
         console.error('❌ API Error:', result);

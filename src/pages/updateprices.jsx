@@ -5,6 +5,8 @@ export default function UpdatePrice({
   setIsLoading,
   prices,
   initialPrices,
+  setPrices,
+  setInitialPrices,
 }) {
   const [editingCategory, setEditingCategory] = useState(null);
 

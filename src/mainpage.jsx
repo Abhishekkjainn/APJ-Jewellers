@@ -143,6 +143,8 @@ export default function Mainpage({
           setIsLoading={setIsLoading}
           prices={prices}
           initialPrices={initialPrices}
+          setPrices={setPrices}
+          setInitialPrices={setInitialPrices}
         />
       )}
       {activeTab === 'add' && (

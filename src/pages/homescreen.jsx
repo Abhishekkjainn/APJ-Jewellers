@@ -128,7 +128,68 @@ export default function Homescreen({
       {/* Render Filtered Items (optional section) */}
       <div className="itemsdiv">
         {filteredData.map((item) => (
-          <data className="itemcard"></data>
+          <div className="comp">
+            <data className="itemcard">
+              <div className="first">
+                <img
+                  src={item.imagelink}
+                  alt="Product Image"
+                  className="productimage"
+                />
+              </div>
+              <div className="second">
+                <div className="pillsection">
+                  <div className="pilldiv">
+                    <div className="pill">{item.category}</div>
+                    <div className="pill">{item.subcategory}</div>
+                  </div>
+                  <div className="editbutton">
+                    <div className="btn">
+                      <img
+                        src="/edit.png"
+                        alt="editicon"
+                        className="editicon"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="medium">Product ID - {item.productId}</div>
+                <div className="bottom">
+                  <div className="downloadbutton">
+                    <div className="dwntag">Q1 : {item.tier1price}</div>
+                    <div className="dwnicon">
+                      <img
+                        src="/download.png"
+                        alt="download icon"
+                        className="downicon"
+                      />
+                    </div>
+                  </div>
+                  <div className="downloadbutton">
+                    <div className="dwntag">Q2 : {item.tier2price}</div>
+                    <div className="dwnicon">
+                      <img
+                        src="/download.png"
+                        alt="download icon"
+                        className="downicon"
+                      />
+                    </div>
+                  </div>
+                  <div className="downloadbutton">
+                    <div className="dwntag">Q3 : {item.tier3price}</div>
+                    <div className="dwnicon">
+                      <img
+                        src="/download.png"
+                        alt="download icon"
+                        className="downicon"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </data>
+            <div className="sep"></div>
+          </div>
         ))}
       </div>
     </div>
