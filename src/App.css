@@ -285,6 +285,12 @@ body{
   overflow-x: auto;
   height: auto;
   margin-top: 8px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-left: 16px;
+  margin-right: 16px;
+  white-space: nowrap;
 }
 .category{
   width: max-content;
@@ -298,7 +304,8 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 16px;
+  margin-left: 6px;
+  margin-right: 6px;
   font-size: 12px;
   font-weight: 600;
 }
@@ -317,6 +324,24 @@ body{
 }
 .catactive .caticon{
   filter: invert(1);
+}
+.itemsdiv{
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; 
+  margin-top: 16px;
+}
+.itemcard{
+  width: 90%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(241, 241, 241);
+  border-radius: 20px;
 }
 
 
@@ -552,7 +577,7 @@ body{
 }
 
 
-
+/* 
 .itemcard{
   padding-bottom: 12px;
   padding-top: 12px;
@@ -562,7 +587,7 @@ body{
   padding-bottom: 12px;
   padding-left: 12px;
   padding-right: 12px; */
-  display: flex;
+  /* display: flex;
   justify-content: start;
   align-items: center;
   border-bottom: 1px solid rgba(205, 205, 205, 0.444);
@@ -659,8 +684,8 @@ body{
 .downloadicon{
   filter: invert(1);
   width: 12px;
-  margin-left: 4px;
-}
+  margin-left: 4px; 
+} */
 
 
 
