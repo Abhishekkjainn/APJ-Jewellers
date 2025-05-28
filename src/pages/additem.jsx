@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-export default function AddItemPage({ isLoading, setIsLoading }) {
-  const [pricesData, setPricesData] = useState([]);
+export default function AddItemPage({
+  isLoading,
+  setIsLoading,
+  pricesData,
+  setActiveTab,
+}) {
+  // const [pricesData, setPricesData] = useState([]);
   const [category, setCategory] = useState('');
   const [subcategory, setSubcategory] = useState('');
   const [grossWeight, setGrossWeight] = useState('');
@@ -25,18 +30,18 @@ export default function AddItemPage({ isLoading, setIsLoading }) {
     'Chain',
   ];
 
-  useEffect(() => {
-    setIsLoading(true);
-    fetch('https://apjapi.vercel.app/getAllPrices')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          setPricesData(data.PRICES);
-        }
-        setIsLoading(false);
-      })
-      .catch((err) => console.error('Failed to fetch prices:', err));
-  }, []);
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   fetch('https://apjapi.vercel.app/getAllPrices')
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       if (data.success) {
+  //         setPricesData(data.PRICES);
+  //       }
+  //       setIsLoading(false);
+  //     })
+  //     .catch((err) => console.error('Failed to fetch prices:', err));
+  // }, []);
 
   const getAllMaterialOptions = () => {
     const materials = [];
@@ -346,9 +351,7 @@ export default function AddItemPage({ isLoading, setIsLoading }) {
       // ✅ Success
       alert(`✅ ${result.message}`);
       console.log('✅ Item saved successfully:', result);
-
-      // Optional: reset form or state
-      // resetForm();
+      setActiveTab('home');
     } catch (error) {
       console.error('❌ Network/Server Error:', error);
       alert(

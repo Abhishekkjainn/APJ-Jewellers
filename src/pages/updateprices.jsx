@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-export default function UpdatePrice({ isLoading, setIsLoading }) {
-  const [prices, setPrices] = useState([]);
-  const [initialPrices, setInitialPrices] = useState([]);
-  const [loading, setLoading] = useState(true);
+export default function UpdatePrice({
+  isLoading,
+  setIsLoading,
+  prices,
+  initialPrices,
+}) {
   const [editingCategory, setEditingCategory] = useState(null);
 
   const [showPopup, setShowPopup] = useState(false);
@@ -14,21 +16,21 @@ export default function UpdatePrice({ isLoading, setIsLoading }) {
     unit: 'gm',
   });
 
-  useEffect(() => {
-    setIsLoading(true);
-    fetch('https://apjapi.vercel.app/getAllPrices')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          setPrices(data.PRICES);
-          setInitialPrices(JSON.parse(JSON.stringify(data.PRICES)));
-          console.log('[Initial Load] Prices:', data.PRICES);
-        }
-        setIsLoading(false);
-      })
-      .catch((err) => console.error('❌ Error fetching prices:', err))
-      .finally(() => setIsLoading(false));
-  }, []);
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   fetch('https://apjapi.vercel.app/getAllPrices')
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       if (data.success) {
+  //         setPrices(data.PRICES);
+  //         setInitialPrices(JSON.parse(JSON.stringify(data.PRICES)));
+  //         console.log('[Initial Load] Prices:', data.PRICES);
+  //       }
+  //       setIsLoading(false);
+  //     })
+  //     .catch((err) => console.error('❌ Error fetching prices:', err))
+  //     .finally(() => setIsLoading(false));
+  // }, []);
 
   const handleInputChange = (categoryIndex, itemKey, tierIndex, value) => {
     const updatedPrices = [...prices];

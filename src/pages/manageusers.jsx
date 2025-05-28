@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function ManageUsers() {
+export default function ManageUsers({ isLoading, setIsLoading }) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -13,6 +13,7 @@ export default function ManageUsers() {
 
   const fetchUsers = async () => {
     try {
+      setIsLoading(true);
       const response = await fetch('https://apjapi.vercel.app/getAllUsers');
       const data = await response.json();
       if (data.success) {
@@ -21,10 +22,12 @@ export default function ManageUsers() {
       } else {
         setError(data.message || 'Failed to fetch users.');
       }
+      setIsLoading(false);
     } catch (err) {
       setError('An error occurred while fetching users.');
     } finally {
-      setLoading(false);
+      // setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -150,7 +153,7 @@ export default function ManageUsers() {
 
       {toast && <div className="manageusers-toast">{toast}</div>}
 
-      {loading ? (
+      {isLoading ? (
         <p className="manageusers-loading">Loading users...</p>
       ) : error ? (
         <p className="manageusers-error">{error}</p>

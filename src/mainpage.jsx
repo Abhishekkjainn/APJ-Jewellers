@@ -24,6 +24,10 @@ export default function Mainpage({
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedPriceIndex, setSelectedPriceIndex] = useState(null);
   const [showReminder, setShowReminder] = useState(false);
+  const [data, setData] = useState([]);
+  const [prices, setPrices] = useState([]);
+  const [initialPrices, setInitialPrices] = useState([]);
+  const [pricesData, setPricesData] = useState([]);
 
   // Show popup once per day
   useEffect(() => {
@@ -33,6 +37,43 @@ export default function Mainpage({
       setShowReminder(true);
       localStorage.setItem('lastReminderDate', today);
     }
+  }, []);
+
+  //get all items data
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetch('https://apjapi.vercel.app/getAllItems')
+      .then((res) => res.json())
+      .then((dataa) => {
+        if (dataa.success) {
+          setData(dataa.items);
+
+          console.log('Total Prices All Items :', dataa.items);
+        }
+        setIsLoading(false);
+      })
+      .catch((err) => console.error('❌ Error fetching prices:', err))
+      .finally(() => setIsLoading(false));
+  }, []);
+
+  //fetch Update Items api call
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetch('https://apjapi.vercel.app/getAllPrices')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setPrices(data.PRICES);
+          setPricesData(data.PRICES);
+          setInitialPrices(JSON.parse(JSON.stringify(data.PRICES)));
+          console.log('[Initial Load] Prices:', data.PRICES);
+        }
+        setIsLoading(false);
+      })
+      .catch((err) => console.error('❌ Error fetching prices:', err))
+      .finally(() => setIsLoading(false));
   }, []);
 
   const handlePriceClick = (item, index) => {
@@ -93,13 +134,24 @@ export default function Mainpage({
           onPriceClick={handlePriceClick}
           isLoading={isLoading}
           setIsLoading={setIsLoading}
+          data={data}
         />
       )}
       {activeTab === 'price' && (
-        <UpdatePrice isLoading={isLoading} setIsLoading={setIsLoading} />
+        <UpdatePrice
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          prices={prices}
+          initialPrices={initialPrices}
+        />
       )}
       {activeTab === 'add' && (
-        <AddItemPage isLoading={isLoading} setIsLoading={setIsLoading} />
+        <AddItemPage
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          pricesData={pricesData}
+          setActiveTab={setActiveTab}
+        />
       )}
       {activeTab === 'users' && (
         <ManageUsers isLoading={isLoading} setIsLoading={setIsLoading} />
