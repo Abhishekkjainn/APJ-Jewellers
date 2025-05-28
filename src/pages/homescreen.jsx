@@ -59,6 +59,10 @@ export default function Homescreen({
   isLoading,
   setIsLoading,
   data,
+  setSelectedItem,
+  selectedItem,
+  setSelectedPriceIndex,
+  selectedPriceIndex,
 }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All Items');

@@ -135,6 +135,10 @@ export default function Mainpage({
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           data={data}
+          setSelectedItem={setSelectedItem}
+          selectedItem={selectedItem}
+          setSelectedPriceIndex={setSelectedPriceIndex}
+          selectedPriceIndex={selectedPriceIndex}
         />
       )}
       {activeTab === 'price' && (
