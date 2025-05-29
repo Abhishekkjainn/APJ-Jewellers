@@ -28,7 +28,7 @@ export default function Mainpage({
   const [prices, setPrices] = useState([]);
   const [initialPrices, setInitialPrices] = useState([]);
   const [pricesData, setPricesData] = useState([]);
-
+  const [draft, setDraft] = useState([]);
   // Show popup once per day
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
@@ -48,6 +48,22 @@ export default function Mainpage({
       .then((dataa) => {
         if (dataa.success) {
           setData(dataa.items);
+
+          console.log('Total Prices All Items :', dataa.items);
+        }
+        setIsLoading(false);
+      })
+      .catch((err) => console.error('❌ Error fetching prices:', err))
+      .finally(() => setIsLoading(false));
+  }, []);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetch('https://apjapi.vercel.app/getAllDrafts')
+      .then((res) => res.json())
+      .then((dataa) => {
+        if (dataa.success) {
+          setDraft(dataa.items);
 
           console.log('Total Prices All Items :', dataa.items);
         }
@@ -174,7 +190,17 @@ export default function Mainpage({
         />
       )}
       {activeTab === 'draft' && (
-        <DraftPage isLoading={isLoading} setIsLoading={setIsLoading} />
+        <DraftPage
+          onPriceClick={handlePriceClick}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          data={draft}
+          setSelectedItem={setSelectedItem}
+          selectedItem={selectedItem}
+          setSelectedPriceIndex={setSelectedPriceIndex}
+          selectedPriceIndex={selectedPriceIndex}
+          setActiveTab={setActiveTab}
+        />
       )}
 
       <Bottombar
