@@ -701,6 +701,23 @@ body{
   margin-bottom: 20px;
   margin-left: 20px;
 }
+.editbutton{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn{
+  margin-left: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.editicon{
+  width: 10px;
+}
+.btnred{
+  background-color: rgb(255, 147, 147);
+}
 
 
 /* 

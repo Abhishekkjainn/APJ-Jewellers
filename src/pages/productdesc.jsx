@@ -59,6 +59,46 @@ export default function ProductDesc({
     return acc;
   }, {});
 
+  async function handleDelete(productId) {
+    if (!productId) {
+      alert('❌ Product ID is missing.');
+      return;
+    }
+
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete item ${productId}?`
+    );
+    if (!confirmDelete) return;
+
+    try {
+      // Send GET request to delete the item
+      const response = await fetch(
+        `https://apjapi.vercel.app/deleteItem/productId=${encodeURIComponent(
+          productId
+        )}`
+      );
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        console.error('❌ Deletion failed:', result);
+        alert(`Failed to delete item: ${result.message}`);
+        return;
+      }
+
+      console.log('✅ Item deleted:', result);
+      alert(`✅ ${result.message}`);
+
+      // Optional: refresh or remove item from UI
+      setTimeout(() => window.location.reload(), 300);
+    } catch (error) {
+      console.error('❌ Network/Server Error:', error);
+      alert(
+        'Something went wrong while deleting the item. Please try again later.'
+      );
+    }
+  }
+
   // Helper function to get material price from allPrices
   const getMaterialPrice = (category, label) => {
     if (!allPrices) return null;
@@ -89,6 +129,14 @@ export default function ProductDesc({
           }}
         >
           <img src="/downloadpdf.png" alt="" className="backicon" />
+        </div>
+        <div
+          className="backbutton"
+          onClick={() => {
+            handleDelete(item.id);
+          }}
+        >
+          <img src="/delete.png" alt="" className="backicon" />
         </div>
       </div>
       <img src={item.imagelink} alt="" className="productdescimage" />
