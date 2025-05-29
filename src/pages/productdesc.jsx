@@ -1,103 +1,3 @@
-// import { PDFDownloadLink, pdf } from '@react-pdf/renderer'; // adjust the path
-// import { saveAs } from 'file-saver';
-// import ProductPDF from './productPDF';
-// import { useState } from 'react';
-// export default function ProductDesc({
-//   item,
-//   priceIndex,
-//   isLoading,
-//   setIsLoading,
-//   onBack,
-//   selectedPriceIndex,
-// }) {
-//   const [snackbarVisible, setSnackbarVisible] = useState(false);
-//   if (!item) return <div>No item selected.</div>;
-
-//   // const priceLabels = ['Total Price', 'RQ', 'FRQ'];
-//   // const priceValues = [
-//   //   item.pricing.base,
-//   //   item.pricing.franchise,
-//   //   item.pricing.retail,
-//   // ];
-
-//   const handleDownload = async () => {
-//     const blob = await pdf(
-//       <ProductPDF
-//         item={item}
-//         priceIndex={priceIndex}
-//         logoUrl={
-//           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZpUQWDaUTeJ180nuMsWJwVVpLsDm2xVEycw&s'
-//         }
-//       />
-//     ).toBlob();
-
-//     const today = new Date();
-//     const formattedDate = today.toISOString().split('T')[0];
-//     const filename = `${item.id || 'item'}_${formattedDate}.pdf`;
-
-//     saveAs(blob, filename);
-
-//     // Show snackbar
-//     setSnackbarVisible(true);
-
-//     // Redirect after a short delay
-//     setTimeout(() => {
-//       setSnackbarVisible(false);
-//       setActiveTab('home');
-//     }, 2000); // Show snackbar for 2 seconds
-//   };
-//   let tag = `tier${priceIndex + 1}price`;
-//   let price = item[tag];
-//   const groupedItems = item.itemsUsed?.reduce((acc, material) => {
-//     if (!acc[material.category]) acc[material.category] = [];
-//     acc[material.category].push(material);
-//     return acc;
-//   }, {});
-
-//   return (
-//     <div className="productdescriptionpage">
-//       <img src={item.imagelink} alt="" className="productdescimage" />
-//       <div className="productdesccategory">
-//         <div className="productdescid">Product ID - {item.id}</div>
-//         <div className="productdescpillsection">
-//           <div className="pill">{item.category}</div>
-//           <div className="pill">{item.subcategory}</div>
-//         </div>
-//       </div>
-//       <div className="productdescgolddata">
-//         <div className="golddatatag">Total Price -&nbsp;</div>
-//         <div className="golddataval">{price}</div>
-//       </div>
-//       <div className="productdescgolddata">
-//         <div className="golddatatag">Gold Purity -&nbsp;</div>
-//         <div className="golddataval">{item.goldpurity}</div>
-//       </div>
-//       <div className="productdescgolddata">
-//         <div className="golddatatag">Gold Weight -&nbsp;</div>
-//         <div className="golddataval">{item.netweight} gm</div>
-//       </div>
-//       <div className="productdescgolddata">
-//         <div className="golddatatag">Total Weight -&nbsp;</div>
-//         <div className="golddataval">{item.grossWeight} gm</div>
-//       </div>
-//       <div className="productdesc-groupedlist">
-//         {Object.entries(groupedItems).map(([category, items]) => (
-//           <div key={category}>
-//             <div className="productdesc-category">{category}</div>
-//             <ul className="productdesc-itemlist">
-//               {items.map((item, idx) => (
-//                 <li className="productdesc-item" key={idx}>
-//                   {item.label} – {item.quantity}
-//                 </li>
-//               ))}
-//             </ul>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
-
 import { PDFDownloadLink, pdf } from '@react-pdf/renderer';
 import { saveAs } from 'file-saver';
 import ProductPDF from './productPDF';
@@ -173,6 +73,24 @@ export default function ProductDesc({
 
   return (
     <div className="productdescriptionpage">
+      <div className="productdescbuttonsection">
+        <div
+          className="backbutton"
+          onClick={() => {
+            onBack();
+          }}
+        >
+          <img src="/back.png" alt="" className="backicon" />
+        </div>
+        <div
+          className="backbutton"
+          onClick={() => {
+            handleDownload();
+          }}
+        >
+          <img src="/downloadpdf.png" alt="" className="backicon" />
+        </div>
+      </div>
       <img src={item.imagelink} alt="" className="productdescimage" />
       <div className="productdesccategory">
         <div className="productdescid">Product ID - {item.id}</div>

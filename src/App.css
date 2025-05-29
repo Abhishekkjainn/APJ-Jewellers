@@ -1080,6 +1080,27 @@ body{
 .close-button:hover {
   background-color: #aaa;
 }
+.productdescbuttonsection{
+  width: 90%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.backbutton{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 12px;
+  margin-bottom: 8px;
+}
+.backicon{
+  width: 16px;
+  height: 16px;
+}
 /* Add Items Page - Modern Minimal Aesthetic */
 
 /* Add Items Page - Mobile First Responsive & Compact Design */

@@ -8,92 +8,115 @@ import {
   Image,
 } from '@react-pdf/renderer';
 
-// PDF styles
 const styles = StyleSheet.create({
-  materialsSection: {
-    marginTop: 10,
-  },
-  materialItem: {
-    fontSize: 10,
-    marginBottom: 2,
-  },
   page: {
-    padding: 30,
-    fontSize: 12,
-    fontFamily: 'Helvetica',
+    padding: 20,
+    fontSize: 10,
+    fontFamily: 'Courier',
     backgroundColor: '#fff',
   },
   header: {
-    borderBottom: '1 solid #000',
-    marginBottom: 15,
-    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+    borderBottomStyle: 'dotted',
+    marginBottom: 10,
+    paddingBottom: 8,
     flexDirection: 'row',
     alignItems: 'center',
   },
   logo: {
-    width: 60,
-    height: 60,
-    marginRight: 15,
+    width: 50,
+    height: 50,
+    marginRight: 10,
   },
   shopInfo: {
     flexDirection: 'column',
     justifyContent: 'center',
   },
   shopName: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: 'bold',
-    marginBottom: 2,
+    letterSpacing: 1.2,
   },
   contactLine: {
-    fontSize: 10,
+    fontSize: 8,
     marginBottom: 1,
+  },
+  title: {
+    fontSize: 13,
+    textAlign: 'center',
+    textDecoration: 'underline',
+    marginVertical: 12,
+    fontWeight: 'bold',
+    letterSpacing: 1,
+  },
+  image: {
+    width: 160,
+    height: 160,
+    marginVertical: 8,
+    alignSelf: 'center',
+    borderRadius: 20,
   },
   section: {
     marginBottom: 8,
   },
-  labelRow: {
+  row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottom: '1 solid #ccc',
-    paddingBottom: 4,
-    marginBottom: 4,
+    borderBottomWidth: 1,
+    borderBottomColor: '#888',
+    borderBottomStyle: 'dotted',
+    paddingVertical: 2,
   },
   label: {
-    fontWeight: 'bold',
-    width: '40%',
+    fontWeight: 'normal',
+    width: '45%',
+    letterSpacing: 0.8,
   },
   value: {
-    width: '58%',
+    width: '55%',
     textAlign: 'right',
+    letterSpacing: 0.8,
   },
-  itemImage: {
-    width: 120,
-    height: 120,
-    marginVertical: 10,
-    alignSelf: 'center',
+  subHeader: {
+    fontWeight: 'bold',
+    marginTop: 8,
+    marginBottom: 4,
+    fontSize: 11,
+    textDecoration: 'underline',
+    letterSpacing: 1,
   },
-  footerNote: {
-    fontSize: 10,
-    marginTop: 20,
+  materialItem: {
+    fontSize: 9,
+    marginBottom: 1,
+    letterSpacing: 0.5,
+  },
+  footer: {
+    fontSize: 8,
     textAlign: 'center',
+    marginTop: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#000',
+    borderTopStyle: 'dotted',
+    paddingTop: 6,
+    letterSpacing: 0.7,
   },
 });
 
-// PDF document
 const ProductPDF = ({ item, priceIndex, logoUrl }) => {
-  const priceLabels = ['Total Price', 'RQ', 'FRQ'];
-  const priceValues = [item.totalPrice, item.RQ, item.FRQ];
+  const priceTiers = ['tier1', 'tier2', 'tier3'];
+  const selectedTier = item.pricingBreakdown[priceTiers[priceIndex]];
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        {/* Header with Logo and Shop Details */}
+        {/* Header */}
         <View style={styles.header}>
           {logoUrl && <Image style={styles.logo} src={logoUrl} />}
           <View style={styles.shopInfo}>
             <Text style={styles.shopName}>Amarsons Pearl and Jewels</Text>
             <Text style={styles.contactLine}>
-              Address - Aurangabad , Maharashtra Infront of Anil Medico
+              Address: Infront of Anil Medico, Aurangabad, Maharashtra
             </Text>
             <Text style={styles.contactLine}>Phone: +91 98765 43210</Text>
             <Text style={styles.contactLine}>Email: contact@amarsons.in</Text>
@@ -101,88 +124,89 @@ const ProductPDF = ({ item, priceIndex, logoUrl }) => {
           </View>
         </View>
 
-        {/* Item Name as Heading */}
-        <Text
-          style={{
-            fontSize: 16,
-            marginBottom: 10,
-            textAlign: 'center',
-            textDecoration: 'underline',
-          }}
-        >
-          {item.name}
-        </Text>
+        {/* Title */}
+        <Text style={styles.title}>Jewelry Quotation</Text>
 
         {/* Product Image */}
-        {item.image && <Image style={styles.itemImage} src={item.image} />}
+        {item.imagelink && <Image style={styles.image} src={item.imagelink} />}
 
-        {/* Details Section */}
+        {/* Product Details */}
         <View style={styles.section}>
-          <View style={styles.labelRow}>
+          <View style={styles.row}>
+            <Text style={styles.label}>Product ID:</Text>
+            <Text style={styles.value}>{item.productId}</Text>
+          </View>
+          <View style={styles.row}>
             <Text style={styles.label}>Category:</Text>
+            <Text style={styles.value}>{item.category}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>Jewellery Type:</Text>
             <Text style={styles.value}>{item.subcategory}</Text>
           </View>
-          <View style={styles.labelRow}>
-            <Text style={styles.label}>Material:</Text>
+
+          <View style={styles.row}>
+            <Text style={styles.label}>Gold Purity:</Text>
+            <Text style={styles.value}>{item.goldpurity}</Text>
+          </View>
+
+          <View style={styles.row}>
+            <Text style={styles.label}>Gold Weight:</Text>
+            <Text style={styles.value}>{item.netweight} g</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>Total Weight:</Text>
+            <Text style={styles.value}>{item.grossWeight} g</Text>
+          </View>
+        </View>
+
+        {/* Materials Used */}
+        <Text style={styles.subHeader}>Materials Used</Text>
+        <View style={styles.section}>
+          {item.itemsUsed.map((mat, idx) => (
+            <Text key={idx} style={styles.materialItem}>
+              • {mat.label} ({mat.category}) - {mat.quantity}
+            </Text>
+          ))}
+        </View>
+
+        {/* Pricing Breakdown */}
+        <Text style={styles.subHeader}>
+          Pricing Breakdown (Tier {priceIndex + 1})
+        </Text>
+        <View style={styles.section}>
+          <View style={styles.row}>
+            <Text style={styles.label}>Gold Charges:</Text>
+            <Text style={styles.value}>₹ {selectedTier.goldCharges}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>Wastage Charges:</Text>
+            <Text style={styles.value}>₹ {selectedTier.wastageCharges} Rs</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>Making Charges:</Text>
+            <Text style={styles.value}>₹ {selectedTier.makingCharges} Rs</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>Other Material Charges:</Text>
             <Text style={styles.value}>
-              {item.category}
-              {/* ({item.purity}) */}
+              ₹ {selectedTier.materialCharges} Rs
             </Text>
           </View>
-          <View style={styles.labelRow}>
-            <Text style={styles.label}>Gross Weight:</Text>
-            <Text style={styles.value}>{item.grossweight} g</Text>
+          <View style={styles.row}>
+            <Text style={styles.label}>GST ({item.gst}%):</Text>
+            <Text style={styles.value}>Included</Text>
           </View>
-          {/* <View style={styles.labelRow}>
-            <Text style={styles.label}>Net Weight:</Text>
-            <Text style={styles.value}>{item.netWeight} g</Text>
-          </View> */}
-          {/* <View style={styles.labelRow}>
-            <Text style={styles.label}>Stone:</Text>
-            <Text style={styles.value}>
-              {item.stoneType} ({item.stoneWeight} g)
-            </Text>
-          </View> */}
-          {/* <View style={styles.labelRow}>
-            <Text style={styles.label}>Wastage %:</Text>
-            <Text style={styles.value}>{item.wastagePercent} %</Text>
-          </View> */}
-          {/* <View style={styles.labelRow}>
-            <Text style={styles.label}>Making Charges/g:</Text>
-            <Text style={styles.value}>₹{item.makingChargesPerGram}</Text>
-          </View> */}
-          <View style={styles.labelRow}>
-            <Text style={styles.label}>Price :</Text>
-            <Text style={styles.value}>
-              ₹{' '}
-              {priceIndex == 0
-                ? item.pricing.base
-                : priceLabels == 1
-                ? item.pricing.franchise
-                : item.pricing.retail}
-            </Text>
+          <View style={styles.row}>
+            <Text style={styles.label}>Final Price:</Text>
+            <Text style={styles.value}>₹ {selectedTier.finalPrice} Rs</Text>
           </View>
-          {/* Materials Used Section */}
-          {item.materialsUsed && item.materialsUsed.length > 0 && (
-            <View style={[styles.section, styles.materialsSection]}>
-              <Text style={{ fontWeight: 'bold', marginBottom: 4 }}>
-                Materials Used:
-              </Text>
-              {item.materialsUsed.map((mat, idx) => (
-                <Text key={idx} style={styles.materialItem}>
-                  • {mat.docname}:{' '}
-                  {Object.entries(mat)
-                    .filter(([key]) => key !== 'docname')
-                    .map(([name, value]) => `${name} - ${value}`)
-                    .join(', ')}
-                </Text>
-              ))}
-            </View>
-          )}
         </View>
 
         {/* Footer */}
-        <Text style={styles.footerNote}>Thank you for shopping with us!</Text>
+        <Text style={styles.footer}>
+          Thank you for shopping with us! We appreciate your trust and support.
+        </Text>
       </Page>
     </Document>
   );
