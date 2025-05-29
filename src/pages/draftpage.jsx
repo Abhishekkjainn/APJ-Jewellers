@@ -150,6 +150,45 @@ export default function DraftPage({
       setIsLoading(false);
     }
   }
+  async function handleDelete(productId) {
+    if (!productId) {
+      alert('❌ Product ID is missing.');
+      return;
+    }
+
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete item ${productId}?`
+    );
+    if (!confirmDelete) return;
+
+    try {
+      // Send GET request to delete the item
+      const response = await fetch(
+        `https://apjapi.vercel.app/deleteDraft/productId=${encodeURIComponent(
+          productId
+        )}`
+      );
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        console.error('❌ Deletion failed:', result);
+        alert(`Failed to delete item: ${result.message}`);
+        return;
+      }
+
+      console.log('✅ Item deleted:', result);
+      alert(`✅ ${result.message}`);
+
+      // Optional: refresh or remove item from UI
+      setTimeout(() => window.location.reload(), 300);
+    } catch (error) {
+      console.error('❌ Network/Server Error:', error);
+      alert(
+        'Something went wrong while deleting the item. Please try again later.'
+      );
+    }
+  }
 
   return (
     <div className="homescreen">
@@ -217,13 +256,24 @@ export default function DraftPage({
                     <div className="pill">{item.subcategory}</div>
                   </div>
                   <div className="editbutton">
+                    <div className="btn" onClick={() => setActiveTab('edit')}>
+                      <img
+                        src="/edit.png"
+                        alt="editicon"
+                        className="editicon"
+                      />
+                    </div>
                     <div
-                      className="btn"
+                      className="btn btnred"
                       onClick={() => {
-                        additem(item);
+                        handleDelete(item.productId);
                       }}
                     >
-                      <img src="/add.png" alt="editicon" className="editicon" />
+                      <img
+                        src="/delete.png"
+                        alt="editicon"
+                        className="editicon"
+                      />
                     </div>
                   </div>
                 </div>

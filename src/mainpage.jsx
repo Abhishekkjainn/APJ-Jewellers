@@ -30,6 +30,7 @@ export default function Mainpage({
   const [initialPrices, setInitialPrices] = useState([]);
   const [pricesData, setPricesData] = useState([]);
   const [draft, setDraft] = useState([]);
+  const [edititem, setedititem] = useState([]);
   // Show popup once per day
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
@@ -157,6 +158,8 @@ export default function Mainpage({
           setSelectedPriceIndex={setSelectedPriceIndex}
           selectedPriceIndex={selectedPriceIndex}
           setActiveTab={setActiveTab}
+          setedititem={setedititem}
+          edititem={edititem}
         />
       )}
       {activeTab === 'price' && (
@@ -183,6 +186,8 @@ export default function Mainpage({
           setIsLoading={setIsLoading}
           pricesData={pricesData}
           setActiveTab={setActiveTab}
+          setedititem={setedititem}
+          item={edititem}
         />
       )}
       {activeTab === 'users' && (

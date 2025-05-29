@@ -10,6 +10,8 @@ export default function Homescreen({
   setSelectedPriceIndex,
   selectedPriceIndex,
   setActiveTab,
+  setedititem,
+  edititem,
 }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All Items');
@@ -135,7 +137,13 @@ export default function Homescreen({
                     <div className="pill">{item.subcategory}</div>
                   </div>
                   <div className="editbutton">
-                    <div className="btn" onClick={() => setActiveTab('edit')}>
+                    <div
+                      className="btn"
+                      onClick={() => {
+                        setedititem(item);
+                        setActiveTab('edit');
+                      }}
+                    >
                       <img
                         src="/edit.png"
                         alt="editicon"

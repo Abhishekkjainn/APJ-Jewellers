@@ -7,6 +7,8 @@ export default function EditItemPage({
   setIsLoading,
   pricesData,
   setActiveTab,
+  setedititem,
+  item,
 }) {
   // const [pricesData, setPricesData] = useState([]);
   const [category, setCategory] = useState('');
@@ -28,6 +30,15 @@ export default function EditItemPage({
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
+
+  useEffect(() => {
+    setCategory(item.category);
+    setSubcategory(item.subcategory);
+    setCodeSuffix(item.productId.substring(3));
+    setGrossWeight(item.goldpurity);
+    setGrossWeightAmount(item.grossWeight);
+    setSelectedItems(item.itemsUsed);
+  }, []);
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -351,7 +362,7 @@ export default function EditItemPage({
 
     try {
       setIsLoading(true);
-      const response = await fetch('https://apjapi.vercel.app/addItem', {
+      const response = await fetch('https://apjapi.vercel.app/addeditedItem', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -454,7 +465,7 @@ export default function EditItemPage({
 
   return (
     <div className="additems-container">
-      <div className="additemheading">Add Product</div>
+      <div className="additemheading">Edit Product</div>
       <div className="additems-field">
         <select
           value={category}
