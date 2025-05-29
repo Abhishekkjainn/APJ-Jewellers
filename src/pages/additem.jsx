@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '/firebase.js'; // adjust the path accordingly
 
 export default function AddItemPage({
   isLoading,
@@ -16,6 +18,37 @@ export default function AddItemPage({
   const [total, setTotal] = useState(0);
   const [codeprefix, setCodePrefix] = useState('');
   const [codeSuffix, setCodeSuffix] = useState('');
+  const fileInputRef = useRef(null);
+  const [imageFile, setImageFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState('');
+  const [uploadedUrl, setUploadedUrl] = useState('');
+  const [uploading, setUploading] = useState(false);
+  const [imagelinktext, setImageLinktext] = useState('');
+
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      setPreviewUrl(URL.createObjectURL(file));
+
+      // Upload to Firebase
+      const imageRef = ref(storage, `images/${finalProductCode}`);
+      setIsLoading(true);
+      try {
+        await uploadBytes(imageRef, file);
+        const url = await getDownloadURL(imageRef);
+        setUploadedUrl(url);
+        console.log('Uploaded image URL:', url);
+      } catch (error) {
+        console.error('Upload failed:', error);
+      }
+      setIsLoading(false);
+    }
+  };
 
   const subcategories = [
     'Necklace',
@@ -29,19 +62,6 @@ export default function AddItemPage({
     'Maang Tikka',
     'Chain',
   ];
-
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   fetch('https://apjapi.vercel.app/getAllPrices')
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (data.success) {
-  //         setPricesData(data.PRICES);
-  //       }
-  //       setIsLoading(false);
-  //     })
-  //     .catch((err) => console.error('Failed to fetch prices:', err));
-  // }, []);
 
   const getAllMaterialOptions = () => {
     const materials = [];
@@ -463,6 +483,16 @@ export default function AddItemPage({
           ))}
         </select>
       </div>
+      <div className="additemheadingsmall">Add Image Link</div>
+      <div className="grossweightsection">
+        <input
+          type="text"
+          placeholder="image link"
+          className="grosswtinp imglinkinp"
+          value={imagelinktext}
+          onChange={(e) => setImageLinktext(e.target.value)}
+        />
+      </div>
       <div className="additemheadingsmall">
         Product Code - {finalProductCode}
       </div>
@@ -687,7 +717,38 @@ export default function AddItemPage({
         >
           Add as Draft
         </div>
-        <div className="savebutton">Upload Picture</div>
+        <div
+          className="savebutton"
+          onClick={() => {
+            handleButtonClick();
+          }}
+        >
+          Upload Picture
+        </div>
+        <input
+          type="file"
+          accept="image/*"
+          ref={fileInputRef}
+          style={{ display: 'none' }}
+          onChange={handleFileChange}
+        />
+        {previewUrl && (
+          <div style={{ marginTop: 10 }}>
+            <img
+              src={previewUrl}
+              alt="Preview"
+              style={{ width: 200, height: 'auto', borderRadius: 8 }}
+            />
+          </div>
+        )}
+        {uploadedUrl && (
+          <div style={{ marginTop: 10 }}>
+            <p>Uploaded URL:</p>
+            <a href={uploadedUrl} target="_blank" rel="noopener noreferrer">
+              {uploadedUrl}
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );

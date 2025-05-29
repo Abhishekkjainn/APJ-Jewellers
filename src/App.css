@@ -1077,6 +1077,7 @@ body{
   cursor: pointer;
 }
 
+
 .close-button:hover {
   background-color: #aaa;
 }
@@ -2412,4 +2413,9 @@ body{
   100% {
     background-color: transparent;
   }
+}
+
+.imglinkinp{
+  width: 95%;
+  margin-left: 0;
 }

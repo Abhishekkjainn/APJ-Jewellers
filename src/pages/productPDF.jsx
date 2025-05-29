@@ -171,9 +171,7 @@ const ProductPDF = ({ item, priceIndex, logoUrl }) => {
         </View>
 
         {/* Pricing Breakdown */}
-        <Text style={styles.subHeader}>
-          Pricing Breakdown (Tier {priceIndex + 1})
-        </Text>
+        <Text style={styles.subHeader}>Pricing Breakdown</Text>
         <View style={styles.section}>
           <View style={styles.row}>
             <Text style={styles.label}>Gold Charges:</Text>
