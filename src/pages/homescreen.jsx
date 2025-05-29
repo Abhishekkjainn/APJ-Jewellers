@@ -63,6 +63,7 @@ export default function Homescreen({
   selectedItem,
   setSelectedPriceIndex,
   selectedPriceIndex,
+  setActiveTab,
 }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All Items');
@@ -159,7 +160,14 @@ export default function Homescreen({
                 </div>
                 <div className="medium">Product ID - {item.productId}</div>
                 <div className="bottom">
-                  <div className="downloadbutton">
+                  <div
+                    className="downloadbutton"
+                    onClick={() => {
+                      setSelectedItem(item);
+                      setSelectedPriceIndex(0);
+                      setActiveTab('productdesc');
+                    }}
+                  >
                     <div className="dwntag">Q1 : {item.tier1price}</div>
                     <div className="dwnicon">
                       <img
@@ -169,7 +177,14 @@ export default function Homescreen({
                       />
                     </div>
                   </div>
-                  <div className="downloadbutton">
+                  <div
+                    className="downloadbutton"
+                    onClick={() => {
+                      setSelectedItem(item);
+                      setSelectedPriceIndex(1);
+                      setActiveTab('productdesc');
+                    }}
+                  >
                     <div className="dwntag">Q2 : {item.tier2price}</div>
                     <div className="dwnicon">
                       <img
@@ -179,7 +194,14 @@ export default function Homescreen({
                       />
                     </div>
                   </div>
-                  <div className="downloadbutton">
+                  <div
+                    className="downloadbutton"
+                    onClick={() => {
+                      setSelectedItem(item);
+                      setSelectedPriceIndex(2);
+                      setActiveTab('productdesc');
+                    }}
+                  >
                     <div className="dwntag">Q3 : {item.tier3price}</div>
                     <div className="dwnicon">
                       <img

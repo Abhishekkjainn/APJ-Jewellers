@@ -139,6 +139,7 @@ export default function Mainpage({
           selectedItem={selectedItem}
           setSelectedPriceIndex={setSelectedPriceIndex}
           selectedPriceIndex={selectedPriceIndex}
+          setActiveTab={setActiveTab}
         />
       )}
       {activeTab === 'price' && (
@@ -169,6 +170,7 @@ export default function Mainpage({
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           onBack={() => setActiveTab('home')}
+          selectedPriceIndex={selectedPriceIndex}
         />
       )}
       {activeTab === 'draft' && (
