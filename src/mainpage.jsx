@@ -201,6 +201,7 @@ export default function Mainpage({
           setIsLoading={setIsLoading}
           onBack={() => setActiveTab('home')}
           selectedPriceIndex={selectedPriceIndex}
+          setActiveTab={setActiveTab}
         />
       )}
       {activeTab === 'draft' && (

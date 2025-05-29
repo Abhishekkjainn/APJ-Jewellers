@@ -10,6 +10,7 @@ export default function ProductDesc({
   setIsLoading,
   onBack,
   selectedPriceIndex,
+  setActiveTab,
 }) {
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [allPrices, setAllPrices] = useState(null);
@@ -45,7 +46,6 @@ export default function ProductDesc({
     setSnackbarVisible(true);
     setTimeout(() => {
       setSnackbarVisible(false);
-      setActiveTab('home');
     }, 2000);
   };
 
@@ -236,6 +236,9 @@ export default function ProductDesc({
             </button>
           </div>
         </div>
+      )}
+      {snackbarVisible && (
+        <div className="snackbar">PDF downloaded successfully!</div>
       )}
     </div>
   );

@@ -310,9 +310,6 @@ export default function AddItemPage({
     return finaltotal.toFixed(1);
   }
 
-  let imagelink =
-    'https://5.imimg.com/data5/TG/DN/MY-37294786/designer-artificial-jewellery-500x500.jpg';
-
   async function handleSave() {
     // Frontend Validation
     if (
@@ -321,7 +318,7 @@ export default function AddItemPage({
       !grossWeight ||
       !netWeight ||
       !grossWeightAmount ||
-      !imagelink ||
+      !imagelinktext ||
       !finalProductCode ||
       selectedItems.length === 0
     ) {
@@ -343,7 +340,7 @@ export default function AddItemPage({
       tier3price: calculateThirdPrice(grossWeight, 3),
       itemsUsed: selectedItems,
       gst: 3,
-      imagelink: imagelink,
+      imagelink: imagelinktext,
       productId: finalProductCode,
     };
 
@@ -391,7 +388,7 @@ export default function AddItemPage({
       !grossWeight ||
       !netWeight ||
       !grossWeightAmount ||
-      !imagelink ||
+      !imagelinktext ||
       !finalProductCode ||
       selectedItems.length === 0
     ) {
@@ -413,7 +410,7 @@ export default function AddItemPage({
       tier3price: calculateThirdPrice(grossWeight, 3),
       itemsUsed: selectedItems,
       gst: 3,
-      imagelink: imagelink,
+      imagelink: imagelinktext,
       productId: finalProductCode,
     };
 

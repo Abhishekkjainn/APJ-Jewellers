@@ -38,6 +38,7 @@ export default function EditItemPage({
     setGrossWeight(item.goldpurity);
     setGrossWeightAmount(item.grossWeight);
     setSelectedItems(item.itemsUsed);
+    setImageLinktext(item.imagelink);
   }, []);
 
   const handleFileChange = async (e) => {
