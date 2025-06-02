@@ -256,12 +256,13 @@ export default function DraftPage({
                     <div className="pill">{item.subcategory}</div>
                   </div>
                   <div className="editbutton">
-                    <div className="btn" onClick={() => setActiveTab('edit')}>
-                      <img
-                        src="/edit.png"
-                        alt="editicon"
-                        className="editicon"
-                      />
+                    <div
+                      className="btn"
+                      onClick={() => {
+                        additem(item);
+                      }}
+                    >
+                      <img src="/add.png" alt="editicon" className="editicon" />
                     </div>
                     <div
                       className="btn btnred"

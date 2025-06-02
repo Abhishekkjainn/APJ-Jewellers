@@ -2466,3 +2466,15 @@ body{
     transform: translateX(-50%) translateY(20px);
   }
 }
+.prevdiv{
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.previmg{
+  width: 90%;
+  height: auto;
+  border-radius: 20px;
+}

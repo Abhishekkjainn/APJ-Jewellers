@@ -25,11 +25,7 @@ export default function EditItemPage({
   const [previewUrl, setPreviewUrl] = useState('');
   const [uploadedUrl, setUploadedUrl] = useState('');
   const [uploading, setUploading] = useState(false);
-  const [imagelinktext, setImageLinktext] = useState('');
-
-  const handleButtonClick = () => {
-    fileInputRef.current.click();
-  };
+  const [imageLinkText, setImageLinkText] = useState('');
 
   useEffect(() => {
     setCategory(item.category);
@@ -38,27 +34,62 @@ export default function EditItemPage({
     setGrossWeight(item.goldpurity);
     setGrossWeightAmount(item.grossWeight);
     setSelectedItems(item.itemsUsed);
-    setImageLinktext(item.imagelink);
+    setImageLinkText(item.imagelink);
   }, []);
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
 
-  const handleFileChange = async (e) => {
+  // 🔍 Open file picker when button is clicked
+  const openFilePicker = () => {
+    fileInputRef.current.click();
+  };
+
+  // 📷 Handle file input & show preview
+  const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
+    if (file && file.type.startsWith('image/')) {
       setImageFile(file);
       setPreviewUrl(URL.createObjectURL(file));
+    } else {
+      alert('Please select a valid image file.');
+    }
+  };
 
-      // Upload to Firebase
-      const imageRef = ref(storage, `images/${finalProductCode}`);
-      setIsLoading(true);
-      try {
-        await uploadBytes(imageRef, file);
-        const url = await getDownloadURL(imageRef);
-        setUploadedUrl(url);
-        console.log('Uploaded image URL:', url);
-      } catch (error) {
-        console.error('Upload failed:', error);
+  // ⬆️ Upload to Cloudinary
+  const uploadToCloudinary = async () => {
+    if (!imageFile) {
+      alert('No image selected');
+      return;
+    }
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append('file', imageFile);
+    formData.append('upload_preset', 'your_unsigned_preset'); // 🔁 Replace with your preset name
+    formData.append('folder', 'myimages'); // Optional
+
+    try {
+      const response = await fetch(
+        'https://api.cloudinary.com/v1_1/your_cloud_name/image/upload', // 🔁 Replace with your cloud name
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+
+      const data = await response.json();
+      if (data.secure_url) {
+        setUploadedUrl(data.secure_url);
+        setImageLinkText(data.secure_url);
+        console.log('Image uploaded to:', data.secure_url);
+      } else {
+        console.error('Upload failed:', data);
       }
-      setIsLoading(false);
+    } catch (error) {
+      console.error('Error uploading:', error);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -325,6 +356,76 @@ export default function EditItemPage({
   let imagelink =
     'https://5.imimg.com/data5/TG/DN/MY-37294786/designer-artificial-jewellery-500x500.jpg';
 
+  // async function handleSave() {
+  //   // Frontend Validation
+  //   if (
+  //     !category ||
+  //     !subcategory ||
+  //     !grossWeight ||
+  //     !netWeight ||
+  //     !grossWeightAmount ||
+  //     !imagelink ||
+  //     !finalProductCode ||
+  //     selectedItems.length === 0
+  //   ) {
+  //     alert(
+  //       'All fields must be filled and at least one item must be selected.'
+  //     );
+  //     return;
+  //   }
+
+  //   // Construct final data object
+  //   const data = {
+  //     category: category,
+  //     subcategory: subcategory,
+  //     goldpurity: grossWeight,
+  //     netweight: netWeight,
+  //     grossWeight: grossWeightAmount,
+  //     tier1price: calculateFirstPrice(grossWeight, 3),
+  //     tier2price: calculateSecondPrice(grossWeight, 3),
+  //     tier3price: calculateThirdPrice(grossWeight, 3),
+  //     itemsUsed: selectedItems,
+  //     gst: 3,
+  //     imagelink: imagelink,
+  //     productId: finalProductCode,
+  //   };
+
+  //   console.log('🔍 Validated Final Data:', data);
+
+  //   try {
+  //     setIsLoading(true);
+  //     const response = await fetch('https://apjapi.vercel.app/addeditedItem', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(data),
+  //     });
+
+  //     const result = await response.json();
+  //     setIsLoading(false);
+  //     setTimeout(() => {
+  //       window.location.reload();
+  //     }, 300);
+
+  //     if (!response.ok) {
+  //       console.error('❌ API Error:', result);
+  //       alert(`Error: ${result.message}`);
+  //       return;
+  //     }
+
+  //     // ✅ Success
+  //     alert(`✅ ${result.message}`);
+  //     console.log('✅ Item saved successfully:', result);
+  //     setActiveTab('home');
+  //   } catch (error) {
+  //     console.error('❌ Network/Server Error:', error);
+  //     alert(
+  //       'Something went wrong while saving the item. Please try again later.'
+  //     );
+  //   }
+  // }
+
   async function handleSave() {
     // Frontend Validation
     if (
@@ -333,7 +434,7 @@ export default function EditItemPage({
       !grossWeight ||
       !netWeight ||
       !grossWeightAmount ||
-      !imagelink ||
+      // !imageLinkText ||
       !finalProductCode ||
       selectedItems.length === 0
     ) {
@@ -342,6 +443,45 @@ export default function EditItemPage({
       );
       return;
     }
+
+    setIsLoading(true);
+
+    // // 🔄 Step 1: Upload image to Cloudinary
+    // let imageUrl = '';
+    // const formData = new FormData();
+    // formData.append('file', imageFile);
+    // formData.append('upload_preset', 'apjimagedatabase'); // your preset
+    // formData.append('folder', 'apjimages'); // optional
+
+    // try {
+    //   const uploadResponse = await fetch(
+    //     'https://api.cloudinary.com/v1_1/dmqvtwlv2/image/upload',
+    //     {
+    //       method: 'POST',
+    //       body: formData,
+    //     }
+    //   );
+
+    //   const uploadResult = await uploadResponse.json();
+
+    //   if (!uploadResult.secure_url) {
+    //     setIsLoading(false);
+    //     console.error('❌ Image upload failed:', uploadResult);
+    //     alert('Image upload failed. Please try again.');
+    //     return;
+    //   }
+
+    //   imageUrl = uploadResult.secure_url;
+    //   console.log(imageUrl);
+    //   setUploadedUrl(imageUrl);
+    //   setImageLinkText(imageUrl);
+    //   console.log('✅ Image uploaded:', imageUrl);
+    // } catch (error) {
+    //   setIsLoading(false);
+    //   console.error('❌ Error uploading image:', error);
+    //   alert('Something went wrong during image upload.');
+    //   return;
+    // }
 
     // Construct final data object
     const data = {
@@ -355,7 +495,7 @@ export default function EditItemPage({
       tier3price: calculateThirdPrice(grossWeight, 3),
       itemsUsed: selectedItems,
       gst: 3,
-      imagelink: imagelink,
+      imagelink: imageLinkText,
       productId: finalProductCode,
     };
 
@@ -501,8 +641,8 @@ export default function EditItemPage({
           type="text"
           placeholder="image link"
           className="grosswtinp imglinkinp"
-          value={imagelinktext}
-          onChange={(e) => setImageLinktext(e.target.value)}
+          value={imageLinkText}
+          onChange={(e) => setImageLinkText(e.target.value)}
         />
       </div>
       <div className="additemheadingsmall">
@@ -721,46 +861,22 @@ export default function EditItemPage({
         >
           Save Product
         </div>
-        <div
+        {/* <div
           className="savebutton"
           onClick={() => {
             handleDraft();
           }}
         >
           Add as Draft
-        </div>
-        <div
+        </div> */}
+        {/* <div
           className="savebutton"
           onClick={() => {
             handleButtonClick();
           }}
         >
           Upload Picture
-        </div>
-        <input
-          type="file"
-          accept="image/*"
-          ref={fileInputRef}
-          style={{ display: 'none' }}
-          onChange={handleFileChange}
-        />
-        {previewUrl && (
-          <div style={{ marginTop: 10 }}>
-            <img
-              src={previewUrl}
-              alt="Preview"
-              style={{ width: 200, height: 'auto', borderRadius: 8 }}
-            />
-          </div>
-        )}
-        {uploadedUrl && (
-          <div style={{ marginTop: 10 }}>
-            <p>Uploaded URL:</p>
-            <a href={uploadedUrl} target="_blank" rel="noopener noreferrer">
-              {uploadedUrl}
-            </a>
-          </div>
-        )}
+        </div>      */}
       </div>
     </div>
   );

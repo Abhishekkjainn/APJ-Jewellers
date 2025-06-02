@@ -23,29 +23,58 @@ export default function AddItemPage({
   const [previewUrl, setPreviewUrl] = useState('');
   const [uploadedUrl, setUploadedUrl] = useState('');
   const [uploading, setUploading] = useState(false);
-  const [imagelinktext, setImageLinktext] = useState('');
+  const [imageLinkText, setImageLinkText] = useState('');
 
-  const handleButtonClick = () => {
+  const openFilePicker = () => {
     fileInputRef.current.click();
   };
 
-  const handleFileChange = async (e) => {
+  // 📷 Handle file input & show preview
+  const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
+    if (file && file.type.startsWith('image/')) {
       setImageFile(file);
       setPreviewUrl(URL.createObjectURL(file));
+    } else {
+      alert('Please select a valid image file.');
+    }
+  };
 
-      // Upload to Firebase
-      const imageRef = ref(storage, `images/${finalProductCode}`);
-      setIsLoading(true);
-      try {
-        await uploadBytes(imageRef, file);
-        const url = await getDownloadURL(imageRef);
-        setUploadedUrl(url);
-        console.log('Uploaded image URL:', url);
-      } catch (error) {
-        console.error('Upload failed:', error);
+  // ⬆️ Upload to Cloudinary
+  const uploadToCloudinary = async () => {
+    if (!imageFile) {
+      alert('No image selected');
+      return;
+    }
+
+    setUploading(true);
+    setIsLoading(true);
+    const formData = new FormData();
+    formData.append('file', imageFile);
+    formData.append('upload_preset', 'apjimagedatabase'); // 🔁 Replace with your preset name
+    formData.append('folder', 'apjimages'); // Optional
+
+    try {
+      const response = await fetch(
+        'https://api.cloudinary.com/v1_1/dmqvtwlv2/image/upload', // 🔁 Replace with your cloud name
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+
+      const data = await response.json();
+      if (data.secure_url) {
+        setUploadedUrl(data.secure_url);
+        setImageLinkText(data.secure_url);
+        console.log('Image uploaded to:', data.secure_url);
+      } else {
+        console.error('Upload failed:', data);
       }
+    } catch (error) {
+      console.error('Error uploading:', error);
+    } finally {
+      setUploading(false);
       setIsLoading(false);
     }
   };
@@ -318,13 +347,52 @@ export default function AddItemPage({
       !grossWeight ||
       !netWeight ||
       !grossWeightAmount ||
-      !imagelinktext ||
+      // !imageLinkText ||
       !finalProductCode ||
       selectedItems.length === 0
     ) {
       alert(
         'All fields must be filled and at least one item must be selected.'
       );
+      return;
+    }
+
+    setIsLoading(true);
+
+    // 🔄 Step 1: Upload image to Cloudinary
+    let imageUrl = '';
+    const formData = new FormData();
+    formData.append('file', imageFile);
+    formData.append('upload_preset', 'apjimagedatabase'); // your preset
+    formData.append('folder', 'apjimages'); // optional
+
+    try {
+      const uploadResponse = await fetch(
+        'https://api.cloudinary.com/v1_1/dmqvtwlv2/image/upload',
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+
+      const uploadResult = await uploadResponse.json();
+
+      if (!uploadResult.secure_url) {
+        setIsLoading(false);
+        console.error('❌ Image upload failed:', uploadResult);
+        alert('Image upload failed. Please try again.');
+        return;
+      }
+
+      imageUrl = uploadResult.secure_url;
+      console.log(imageUrl);
+      setUploadedUrl(imageUrl);
+      setImageLinkText(imageUrl);
+      console.log('✅ Image uploaded:', imageUrl);
+    } catch (error) {
+      setIsLoading(false);
+      console.error('❌ Error uploading image:', error);
+      alert('Something went wrong during image upload.');
       return;
     }
 
@@ -340,7 +408,7 @@ export default function AddItemPage({
       tier3price: calculateThirdPrice(grossWeight, 3),
       itemsUsed: selectedItems,
       gst: 3,
-      imagelink: imagelinktext,
+      imagelink: imageUrl,
       productId: finalProductCode,
     };
 
@@ -388,13 +456,52 @@ export default function AddItemPage({
       !grossWeight ||
       !netWeight ||
       !grossWeightAmount ||
-      !imagelinktext ||
+      // !imageLinkText ||
       !finalProductCode ||
       selectedItems.length === 0
     ) {
       alert(
         'All fields must be filled and at least one item must be selected.'
       );
+      return;
+    }
+
+    setIsLoading(true);
+
+    // 🔄 Step 1: Upload image to Cloudinary
+    let imageUrl = '';
+    const formData = new FormData();
+    formData.append('file', imageFile);
+    formData.append('upload_preset', 'apjimagedatabase'); // your preset
+    formData.append('folder', 'apjimages'); // optional
+
+    try {
+      const uploadResponse = await fetch(
+        'https://api.cloudinary.com/v1_1/dmqvtwlv2/image/upload',
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+
+      const uploadResult = await uploadResponse.json();
+
+      if (!uploadResult.secure_url) {
+        setIsLoading(false);
+        console.error('❌ Image upload failed:', uploadResult);
+        alert('Image upload failed. Please try again.');
+        return;
+      }
+
+      imageUrl = uploadResult.secure_url;
+      console.log(imageUrl);
+      setUploadedUrl(imageUrl);
+      setImageLinkText(imageUrl);
+      console.log('✅ Image uploaded:', imageUrl);
+    } catch (error) {
+      setIsLoading(false);
+      console.error('❌ Error uploading image:', error);
+      alert('Something went wrong during image upload.');
       return;
     }
 
@@ -410,7 +517,7 @@ export default function AddItemPage({
       tier3price: calculateThirdPrice(grossWeight, 3),
       itemsUsed: selectedItems,
       gst: 3,
-      imagelink: imagelinktext,
+      imagelink: imageUrl,
       productId: finalProductCode,
     };
 
@@ -428,6 +535,9 @@ export default function AddItemPage({
 
       const result = await response.json();
       setIsLoading(false);
+      setTimeout(() => {
+        window.location.reload();
+      }, 300);
 
       if (!response.ok) {
         console.error('❌ API Error:', result);
@@ -437,10 +547,8 @@ export default function AddItemPage({
 
       // ✅ Success
       alert(`✅ ${result.message}`);
-      console.log('✅ Item saved to Draft successfully:', result);
-
-      // Optional: reset form or state
-      // resetForm();
+      console.log('✅ Item saved successfully:', result);
+      setActiveTab('home');
     } catch (error) {
       console.error('❌ Network/Server Error:', error);
       alert(
@@ -486,8 +594,8 @@ export default function AddItemPage({
           type="text"
           placeholder="image link"
           className="grosswtinp imglinkinp"
-          value={imagelinktext}
-          onChange={(e) => setImageLinktext(e.target.value)}
+          value={imageLinkText}
+          onChange={(e) => setImageLinkText(e.target.value)}
         />
       </div>
       <div className="additemheadingsmall">
@@ -697,10 +805,6 @@ export default function AddItemPage({
         <div
           className="savebutton"
           onClick={() => {
-            // getAllPrices();
-            // calculateFirstPrice(grossWeight, 3);
-            // calculateSecondPrice(grossWeight, 3);
-            // calculateThirdPrice(grossWeight, 3);
             handleSave();
           }}
         >
@@ -714,14 +818,8 @@ export default function AddItemPage({
         >
           Add as Draft
         </div>
-        <div
-          className="savebutton"
-          onClick={() => {
-            handleButtonClick();
-          }}
-        >
-          Upload Picture
-        </div>
+
+        {/* Hidden file input */}
         <input
           type="file"
           accept="image/*"
@@ -729,24 +827,37 @@ export default function AddItemPage({
           style={{ display: 'none' }}
           onChange={handleFileChange}
         />
-        {previewUrl && (
-          <div style={{ marginTop: 10 }}>
-            <img
-              src={previewUrl}
-              alt="Preview"
-              style={{ width: 200, height: 'auto', borderRadius: 8 }}
-            />
-          </div>
-        )}
-        {uploadedUrl && (
-          <div style={{ marginTop: 10 }}>
-            <p>Uploaded URL:</p>
-            <a href={uploadedUrl} target="_blank" rel="noopener noreferrer">
-              {uploadedUrl}
-            </a>
-          </div>
-        )}
+
+        <button
+          disabled={uploadedUrl}
+          className="savebutton"
+          onClick={openFilePicker}
+        >
+          Upload Picture
+        </button>
       </div>
+      {/* Upload button */}
+      {previewUrl && (
+        <div style={{ marginTop: 10 }} className="prevdiv">
+          <img
+            src={previewUrl}
+            alt="Preview"
+            // style={{ width: 200, borderRadius: 8 }}
+            className="previmg"
+          />
+          {/* {imageFile && (
+            <div style={{ marginTop: 10 }} className="imgupload">
+              <button
+                onClick={uploadToCloudinary}
+                disabled={uploading}
+                className="savebutton"
+              >
+                {uploading ? 'Uploading...' : 'Upload Database'}
+              </button>
+            </div>
+          )} */}
+        </div>
+      )}
     </div>
   );
 }
