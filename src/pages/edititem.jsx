@@ -191,11 +191,7 @@ export default function EditItemPage({
   }
 
   useEffect(() => {
-    if (item.making == 'MAKING') {
-      setPolkiType(0);
-    } else {
-      setPolkiType(1);
-    }
+    setPolkiType(item.making);
   }, [item]);
 
   useEffect(() => {
