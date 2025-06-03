@@ -214,66 +214,80 @@ export default function UpdatePrice({
       {isLoading ? (
         <p className="updateprices-loading">Loading...</p>
       ) : (
-        prices.map((category, categoryIndex) => (
-          <div key={category.docname} className="updateprices-category">
-            <div className="updateprices-category-header">
-              <h3>{category.docname}</h3>
-              <button
-                className="updateprices-edit-button"
-                onClick={() => handleEditCategory(category.docname)}
-              >
-                {editingCategory === category.docname ? 'Close' : 'Edit'}
-              </button>
-            </div>
-            <div className="updateprices-items">
-              {Object.entries(category).map(([itemKey, values]) => {
-                if (itemKey === 'docname') return null;
-                return (
-                  <div key={itemKey} className="updateprices-item-row">
-                    <label className="updateprices-item-label">{itemKey}</label>
-                    <div className="updateprices-input-group">
-                      {values.map((value, tierIndex) => {
-                        const isChanged =
-                          initialPrices?.[categoryIndex]?.[itemKey]?.[
-                            tierIndex
-                          ] != value;
-                        return (
-                          <input
-                            key={tierIndex}
-                            type="number"
-                            value={value}
-                            onChange={(e) =>
-                              handleInputChange(
-                                categoryIndex,
-                                itemKey,
-                                tierIndex,
-                                e.target.value
-                              )
-                            }
-                            className={`updateprices-input ${
-                              isChanged ? 'updateprices-changed' : ''
-                            }`}
-                            disabled={editingCategory !== category.docname}
-                          />
-                        );
-                      })}
-                      {editingCategory === category.docname && (
-                        <button
-                          className="updateprices-delete-button"
-                          onClick={() =>
-                            handleDeleteItem(categoryIndex, itemKey)
-                          }
-                        >
-                          ❌
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
+        <>
+          <div className="topheaderupd updateprices-items">
+            <div className="updateprices-item-row">
+              <label className="updateprices-item-label l1">Item name</label>
+              <div className="updateprices-input-group">
+                <div className="Q3">Q3 : Owner</div>
+                <div className="Q3">Q2 : RQ</div>
+                <div className="Q3">Q1 : Highest</div>
+              </div>
             </div>
           </div>
-        ))
+          {prices.map((category, categoryIndex) => (
+            <div key={category.docname} className="updateprices-category">
+              <div className="updateprices-category-header">
+                <h3>{category.docname}</h3>
+                <button
+                  className="updateprices-edit-button"
+                  onClick={() => handleEditCategory(category.docname)}
+                >
+                  {editingCategory === category.docname ? 'Close' : 'Edit'}
+                </button>
+              </div>
+              <div className="updateprices-items">
+                {Object.entries(category).map(([itemKey, values]) => {
+                  if (itemKey === 'docname') return null;
+                  return (
+                    <div key={itemKey} className="updateprices-item-row">
+                      <label className="updateprices-item-label">
+                        {itemKey}
+                      </label>
+                      <div className="updateprices-input-group">
+                        {values.map((value, tierIndex) => {
+                          const isChanged =
+                            initialPrices?.[categoryIndex]?.[itemKey]?.[
+                              tierIndex
+                            ] != value;
+                          return (
+                            <input
+                              key={tierIndex}
+                              type="number"
+                              value={value}
+                              onChange={(e) =>
+                                handleInputChange(
+                                  categoryIndex,
+                                  itemKey,
+                                  tierIndex,
+                                  e.target.value
+                                )
+                              }
+                              className={`updateprices-input ${
+                                isChanged ? 'updateprices-changed' : ''
+                              }`}
+                              disabled={editingCategory !== category.docname}
+                            />
+                          );
+                        })}
+                        {editingCategory === category.docname && (
+                          <button
+                            className="updateprices-delete-button"
+                            onClick={() =>
+                              handleDeleteItem(categoryIndex, itemKey)
+                            }
+                          >
+                            ❌
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </>
       )}
     </div>
   );

@@ -21,8 +21,12 @@ export default function Homescreen({
     new Set(data.map((item) => item.subcategory))
   );
 
+  const sortedData = [...data].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
   // Filter data by category and search term
-  const filteredData = data.filter((item) => {
+  const filteredData = sortedData.filter((item) => {
     const matchesCategory =
       selectedCategory === 'All Items' || item.subcategory === selectedCategory;
     const matchesSearch = item.productId
@@ -175,7 +179,12 @@ export default function Homescreen({
                       setActiveTab('productdesc');
                     }}
                   >
-                    <div className="dwntag">Q1 : {item.tier1price}</div>
+                    <div className="dwntag">
+                      Q1 :{' '}
+                      {Number(item.tier1price).toLocaleString('en-IN', {
+                        maximumFractionDigits: 0,
+                      })}
+                    </div>
                     <div className="dwnicon">
                       <img
                         src="/download.png"
@@ -192,7 +201,12 @@ export default function Homescreen({
                       setActiveTab('productdesc');
                     }}
                   >
-                    <div className="dwntag">Q2 : {item.tier2price}</div>
+                    <div className="dwntag">
+                      Q2 :{' '}
+                      {Number(item.tier2price).toLocaleString('en-IN', {
+                        maximumFractionDigits: 0,
+                      })}
+                    </div>
                     <div className="dwnicon">
                       <img
                         src="/download.png"
@@ -209,7 +223,12 @@ export default function Homescreen({
                       setActiveTab('productdesc');
                     }}
                   >
-                    <div className="dwntag">Q3 : {item.tier3price}</div>
+                    <div className="dwntag">
+                      Q3 :{' '}
+                      {Number(item.tier3price).toLocaleString('en-IN', {
+                        maximumFractionDigits: 0,
+                      })}
+                    </div>
                     <div className="dwnicon">
                       <img
                         src="/download.png"

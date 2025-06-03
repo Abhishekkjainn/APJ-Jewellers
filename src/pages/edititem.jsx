@@ -653,7 +653,7 @@ export default function EditItemPage({
           ))}
         </select>
       </div>
-      <div className="additemheadingsmall">Add Image Link</div>
+      {/* <div className="additemheadingsmall">Add Image Link</div>
       <div className="grossweightsection">
         <input
           type="text"
@@ -662,7 +662,7 @@ export default function EditItemPage({
           value={imageLinkText}
           onChange={(e) => setImageLinkText(e.target.value)}
         />
-      </div>
+      </div> */}
       <div className="additemheadingsmall">
         Product Code - {finalProductCode}
       </div>
@@ -818,7 +818,7 @@ export default function EditItemPage({
               setPolkiType(e.target.value);
             }}
           >
-            <option value={0}>MAKING</option>
+            <option value={0}>POLKI MC</option>
             <option value={1}>VICTORIAN MC</option>
           </select>
         </div>
