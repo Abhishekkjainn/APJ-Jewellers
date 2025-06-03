@@ -28,6 +28,7 @@ export default function Homescreen({
     const matchesSearch = item.productId
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
+
     return matchesCategory && matchesSearch;
   });
 

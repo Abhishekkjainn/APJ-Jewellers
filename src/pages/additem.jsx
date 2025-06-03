@@ -395,6 +395,10 @@ export default function AddItemPage({
       alert('Something went wrong during image upload.');
       return;
     }
+    const making = 0;
+    if (polkiType == 1) {
+      making = 1;
+    }
 
     // Construct final data object
     const data = {
@@ -410,6 +414,7 @@ export default function AddItemPage({
       gst: 3,
       imagelink: imageUrl,
       productId: finalProductCode,
+      making: making,
     };
 
     console.log('🔍 Validated Final Data:', data);

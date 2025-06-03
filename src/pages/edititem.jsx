@@ -191,10 +191,19 @@ export default function EditItemPage({
   }
 
   useEffect(() => {
+    if (item.making == 'MAKING') {
+      setPolkiType(0);
+    } else {
+      setPolkiType(1);
+    }
+  }, [item]);
+
+  useEffect(() => {
     const totalPrice = selectedItems.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0
     );
+    console.log(item);
     setTotal(totalPrice);
   }, [selectedItems]);
 
