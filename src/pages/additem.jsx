@@ -395,7 +395,7 @@ export default function AddItemPage({
       alert('Something went wrong during image upload.');
       return;
     }
-    const making = 0;
+    var making = 0;
     if (polkiType == 1) {
       making = 1;
     }
