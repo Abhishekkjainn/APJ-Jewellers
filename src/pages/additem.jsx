@@ -17,6 +17,7 @@ export default function AddItemPage({
   const [newItem, setNewItem] = useState('');
   const [total, setTotal] = useState(0);
   const [codeprefix, setCodePrefix] = useState('');
+  const [codeprefixlist, setcodeprefixlist] = useState([]);
   const [codeSuffix, setCodeSuffix] = useState('');
   const fileInputRef = useRef(null);
   const [imageFile, setImageFile] = useState(null);
@@ -185,12 +186,17 @@ export default function AddItemPage({
   }, [selectedItems]);
 
   const codes = ['GNS', 'DNS', 'PNS'];
+  const codep = {
+    DIAMOND: ['DNS', 'DB', 'DN', 'DV', 'DL'],
+    GOLD: ['GNS', 'GE', 'GB', 'GC', 'GV', 'GL'],
+    POLKI: ['PNS', 'PB', 'PC', 'PV', 'PP', 'PL', 'VNS', 'VB', 'VC', 'VL'],
+  };
   const finalProductCode = `${codeprefix}${codeSuffix}`;
   const [polkiType, setPolkiType] = useState(0); // default
   useEffect(() => {
-    if (category === 'GOLD') setCodePrefix('GNS');
-    else if (category === 'DIAMONDS') setCodePrefix('DNS');
-    else if (category === 'POLKI') setCodePrefix('PNS');
+    if (category === 'GOLD') setcodeprefixlist(codep.GOLD);
+    else if (category === 'DIAMONDS') setcodeprefixlist(codep.DIAMOND);
+    else if (category === 'POLKI') setcodeprefixlist(codep.POLKI);
   }, [category]);
 
   const tier1price = calculateSelectedTotal(0);
@@ -613,9 +619,9 @@ export default function AddItemPage({
           className="additems-input"
         >
           <option value="">Select Code Prefix</option>
-          {codes.map((goldType) => (
-            <option key={goldType} value={goldType}>
-              {goldType}
+          {codeprefixlist.map((pre) => (
+            <option key={pre} value={pre}>
+              {pre}
             </option>
           ))}
         </select>
