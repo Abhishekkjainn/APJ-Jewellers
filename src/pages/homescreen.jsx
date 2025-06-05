@@ -16,6 +16,8 @@ export default function Homescreen({
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All Items');
 
+  console.log(data);
+
   // Extract unique categories
   const subcategories = Array.from(
     new Set(data.map((item) => item.subcategory))

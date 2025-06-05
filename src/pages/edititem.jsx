@@ -29,9 +29,27 @@ export default function EditItemPage({
   const [imageLinkText, setImageLinkText] = useState('');
   const [priceData, setPriceData] = useState([]);
   const [tier, setTier] = useState(2); // 0 = Tier 1, 1 = Tier 2, 2 = Tier 3
+  // const [mak, setmak] = useState(0);
+
+  // useEffect(() => {
+  //   console.log(item);
+  //   setCategory(item.category);
+  //   setSubcategory(item.subcategory);
+  //   setCodeSuffix(item.productId.replace(/^\D+/, ''));
+  //   setGrossWeight(item.goldpurity);
+  //   setGrossWeightAmount(item.grossWeight);
+  //   setSelectedItems(item.itemsUsed);
+  //   setImageLinkText(item.imagelink);
+
+  //   if (item.making === undefined || item.making === null) {
+  //     setmak(1);
+  //   } else {
+  //     setmak(0);
+  //   }
+  // }, []);
 
   useEffect(() => {
-    console.log(item);
+    // Prevent running if item is undefined or empty
     setCategory(item.category);
     setSubcategory(item.subcategory);
     setCodeSuffix(item.productId.replace(/^\D+/, ''));
@@ -208,8 +226,13 @@ export default function EditItemPage({
   }
 
   useEffect(() => {
-    setPolkiType(item.making);
-  }, [item]);
+    // console.log(mak + 'making');
+    if (!item.making) {
+      setPolkiType(1);
+    } else {
+      setPolkiType(item.making);
+    }
+  }, []);
 
   useEffect(() => {
     const totalPrice = selectedItems.reduce(
