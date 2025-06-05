@@ -27,8 +27,11 @@ export default function EditItemPage({
   const [uploadedUrl, setUploadedUrl] = useState('');
   const [uploading, setUploading] = useState(false);
   const [imageLinkText, setImageLinkText] = useState('');
+  const [priceData, setPriceData] = useState([]);
+  const [tier, setTier] = useState(2); // 0 = Tier 1, 1 = Tier 2, 2 = Tier 3
 
   useEffect(() => {
+    console.log(item);
     setCategory(item.category);
     setSubcategory(item.subcategory);
     setCodeSuffix(item.productId.replace(/^\D+/, ''));
@@ -36,6 +39,19 @@ export default function EditItemPage({
     setGrossWeightAmount(item.grossWeight);
     setSelectedItems(item.itemsUsed);
     setImageLinkText(item.imagelink);
+  }, []);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetch('https://apjapi.vercel.app/getAllPrices')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setPriceData(data.PRICES);
+        }
+        setIsLoading(false);
+      })
+      .catch((err) => console.error('Price API Error:', err));
   }, []);
   const handleButtonClick = () => {
     fileInputRef.current.click();
@@ -622,6 +638,28 @@ export default function EditItemPage({
     }
   }
 
+  const base =
+    calcWastage(goldWastage, getGoldRate(grossWeight, 0) * netWeight) +
+    getGoldRate(grossWeight, 0) * netWeight +
+    (polkiType == 0 && category == 'POLKI'
+      ? getMakingCharges(0, category, 0)
+      : getMakingCharges(0, category, 1)) *
+      netWeight +
+    total;
+
+  const outerWastage = calcWastage(3, base);
+
+  const finalAmount = Math.round(base + outerWastage); // toFixed(0) as a number
+
+  const getPriceForItem = (category, label) => {
+    const categoryData = priceData.find((cat) => cat.docname === category);
+    if (!categoryData) return 0;
+    const itemPrices = categoryData[label];
+    if (!itemPrices || !Array.isArray(itemPrices)) return 0;
+
+    const parsedPrice = parseFloat(itemPrices[tier]);
+    return isNaN(parsedPrice) ? 0 : parsedPrice;
+  };
   return (
     <div className="additems-container">
       <div className="additemheading">Edit Product</div>
@@ -653,16 +691,6 @@ export default function EditItemPage({
           ))}
         </select>
       </div>
-      {/* <div className="additemheadingsmall">Add Image Link</div>
-      <div className="grossweightsection">
-        <input
-          type="text"
-          placeholder="image link"
-          className="grosswtinp imglinkinp"
-          value={imageLinkText}
-          onChange={(e) => setImageLinkText(e.target.value)}
-        />
-      </div> */}
       <div className="additemheadingsmall">
         Product Code - {finalProductCode}
       </div>
@@ -716,24 +744,27 @@ export default function EditItemPage({
       </div>
       <div className="additemheadingsmall">Items Used</div>
       <div className="itemsused-section">
-        {selectedItems.map((item, index) => (
-          <div key={index} className="itemsused-row">
-            <div className="item-name">{item.label}</div>
-            <input
-              type="number"
-              value={item.quantity}
-              onChange={(e) => updateQuantity(index, e.target.value)}
-              className="item-qty-input"
-            />
-            <span className="unit">ct</span>
-            <button onClick={() => deleteItem(index)} className="delete-btn">
-              <img src="/delete.png" alt="Delete Icon" className="delicon" />
-            </button>
-            <div className="item-total">
-              ₹{(item.quantity * item.price).toLocaleString()}
+        {selectedItems.map((item, index) => {
+          const unitPrice = getPriceForItem(item.category, item.label);
+          const total = unitPrice * item.quantity;
+
+          return (
+            <div key={index} className="itemsused-row">
+              <div className="item-name">{item.label}</div>
+              <input
+                type="number"
+                value={item.quantity}
+                onChange={(e) => updateQuantity(index, e.target.value)}
+                className="item-qty-input"
+              />
+              <span className="unit">ct</span>
+              <button onClick={() => deleteItem(index)} className="delete-btn">
+                <img src="/delete.png" alt="Delete Icon" className="delicon" />
+              </button>
+              <div className="item-total">₹{total.toLocaleString()}</div>
             </div>
-          </div>
-        ))}
+          );
+        })}
 
         <div className="additem-dropdown-row">
           <select
@@ -829,7 +860,7 @@ export default function EditItemPage({
         <div className="additemheadingsmall">SubTotal</div>
         {/* <div className="netwtval">{getMakingCharges(0)} ₹/gm</div> */}
         <div className="netwtval finprice">
-          {(
+          {/* {(
             calcWastage(goldWastage, getGoldRate(grossWeight, 0) * netWeight) +
             getGoldRate(grossWeight, 0) * netWeight +
             (polkiType == 0 && category == 'POLKI'
@@ -837,15 +868,15 @@ export default function EditItemPage({
               : getMakingCharges(0, category, 1)) *
               netWeight +
             total
-          ).toFixed(1)}
-          ₹
+          ).toFixed(1)} */}
+          {base.toFixed(0)} ₹
         </div>
       </div>
       <div className="netwt">
         <div className="additemheadingsmall2">3% GST</div>
         {/* <div className="netwtval">{getMakingCharges(0)} ₹/gm</div> */}
         <div className="netwtval finprice">
-          {calcWastage(
+          {/* {calcWastage(
             3,
             calcWastage(goldWastage, getGoldRate(grossWeight, 0) * netWeight) +
               getGoldRate(grossWeight, 0) * netWeight +
@@ -854,25 +885,44 @@ export default function EditItemPage({
                 : getMakingCharges(0, category, 1)) *
                 netWeight +
               total
-          ).toFixed(1)}
-          ₹
+          ).toFixed(1)} */}
+          {outerWastage.toFixed(0)} ₹
         </div>
       </div>
       <div className="netwt">
         <div className="additemheadingsmall">Grand Total</div>
         {/* <div className="netwtval">{getMakingCharges(0)} ₹/gm</div> */}
         <div className="netwtval finprice">
-          {calculateFirstPrice(grossWeight, 3)}₹
+          {/* {calculateFirstPrice(grossWeight, 3)}₹ */}
+          {/* {(
+            calcWastage(goldWastage, getGoldRate(grossWeight, 0) * netWeight) +
+            getGoldRate(grossWeight, 0) * netWeight +
+            (polkiType == 0 && category == 'POLKI'
+              ? getMakingCharges(0, category, 0)
+              : getMakingCharges(0, category, 1)) *
+              netWeight +
+            total
+          ).toFixed(0) +
+            calcWastage(
+              3,
+              calcWastage(
+                goldWastage,
+                getGoldRate(grossWeight, 0) * netWeight
+              ) +
+                getGoldRate(grossWeight, 0) * netWeight +
+                (polkiType == 0 && category == 'POLKI'
+                  ? getMakingCharges(0, category, 0)
+                  : getMakingCharges(0, category, 1)) *
+                  netWeight +
+                total
+            ).toFixed(0)} */}
+          {finalAmount.toFixed(0)} ₹
         </div>
       </div>{' '}
       <div className="buttonsectionaddpage">
         <div
           className="savebutton"
           onClick={() => {
-            // getAllPrices();
-            // calculateFirstPrice(grossWeight, 3);
-            // calculateSecondPrice(grossWeight, 3);
-            // calculateThirdPrice(grossWeight, 3);
             handleSave();
           }}
         >
