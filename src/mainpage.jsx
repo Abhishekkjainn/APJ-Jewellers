@@ -215,6 +215,8 @@ export default function Mainpage({
           setSelectedPriceIndex={setSelectedPriceIndex}
           selectedPriceIndex={selectedPriceIndex}
           setActiveTab={setActiveTab}
+          setedititem={setedititem}
+          edititem={edititem}
         />
       )}
 

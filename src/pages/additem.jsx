@@ -23,6 +23,7 @@ export default function AddItemPage({
   const [uploadedUrl, setUploadedUrl] = useState('');
   const [uploading, setUploading] = useState(false);
   const [imageLinkText, setImageLinkText] = useState('');
+  const [polkiType, setPolkiType] = useState(0); // default
   // const [makingT, setMakingT] = useState(0);
 
   const openFilePicker = () => {
@@ -160,10 +161,10 @@ export default function AddItemPage({
     if (i === 'POLKI') {
       if (n == 0) {
         goldRate =
-          pricesData.find((cat) => cat.docname === i)?.MAKING?.[k] ?? '-';
+          pricesData.find((cat) => cat.docname === i)?.POLKIMC?.[k] ?? '-';
       } else {
         goldRate =
-          pricesData.find((cat) => cat.docname === i)?.VICTORIAN?.[k] ?? '-';
+          pricesData.find((cat) => cat.docname === i)?.VICTORIANMC?.[k] ?? '-';
       }
     } else {
       goldRate =
@@ -228,7 +229,7 @@ export default function AddItemPage({
     POLKI: ['PNS', 'PTH', 'PL', 'PCL', 'PB', 'PBRL', 'PJ', 'PR', 'PSL', 'PT'],
   };
   const finalProductCode = `${codeprefix}${codeSuffix}`;
-  const [polkiType, setPolkiType] = useState(0); // default
+
   useEffect(() => {
     if (category === 'GOLD') setcodeprefixlist(codep.GOLD);
     else if (category === 'DIAMONDS') setcodeprefixlist(codep.DIAMOND);
@@ -450,7 +451,12 @@ export default function AddItemPage({
       gst: 3,
       imagelink: imageUrl,
       productId: finalProductCode,
-      making: category === 'POLKI' ? polkiType : 0,
+      making: (() => {
+        if (category === 'POLKI') return polkiType; // 0 or 1 for POLKI
+        if (category === 'DIAMONDS') return 0; // Default for diamonds
+        if (category === 'GOLD') return 0; // Default for gold
+        return 0; // Fallback
+      })(),
     };
 
     console.log('🔍 Validated Final Data:', data);
@@ -560,7 +566,12 @@ export default function AddItemPage({
       gst: 3,
       imagelink: imageUrl,
       productId: finalProductCode,
-      making: category === 'POLKI' ? polkiType : 0,
+      making: (() => {
+        if (category === 'POLKI') return polkiType; // 0 or 1 for POLKI
+        if (category === 'DIAMONDS') return 0; // Default for diamonds
+        if (category === 'GOLD') return 0; // Default for gold
+        return 0; // Fallback
+      })(),
     };
 
     console.log('🔍 Validated Final Data:', data);

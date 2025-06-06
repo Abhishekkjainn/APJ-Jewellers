@@ -10,79 +10,33 @@ export default function DraftPage({
   setSelectedPriceIndex,
   selectedPriceIndex,
   setActiveTab,
+  setedititem,
+  edititem,
 }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All Items');
+
+  console.log(data);
 
   // Extract unique categories
   const subcategories = Array.from(
     new Set(data.map((item) => item.subcategory))
   );
 
+  const sortedData = [...data].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
   // Filter data by category and search term
-  const filteredData = data.filter((item) => {
+  const filteredData = sortedData.filter((item) => {
     const matchesCategory =
       selectedCategory === 'All Items' || item.subcategory === selectedCategory;
     const matchesSearch = item.productId
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
+
     return matchesCategory && matchesSearch;
   });
-
-  // async function additem(item) {
-  //   const finaldata = {
-  //     category: item.category,
-  //     subcategory: item.subcategory,
-  //     goldpurity: item.goldpurity,
-  //     netweight: item.netweight,
-  //     grossWeight: item.grossWeight,
-  //     tier1price: item.tier1price,
-  //     tier2price: item.tier2price,
-  //     tier3price: item.tier3price,
-  //     itemsUsed: item.itemsUsed,
-  //     gst: 3,
-  //     imagelink: item.imagelink,
-  //     productId: item.productId,
-  //   };
-  //   console.log('🔍 Validated Final Data:', finaldata);
-
-  //   try {
-  //     setIsLoading(true);
-  //     const response = await fetch('https://apjapi.vercel.app/addItem', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(finaldata),
-  //     });
-
-  //     const result = await response.json();
-  //     let id = finaldata.productId;
-  //     const response3 = await fetch(
-  //       `https://apjapi.vercel.app/deleteDraft/productId=${id}`
-  //     );
-  //     setIsLoading(false);
-  //     setTimeout(() => {
-  //       window.location.reload();
-  //     }, 300);
-
-  //     if (!response.ok) {
-  //       console.error('❌ API Error:', result);
-  //       alert(`Error: ${result.message}`);
-  //       return;
-  //     }
-
-  //     // ✅ Success
-  //     alert(`✅ ${result.message}`);
-  //     console.log('✅ Item saved successfully:', result);
-  //     setActiveTab('home');
-  //   } catch (error) {
-  //     console.error('❌ Network/Server Error:', error);
-  //     alert(
-  //       'Something went wrong while saving the item. Please try again later.'
-  //     );
-  //   }
-  // }
 
   async function additem(item) {
     const finaldata = {
@@ -98,6 +52,7 @@ export default function DraftPage({
       gst: 3,
       imagelink: item.imagelink,
       productId: item.productId,
+      making: item.making,
     };
 
     console.log('🔍 Validated Final Data:', finaldata);
@@ -150,6 +105,7 @@ export default function DraftPage({
       setIsLoading(false);
     }
   }
+
   async function handleDelete(productId) {
     if (!productId) {
       alert('❌ Product ID is missing.');
@@ -259,6 +215,20 @@ export default function DraftPage({
                     <div
                       className="btn"
                       onClick={() => {
+                        console.log(item + 'Edit Item');
+                        setedititem(item);
+                        setActiveTab('edit');
+                      }}
+                    >
+                      <img
+                        src="/edit.png"
+                        alt="editicon"
+                        className="editicon"
+                      />
+                    </div>
+                    <div
+                      className="btn"
+                      onClick={() => {
                         additem(item);
                       }}
                     >
@@ -288,7 +258,12 @@ export default function DraftPage({
                       setActiveTab('productdesc');
                     }}
                   >
-                    <div className="dwntag">Q1 : {item.tier1price}</div>
+                    <div className="dwntag">
+                      Q1 :{' '}
+                      {Number(item.tier1price).toLocaleString('en-IN', {
+                        maximumFractionDigits: 0,
+                      })}
+                    </div>
                     <div className="dwnicon">
                       <img
                         src="/download.png"
@@ -305,7 +280,12 @@ export default function DraftPage({
                       setActiveTab('productdesc');
                     }}
                   >
-                    <div className="dwntag">Q2 : {item.tier2price}</div>
+                    <div className="dwntag">
+                      Q2 :{' '}
+                      {Number(item.tier2price).toLocaleString('en-IN', {
+                        maximumFractionDigits: 0,
+                      })}
+                    </div>
                     <div className="dwnicon">
                       <img
                         src="/download.png"
@@ -322,7 +302,12 @@ export default function DraftPage({
                       setActiveTab('productdesc');
                     }}
                   >
-                    <div className="dwntag">Q3 : {item.tier3price}</div>
+                    <div className="dwntag">
+                      Q3 :{' '}
+                      {Number(item.tier3price).toLocaleString('en-IN', {
+                        maximumFractionDigits: 0,
+                      })}
+                    </div>
                     <div className="dwnicon">
                       <img
                         src="/download.png"

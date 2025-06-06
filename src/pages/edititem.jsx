@@ -27,7 +27,7 @@ export default function EditItemPage({
   const [imageLinkText, setImageLinkText] = useState('');
   const [priceData, setPriceData] = useState([]);
   const [polkiType, setPolkiType] = useState(0);
-  const [tier, setTier] = useState(2); // 0 = Tier 1, 1 = Tier 2, 2 = Tier 3
+  const [tier, setTier] = useState(0); // 0 = Tier 1, 1 = Tier 2, 2 = Tier 3
   const [mak, setmak] = useState(0);
 
   useEffect(() => {
@@ -194,10 +194,10 @@ export default function EditItemPage({
     if (i === 'POLKI') {
       if (n == 0) {
         goldRate =
-          pricesData.find((cat) => cat.docname === i)?.MAKING?.[k] ?? '-';
+          pricesData.find((cat) => cat.docname === i)?.POLKIMC?.[k] ?? '-';
       } else {
         goldRate =
-          pricesData.find((cat) => cat.docname === i)?.VICTORIAN?.[k] ?? '-';
+          pricesData.find((cat) => cat.docname === i)?.VICTORIANMC?.[k] ?? '-';
       }
     } else {
       goldRate =
