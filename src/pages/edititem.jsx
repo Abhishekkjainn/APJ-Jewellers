@@ -697,10 +697,9 @@ export default function EditItemPage({
         <div className="additemheadingsmall2">+ Wastage</div>
         <div className="netwtval">{goldWastage} %</div>
         <div className="netwtval finprice">
-          {calcWastage(
-            goldWastage,
-            getGoldRate(grossWeight, 0) * netWeight
-          ).toFixed(1)}{' '}
+          {Math.round(
+            calcWastage(goldWastage, getGoldRate(grossWeight, 0) * netWeight)
+          ).toLocaleString('en-IN')}
           ₹
         </div>
       </div>
@@ -708,9 +707,14 @@ export default function EditItemPage({
         <div className="additemheadingsmall2">
           x {grossWeight ? grossWeight : '-'} Rate
         </div>
-        <div className="netwtval">{getGoldRate(grossWeight, 0)} ₹</div>
+        <div className="netwtval">
+          {Math.round(getGoldRate(grossWeight, 0)).toLocaleString('en-IN')} ₹
+        </div>
         <div className="netwtval finprice">
-          {(getGoldRate(grossWeight, 0) * netWeight).toFixed(1)} ₹
+          {Math.round(getGoldRate(grossWeight, 0) * netWeight).toLocaleString(
+            'en-IN'
+          )}{' '}
+          ₹
         </div>
       </div>
       <div className="netwt">
@@ -720,15 +724,15 @@ export default function EditItemPage({
             <div className="netwtval">
               {polkiType === 0
                 ? getMakingCharges(0, category, 0)
-                : getMakingCharges(0, category, 1)}{' '}
+                : getMakingCharges(0, category, 1)}
               ₹/gm
             </div>
             <div className="netwtval finprice">
-              {(
+              {Math.round(
                 (polkiType === 0
                   ? getMakingCharges(0, category, 0)
                   : getMakingCharges(0, category, 1)) * netWeight
-              ).toFixed(1)}{' '}
+              ).toLocaleString('en-IN')}
               ₹
             </div>
           </>
@@ -738,7 +742,10 @@ export default function EditItemPage({
               {getMakingCharges(0, category, 0)} ₹/gm
             </div>
             <div className="netwtval finprice">
-              {(getMakingCharges(0, category, 0) * netWeight).toFixed(1)} ₹
+              {Math.round(
+                getMakingCharges(0, category, 0) * netWeight
+              ).toLocaleString('en-IN')}
+              ₹
             </div>
           </>
         )}
@@ -791,17 +798,22 @@ export default function EditItemPage({
         <div className="additemheadingsmall2">3% GST</div>
         {/* <div className="netwtval">{getMakingCharges(0)} ₹/gm</div> */}
         <div className="netwtval finprice">
-          {calcWastage(
-            3,
-            calcWastage(goldWastage, getGoldRate(grossWeight, 0) * netWeight) +
-              getGoldRate(grossWeight, 0) * netWeight +
-              (polkiType == 0 && category == 'POLKI'
-                ? getMakingCharges(0, category, 0)
-                : getMakingCharges(0, category, 1)) *
-                netWeight +
-              total
-          ).toFixed(1)}
-          {/* {outerWastage.toFixed(0)} ₹ */}
+          {Math.round(
+            calcWastage(
+              3,
+              calcWastage(
+                goldWastage,
+                getGoldRate(grossWeight, 0) * netWeight
+              ) +
+                getGoldRate(grossWeight, 0) * netWeight +
+                (polkiType == 0 && category == 'POLKI'
+                  ? getMakingCharges(0, category, 0)
+                  : getMakingCharges(0, category, 1)) *
+                  netWeight +
+                total
+            )
+          ).toLocaleString('en-IN')}{' '}
+          ₹{/* {outerWastage.toFixed(0)} ₹ */}
         </div>
       </div>
       <div className="netwt">

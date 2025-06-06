@@ -111,6 +111,18 @@ export default function ProductDesc({
       : selectedPrice;
   };
 
+  const formatWeight = (num) => {
+    if (isNaN(num)) return '0.0';
+    return parseFloat(num).toFixed(2);
+  };
+
+  const formatAmount = (num) => {
+    if (isNaN(num)) return '0';
+    return new Intl.NumberFormat('en-IN', {
+      maximumFractionDigits: 0,
+    }).format(Number(num));
+  };
+
   return (
     <div className="productdescriptionpage">
       <div className="productdescbuttonsection">
@@ -150,7 +162,7 @@ export default function ProductDesc({
 
       <div className="productdescgolddata">
         <div className="golddatatag">Total Price -&nbsp;</div>
-        <div className="golddataval">{price}</div>
+        <div className="golddataval">{formatAmount(price)} ₹</div>
         <img
           src="/info.png"
           alt=""
@@ -164,17 +176,17 @@ export default function ProductDesc({
       </div>
       <div className="productdescgolddata">
         <div className="golddatatag">Gold Weight -&nbsp;</div>
-        <div className="golddataval">{item.netweight} gm</div>
+        <div className="golddataval">{formatWeight(item.netweight)} gm</div>
       </div>
       <div className="productdescgolddata">
         <div className="golddatatag">Stone Weight -&nbsp;</div>
         <div className="golddataval">
-          {item.grossWeight - item.netweight} gm
+          {formatWeight(item.grossWeight - item.netweight)} gm
         </div>
       </div>
       <div className="productdescgolddata">
         <div className="golddatatag">Total Weight -&nbsp;</div>
-        <div className="golddataval">{item.grossWeight} gm</div>
+        <div className="golddataval">{formatWeight(item.grossWeight)} gm</div>
       </div>
 
       <div className="productdesc-groupedlist">
@@ -186,7 +198,7 @@ export default function ProductDesc({
                 const unitPrice = getMaterialPrice(mat.category, mat.label);
                 const total =
                   unitPrice != null
-                    ? (unitPrice * mat.quantity).toFixed(2)
+                    ? formatAmount(unitPrice * mat.quantity)
                     : 'N/A';
                 return (
                   <li className="productdesc-item" key={idx}>
@@ -219,7 +231,7 @@ export default function ProductDesc({
                       <td>
                         {key === 'gstPercent'
                           ? `${value}%`
-                          : `₹${Number(value).toFixed(2)}`}
+                          : `₹${formatAmount(Number(value))}`}
                       </td>
                     </tr>
                   ))}
