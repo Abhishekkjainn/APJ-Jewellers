@@ -210,14 +210,25 @@ export default function EditItemPage({
     return (k * n) / 100;
   }
 
+  // useEffect(() => {
+  //   const totalPrice = selectedItems.reduce(
+  //     (sum, item) => sum + item.price * item.quantity,
+  //     0
+  //   );
+  //   console.log(item);
+  //   setTotal(totalPrice);
+  // }, [selectedItems]);
+
   useEffect(() => {
-    const totalPrice = selectedItems.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0
-    );
-    console.log(item);
+    if (!priceData) return;
+
+    const totalPrice = selectedItems.reduce((sum, item) => {
+      const unitPrice = getPriceForItem(item.category, item.label); // use your logic
+      return sum + unitPrice * item.quantity;
+    }, 0);
+
     setTotal(totalPrice);
-  }, [selectedItems]);
+  }, [selectedItems, priceData]);
 
   const codes = ['GNS', 'DNS', 'PNS'];
   const codep = {
@@ -762,15 +773,25 @@ export default function EditItemPage({
               : getMakingCharges(0, category, 1)) *
               netWeight +
             total
-          ).toFixed(1)} */}
-          {base.toFixed(0)} ₹
+          ).toFixed(1)}
+          {base.toFixed(0)} ₹ */}
+          {Math.round(
+            calcWastage(goldWastage, getGoldRate(grossWeight, 0) * netWeight) +
+              getGoldRate(grossWeight, 0) * netWeight +
+              (polkiType == 0 && category === 'POLKI'
+                ? getMakingCharges(0, category, 0)
+                : getMakingCharges(0, category, 1)) *
+                netWeight +
+              total
+          ).toLocaleString('en-IN')}
+          ₹
         </div>
       </div>
       <div className="netwt">
         <div className="additemheadingsmall2">3% GST</div>
         {/* <div className="netwtval">{getMakingCharges(0)} ₹/gm</div> */}
         <div className="netwtval finprice">
-          {/* {calcWastage(
+          {calcWastage(
             3,
             calcWastage(goldWastage, getGoldRate(grossWeight, 0) * netWeight) +
               getGoldRate(grossWeight, 0) * netWeight +
@@ -779,8 +800,8 @@ export default function EditItemPage({
                 : getMakingCharges(0, category, 1)) *
                 netWeight +
               total
-          ).toFixed(1)} */}
-          {outerWastage.toFixed(0)} ₹
+          ).toFixed(1)}
+          {/* {outerWastage.toFixed(0)} ₹ */}
         </div>
       </div>
       <div className="netwt">
@@ -810,7 +831,39 @@ export default function EditItemPage({
                   netWeight +
                 total
             ).toFixed(0)} */}
-          {finalAmount.toFixed(0)} ₹
+          {/* {finalAmount.toFixed(0)} ₹ */}
+          {(
+            Math.round(
+              // Main total
+              calcWastage(
+                goldWastage,
+                getGoldRate(grossWeight, 0) * netWeight
+              ) +
+                getGoldRate(grossWeight, 0) * netWeight +
+                (polkiType == 0 && category === 'POLKI'
+                  ? getMakingCharges(0, category, 0)
+                  : getMakingCharges(0, category, 1)) *
+                  netWeight +
+                total
+            ) +
+            Math.round(
+              // Extra 3% on the entire sum above
+              calcWastage(
+                3,
+                calcWastage(
+                  goldWastage,
+                  getGoldRate(grossWeight, 0) * netWeight
+                ) +
+                  getGoldRate(grossWeight, 0) * netWeight +
+                  (polkiType == 0 && category === 'POLKI'
+                    ? getMakingCharges(0, category, 0)
+                    : getMakingCharges(0, category, 1)) *
+                    netWeight +
+                  total
+              )
+            )
+          ).toLocaleString('en-IN')}{' '}
+          ₹
         </div>
       </div>{' '}
       <div className="buttonsectionaddpage">
