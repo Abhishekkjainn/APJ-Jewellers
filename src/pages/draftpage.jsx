@@ -193,6 +193,7 @@ export default function DraftPage({
         ))}
       </div>
 
+      <div className="additemheadingdraft">Draft Page</div>
       {/* Render Filtered Items (optional section) */}
       <div className="itemsdiv">
         {filteredData.map((item) => (
@@ -217,7 +218,7 @@ export default function DraftPage({
                       onClick={() => {
                         console.log(item + 'Edit Item');
                         setedititem(item);
-                        setActiveTab('edit');
+                        setActiveTab('editdraft');
                       }}
                     >
                       <img

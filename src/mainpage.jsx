@@ -12,6 +12,7 @@ import ManageUsers from './pages/manageusers';
 import ProductDesc from './pages/productdesc';
 import DraftPage from './pages/draftpage';
 import EditItemPage from './pages/edititem';
+import EditDraftPage from './pages/editdraft';
 
 export default function Mainpage({
   username,
@@ -182,6 +183,16 @@ export default function Mainpage({
       )}
       {activeTab === 'edit' && (
         <EditItemPage
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          pricesData={pricesData}
+          setActiveTab={setActiveTab}
+          setedititem={setedititem}
+          item={edititem}
+        />
+      )}
+      {activeTab === 'editdraft' && (
+        <EditDraftPage
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           pricesData={pricesData}

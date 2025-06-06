@@ -2503,3 +2503,12 @@ body{
   font-weight: 500;
   color: black;
 }
+
+.additemheadingdraft{
+  /* width: 80%; */
+  font-size: 22px;
+  font-weight: 600;
+  color: black;
+  /* margin-left: 30px; */
+  margin-top: 20px;
+}
