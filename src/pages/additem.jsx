@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '/firebase.js'; // adjust the path accordingly
 
 export default function AddItemPage({
   isLoading,
@@ -25,6 +23,7 @@ export default function AddItemPage({
   const [uploadedUrl, setUploadedUrl] = useState('');
   const [uploading, setUploading] = useState(false);
   const [imageLinkText, setImageLinkText] = useState('');
+  // const [makingT, setMakingT] = useState(0);
 
   const openFilePicker = () => {
     fileInputRef.current.click();
@@ -236,24 +235,6 @@ export default function AddItemPage({
     else if (category === 'POLKI') setcodeprefixlist(codep.POLKI);
   }, [category]);
 
-  const tier1price = calculateSelectedTotal(0);
-  const tier2price = calculateSelectedTotal(1);
-  const tier3price = calculateSelectedTotal(2);
-
-  function getAllPrices() {
-    console.log(selectedItems);
-    const data = {
-      category: category,
-      subcategory: subcategory,
-      purity: grossWeight,
-      grossWeight: grossWeightAmount,
-      selectedItems: selectedItems,
-      ItemsTotalPrice: total,
-      finalProductCode: finalProductCode,
-    };
-    console.log(data);
-  }
-
   function calculateSelectedTotal(i) {
     let total = 0;
 
@@ -291,6 +272,10 @@ export default function AddItemPage({
     return total;
   }
 
+  const tier1price = calculateSelectedTotal(0);
+  const tier2price = calculateSelectedTotal(1);
+  const tier3price = calculateSelectedTotal(2);
+
   function calculateFirstPrice(goldpurity, gst) {
     console.log(selectedItems);
     console.log(pricesData);
@@ -301,7 +286,7 @@ export default function AddItemPage({
     console.log(wasteandgold);
     let makingcharges = 0;
     if (category === 'POLKI') {
-      if (polkiType == 0) {
+      if (polkiType === 0) {
         makingcharges = getMakingCharges(0, category, 0);
       } else {
         makingcharges = getMakingCharges(0, category, 1);
@@ -331,7 +316,7 @@ export default function AddItemPage({
     console.log(wasteandgold);
     let makingcharges = 0;
     if (category === 'POLKI') {
-      if (polkiType == 0) {
+      if (polkiType === 0) {
         makingcharges = getMakingCharges(1, category, 0);
       } else {
         makingcharges = getMakingCharges(1, category, 1);
@@ -361,7 +346,7 @@ export default function AddItemPage({
     console.log(wasteandgold);
     let makingcharges = 0;
     if (category === 'POLKI') {
-      if (polkiType == 0) {
+      if (polkiType === 0) {
         makingcharges = getMakingCharges(2, category, 0);
       } else {
         makingcharges = getMakingCharges(2, category, 1);
@@ -381,6 +366,14 @@ export default function AddItemPage({
     // console.log(totalbeforetax + gstamt);
     return finaltotal.toFixed(1);
   }
+
+  // useEffect(() => {
+  //   if (category === 'POLKI') {
+  //     setMakingT(polkiType == 1 ? 1 : 0);
+  //   } else {
+  //     setMakingT(0);
+  //   }
+  // }, [category, polkiType]);
 
   async function handleSave() {
     // Frontend Validation
@@ -439,7 +432,7 @@ export default function AddItemPage({
       return;
     }
     var making = 0;
-    if (polkiType == 1) {
+    if (polkiType === 1) {
       making = 1;
     }
 
@@ -457,7 +450,7 @@ export default function AddItemPage({
       gst: 3,
       imagelink: imageUrl,
       productId: finalProductCode,
-      making: making,
+      making: category === 'POLKI' ? polkiType : 0,
     };
 
     console.log('🔍 Validated Final Data:', data);
@@ -567,6 +560,7 @@ export default function AddItemPage({
       gst: 3,
       imagelink: imageUrl,
       productId: finalProductCode,
+      making: category === 'POLKI' ? polkiType : 0,
     };
 
     console.log('🔍 Validated Final Data:', data);
@@ -766,14 +760,14 @@ export default function AddItemPage({
         {category == 'POLKI' ? (
           <>
             <div className="netwtval">
-              {polkiType == 0
+              {polkiType === 0
                 ? getMakingCharges(0, category, 0)
                 : getMakingCharges(0, category, 1)}{' '}
               ₹/gm
             </div>
             <div className="netwtval finprice">
               {(
-                (polkiType == 0
+                (polkiType === 0
                   ? getMakingCharges(0, category, 0)
                   : getMakingCharges(0, category, 1)) * netWeight
               ).toFixed(1)}{' '}
@@ -799,7 +793,9 @@ export default function AddItemPage({
             className="additems-input polkiselect"
             value={polkiType}
             onChange={(e) => {
-              setPolkiType(e.target.value);
+              console.log(e.target.value);
+              // setMakingT(e.target.value);
+              setPolkiType(Number(e.target.value));
             }}
           >
             <option value={0}>POLKI MC</option>
@@ -816,7 +812,7 @@ export default function AddItemPage({
           {(
             calcWastage(goldWastage, getGoldRate(grossWeight, 0) * netWeight) +
             getGoldRate(grossWeight, 0) * netWeight +
-            (polkiType == 0 && category == 'POLKI'
+            (polkiType === 0 && category === 'POLKI'
               ? getMakingCharges(0, category, 0)
               : getMakingCharges(0, category, 1)) *
               netWeight +
@@ -833,7 +829,7 @@ export default function AddItemPage({
             3,
             calcWastage(goldWastage, getGoldRate(grossWeight, 0) * netWeight) +
               getGoldRate(grossWeight, 0) * netWeight +
-              (polkiType == 0 && category == 'POLKI'
+              (polkiType === 0 && category === 'POLKI'
                 ? getMakingCharges(0, category, 0)
                 : getMakingCharges(0, category, 1)) *
                 netWeight +

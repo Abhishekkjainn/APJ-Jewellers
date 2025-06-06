@@ -147,6 +147,7 @@ export default function Homescreen({
                     <div
                       className="btn"
                       onClick={() => {
+                        console.log(item + 'Edit Item');
                         setedititem(item);
                         setActiveTab('edit');
                       }}

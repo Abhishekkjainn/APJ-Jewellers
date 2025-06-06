@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '/firebase.js'; // adjust the path accordingly
 
 export default function EditItemPage({
   isLoading,
@@ -28,36 +26,23 @@ export default function EditItemPage({
   const [uploading, setUploading] = useState(false);
   const [imageLinkText, setImageLinkText] = useState('');
   const [priceData, setPriceData] = useState([]);
+  const [polkiType, setPolkiType] = useState(0);
   const [tier, setTier] = useState(2); // 0 = Tier 1, 1 = Tier 2, 2 = Tier 3
-  // const [mak, setmak] = useState(0);
-
-  // useEffect(() => {
-  //   console.log(item);
-  //   setCategory(item.category);
-  //   setSubcategory(item.subcategory);
-  //   setCodeSuffix(item.productId.replace(/^\D+/, ''));
-  //   setGrossWeight(item.goldpurity);
-  //   setGrossWeightAmount(item.grossWeight);
-  //   setSelectedItems(item.itemsUsed);
-  //   setImageLinkText(item.imagelink);
-
-  //   if (item.making === undefined || item.making === null) {
-  //     setmak(1);
-  //   } else {
-  //     setmak(0);
-  //   }
-  // }, []);
+  const [mak, setmak] = useState(0);
 
   useEffect(() => {
-    // Prevent running if item is undefined or empty
-    setCategory(item.category);
-    setSubcategory(item.subcategory);
-    setCodeSuffix(item.productId.replace(/^\D+/, ''));
-    setGrossWeight(item.goldpurity);
-    setGrossWeightAmount(item.grossWeight);
-    setSelectedItems(item.itemsUsed);
-    setImageLinkText(item.imagelink);
-  }, []);
+    if (item) {
+      console.log(item.making + 'Polkitype');
+      setCategory(item.category || '');
+      setSubcategory(item.subcategory || '');
+      setCodeSuffix(item.productId?.replace(/^\D+/, '') || '');
+      setGrossWeight(item.goldpurity || '');
+      setGrossWeightAmount(item.grossWeight || '');
+      setSelectedItems(item.itemsUsed || []);
+      setImageLinkText(item.imagelink || '');
+      setPolkiType(item.making); // Default to 0 (POLKI) if not specified
+    }
+  }, [item]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -226,15 +211,6 @@ export default function EditItemPage({
   }
 
   useEffect(() => {
-    // console.log(mak + 'making');
-    if (!item.making) {
-      setPolkiType(1);
-    } else {
-      setPolkiType(item.making);
-    }
-  }, []);
-
-  useEffect(() => {
     const totalPrice = selectedItems.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0
@@ -250,7 +226,7 @@ export default function EditItemPage({
     POLKI: ['PNS', 'PB', 'PC', 'PV', 'PP', 'PL', 'VNS', 'VB', 'VC', 'VL'],
   };
   const finalProductCode = `${codeprefix}${codeSuffix}`;
-  const [polkiType, setPolkiType] = useState(0); // default
+  // default
   // useEffect(() => {
   //   if (category === 'GOLD') setCodePrefix('GNS');
   //   else if (category === 'DIAMONDS') setCodePrefix('DNS');
@@ -329,7 +305,7 @@ export default function EditItemPage({
     console.log(wasteandgold);
     let makingcharges = 0;
     if (category === 'POLKI') {
-      if (polkiType == 0) {
+      if (polkiType === 0) {
         makingcharges = getMakingCharges(0, category, 0);
       } else {
         makingcharges = getMakingCharges(0, category, 1);
@@ -359,7 +335,7 @@ export default function EditItemPage({
     console.log(wasteandgold);
     let makingcharges = 0;
     if (category === 'POLKI') {
-      if (polkiType == 0) {
+      if (polkiType === 0) {
         makingcharges = getMakingCharges(1, category, 0);
       } else {
         makingcharges = getMakingCharges(1, category, 1);
@@ -389,7 +365,7 @@ export default function EditItemPage({
     console.log(wasteandgold);
     let makingcharges = 0;
     if (category === 'POLKI') {
-      if (polkiType == 0) {
+      if (polkiType === 0) {
         makingcharges = getMakingCharges(2, category, 0);
       } else {
         makingcharges = getMakingCharges(2, category, 1);
@@ -413,76 +389,6 @@ export default function EditItemPage({
   let imagelink =
     'https://5.imimg.com/data5/TG/DN/MY-37294786/designer-artificial-jewellery-500x500.jpg';
 
-  // async function handleSave() {
-  //   // Frontend Validation
-  //   if (
-  //     !category ||
-  //     !subcategory ||
-  //     !grossWeight ||
-  //     !netWeight ||
-  //     !grossWeightAmount ||
-  //     !imagelink ||
-  //     !finalProductCode ||
-  //     selectedItems.length === 0
-  //   ) {
-  //     alert(
-  //       'All fields must be filled and at least one item must be selected.'
-  //     );
-  //     return;
-  //   }
-
-  //   // Construct final data object
-  //   const data = {
-  //     category: category,
-  //     subcategory: subcategory,
-  //     goldpurity: grossWeight,
-  //     netweight: netWeight,
-  //     grossWeight: grossWeightAmount,
-  //     tier1price: calculateFirstPrice(grossWeight, 3),
-  //     tier2price: calculateSecondPrice(grossWeight, 3),
-  //     tier3price: calculateThirdPrice(grossWeight, 3),
-  //     itemsUsed: selectedItems,
-  //     gst: 3,
-  //     imagelink: imagelink,
-  //     productId: finalProductCode,
-  //   };
-
-  //   console.log('🔍 Validated Final Data:', data);
-
-  //   try {
-  //     setIsLoading(true);
-  //     const response = await fetch('https://apjapi.vercel.app/addeditedItem', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(data),
-  //     });
-
-  //     const result = await response.json();
-  //     setIsLoading(false);
-  //     setTimeout(() => {
-  //       window.location.reload();
-  //     }, 300);
-
-  //     if (!response.ok) {
-  //       console.error('❌ API Error:', result);
-  //       alert(`Error: ${result.message}`);
-  //       return;
-  //     }
-
-  //     // ✅ Success
-  //     alert(`✅ ${result.message}`);
-  //     console.log('✅ Item saved successfully:', result);
-  //     setActiveTab('home');
-  //   } catch (error) {
-  //     console.error('❌ Network/Server Error:', error);
-  //     alert(
-  //       'Something went wrong while saving the item. Please try again later.'
-  //     );
-  //   }
-  // }
-
   async function handleSave() {
     // Frontend Validation
     if (
@@ -503,43 +409,6 @@ export default function EditItemPage({
 
     setIsLoading(true);
 
-    // // 🔄 Step 1: Upload image to Cloudinary
-    // let imageUrl = '';
-    // const formData = new FormData();
-    // formData.append('file', imageFile);
-    // formData.append('upload_preset', 'apjimagedatabase'); // your preset
-    // formData.append('folder', 'apjimages'); // optional
-
-    // try {
-    //   const uploadResponse = await fetch(
-    //     'https://api.cloudinary.com/v1_1/dmqvtwlv2/image/upload',
-    //     {
-    //       method: 'POST',
-    //       body: formData,
-    //     }
-    //   );
-
-    //   const uploadResult = await uploadResponse.json();
-
-    //   if (!uploadResult.secure_url) {
-    //     setIsLoading(false);
-    //     console.error('❌ Image upload failed:', uploadResult);
-    //     alert('Image upload failed. Please try again.');
-    //     return;
-    //   }
-
-    //   imageUrl = uploadResult.secure_url;
-    //   console.log(imageUrl);
-    //   setUploadedUrl(imageUrl);
-    //   setImageLinkText(imageUrl);
-    //   console.log('✅ Image uploaded:', imageUrl);
-    // } catch (error) {
-    //   setIsLoading(false);
-    //   console.error('❌ Error uploading image:', error);
-    //   alert('Something went wrong during image upload.');
-    //   return;
-    // }
-
     // Construct final data object
     const data = {
       category: category,
@@ -554,6 +423,7 @@ export default function EditItemPage({
       gst: 3,
       imagelink: imageLinkText,
       productId: finalProductCode,
+      making: polkiType,
     };
 
     console.log('🔍 Validated Final Data:', data);
@@ -624,6 +494,7 @@ export default function EditItemPage({
       gst: 3,
       imagelink: imagelink,
       productId: finalProductCode,
+      making: polkiType,
     };
 
     console.log('🔍 Validated Final Data:', data);
@@ -664,7 +535,7 @@ export default function EditItemPage({
   const base =
     calcWastage(goldWastage, getGoldRate(grossWeight, 0) * netWeight) +
     getGoldRate(grossWeight, 0) * netWeight +
-    (polkiType == 0 && category == 'POLKI'
+    (polkiType === 0 && category === 'POLKI'
       ? getMakingCharges(0, category, 0)
       : getMakingCharges(0, category, 1)) *
       netWeight +
@@ -836,14 +707,14 @@ export default function EditItemPage({
         {category == 'POLKI' ? (
           <>
             <div className="netwtval">
-              {polkiType == 0
+              {polkiType === 0
                 ? getMakingCharges(0, category, 0)
                 : getMakingCharges(0, category, 1)}{' '}
               ₹/gm
             </div>
             <div className="netwtval finprice">
               {(
-                (polkiType == 0
+                (polkiType === 0
                   ? getMakingCharges(0, category, 0)
                   : getMakingCharges(0, category, 1)) * netWeight
               ).toFixed(1)}{' '}
@@ -869,7 +740,7 @@ export default function EditItemPage({
             className="additems-input polkiselect"
             value={polkiType}
             onChange={(e) => {
-              setPolkiType(e.target.value);
+              setPolkiType(Number(e.target.value));
             }}
           >
             <option value={0}>POLKI MC</option>
