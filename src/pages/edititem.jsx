@@ -232,9 +232,47 @@ export default function EditItemPage({
 
   const codes = ['GNS', 'DNS', 'PNS'];
   const codep = {
-    DIAMOND: ['DNS', 'DB', 'DN', 'DV', 'DL'],
-    GOLD: ['GNS', 'GE', 'GB', 'GC', 'GV', 'GL'],
-    POLKI: ['PNS', 'PB', 'PC', 'PV', 'PP', 'PL', 'VNS', 'VB', 'VC', 'VL'],
+    DIAMOND: [
+      'DNS',
+      'DC',
+      'DB',
+      'DBRL',
+      'DH',
+      'DJ',
+      'DL',
+      'DNP',
+      'DRL',
+      'DT',
+      'DVAD',
+      'DNAT',
+      'EDNS',
+      'TIKA'
+    ],
+    GOLD: [
+      'GNS',
+      'GJ',
+      'GL',
+      'GT',
+      'GRL',
+      'GB',
+      'GBRL',
+      'GC',
+      'BC',
+      'CHAMP',
+      'CHO',
+      'GUT',
+      'JB',
+      'NARL',
+      'NATH',
+      'TIKA',
+      'VAD',
+      'MANGO',
+      'MS',
+      'TM',
+      'TMH',
+      'VNS',
+    ],
+    POLKI: ['PNS', 'PTH', 'PL', 'PCL', 'PB', 'PBR', 'PJ', 'PR', 'PSL', 'PT','TIKA'],
   };
   const finalProductCode = `${codeprefix}${codeSuffix}`;
   // default
