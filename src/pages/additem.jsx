@@ -201,6 +201,7 @@ export default function AddItemPage({
       'DVAD',
       'DNAT',
       'EDNS',
+      'TIKA'
     ],
     GOLD: [
       'GNS',
@@ -226,7 +227,7 @@ export default function AddItemPage({
       'TMH',
       'VNS',
     ],
-    POLKI: ['PNS', 'PTH', 'PL', 'PCL', 'PB', 'PBRL', 'PJ', 'PR', 'PSL', 'PT'],
+    POLKI: ['PNS', 'PTH', 'PL', 'PCL', 'PB', 'PBR', 'PJ', 'PR', 'PSL', 'PT','TIKA'],
   };
   const finalProductCode = `${codeprefix}${codeSuffix}`;
 
